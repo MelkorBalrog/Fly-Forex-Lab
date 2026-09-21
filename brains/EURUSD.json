@@ -1,0 +1,13 @@
+{
+  "symbol": "EURUSD",
+  "frozen": true,
+  "keep_usd": 1906.66,
+  "saved_at": "2026-09-21 03:53:56",
+  "plastic": {},
+  "banc": {},
+  "params": {},
+  "meta": {
+    "note": "factory readout; W frozen; do not train this file",
+    "snapshot": "snapshots/eurusd-snowball-lock-20260919"
+  }
+}

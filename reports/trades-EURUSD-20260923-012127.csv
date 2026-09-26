@@ -1,0 +1,2 @@
+n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
+1,SELL,3.56,62.0,45.0,0.5,2026-09-10 13:10,2026-09-10 13:55,1.16263,1.16239,1.6,82.47,24.92,17.21,0.0,57.55,gui stop,100057.55

@@ -1,0 +1,4 @@
+symbol,source,n,wins,losses,buys,sells,snowball,net_pips,net_usd,best,worst,equity,da_n,banc_mean
+USDCHF,yahoo 5m USDCHF=X,4,1,3,3,1,0,14.5,-700.6,1940.7,-1358.27,99299.4,4,1.106
+GBPUSD,yahoo 5m GBPUSD=X,6,2,4,3,3,0,-26.2,-690.63,253.2,-456.2,99309.37,6,0.913
+USDJPY,yahoo 5m USDJPY=X,7,2,5,3,4,0,0.4,63.1,73.11,-16.68,100063.1,7,0.954

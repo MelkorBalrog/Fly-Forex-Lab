@@ -1,0 +1,99 @@
+{
+  "target_weekly": 0.01,
+  "exam_days": 14,
+  "train_days": 28,
+  "balance": 100000.0,
+  "pairs": {
+    "EURUSD": {
+      "round": 2,
+      "source": "yahoo 5m EURUSD",
+      "n": 9,
+      "net_usd": -2968.52,
+      "weekly": -0.01484,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 1,
+      "losses": 8,
+      "max_dd": 0.0297,
+      "best_weekly": -0.0016
+    },
+    "GBPUSD": {
+      "round": 2,
+      "source": "yahoo 5m GBPUSD",
+      "n": 1,
+      "net_usd": 1189.16,
+      "weekly": 0.00595,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 1,
+      "losses": 0,
+      "max_dd": 0.0,
+      "best_weekly": 0.00595
+    },
+    "USDJPY": {
+      "round": 1,
+      "source": "yahoo 5m USDJPY",
+      "n": 8,
+      "net_usd": -96.25,
+      "weekly": -0.00048,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 0,
+      "losses": 8,
+      "max_dd": 0.001,
+      "best_weekly": -0.00048
+    },
+    "USDCHF": {
+      "round": 1,
+      "source": "yahoo 5m USDCHF",
+      "n": 0,
+      "net_usd": 0.0,
+      "weekly": 0.0,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 0,
+      "losses": 0,
+      "max_dd": 0.0,
+      "best_weekly": 0.0
+    },
+    "AUDUSD": {
+      "round": 1,
+      "source": "yahoo 5m AUDUSD",
+      "n": 1,
+      "net_usd": -660.99,
+      "weekly": -0.00331,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 0,
+      "losses": 1,
+      "max_dd": 0.0066,
+      "best_weekly": -0.00331
+    },
+    "EURGBP": {
+      "round": 1,
+      "source": "yahoo 5m EURGBP",
+      "n": 0,
+      "net_usd": 0.0,
+      "weekly": 0.0,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 0,
+      "losses": 0,
+      "max_dd": 0.0,
+      "best_weekly": 0.0
+    },
+    "USDCAD": {
+      "round": 1,
+      "source": "yahoo 5m USDCAD",
+      "n": 0,
+      "net_usd": 0.0,
+      "weekly": 0.0,
+      "weeks": 2.0,
+      "passed": false,
+      "wins": 0,
+      "losses": 0,
+      "max_dd": 0.0,
+      "best_weekly": 0.0
+    }
+  }
+}

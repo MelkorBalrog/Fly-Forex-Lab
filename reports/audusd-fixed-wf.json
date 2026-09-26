@@ -1,0 +1,51 @@
+{
+  "promoted": false,
+  "lots": 0.1,
+  "rules": "legacy 2oo3, fixed lots, no snowball, no martingale, plastic off",
+  "train": [
+    {
+      "n": 3,
+      "wins": 1,
+      "losses": 2,
+      "net_pips": -16.7,
+      "net_usd": -16.73,
+      "name": "factory_fixed",
+      "csv": "trades-AUDUSD-20260924-010656.csv",
+      "elapsed_s": 312.0,
+      "genome": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.40 TP 12.0  snow off  mart off"
+    },
+    {
+      "n": 7,
+      "wins": 1,
+      "losses": 6,
+      "net_pips": -23.7,
+      "net_usd": -23.68,
+      "name": "wide_sl",
+      "csv": "trades-AUDUSD-20260924-011121.csv",
+      "elapsed_s": 264.7,
+      "genome": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 3.40 TP 12.0  snow off  mart off"
+    },
+    {
+      "n": 7,
+      "wins": 2,
+      "losses": 5,
+      "net_pips": -19.2,
+      "net_usd": -19.22,
+      "name": "sell_bias",
+      "csv": "trades-AUDUSD-20260924-011544.csv",
+      "elapsed_s": 263.3,
+      "genome": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 3.40 TP 14.0  snow off  mart off"
+    }
+  ],
+  "locked": "factory_fixed",
+  "holdout": {
+    "n": 1,
+    "wins": 0,
+    "losses": 1,
+    "net_pips": -9.3,
+    "net_usd": -9.27,
+    "name": "factory_fixed",
+    "csv": "trades-AUDUSD-20260924-011906.csv",
+    "elapsed_s": 202.4
+  }
+}

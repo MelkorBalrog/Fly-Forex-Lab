@@ -1,0 +1,158 @@
+# Images files
+*.nrrd
+*.lsm
+*.lsm.bz2
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# raw neuron data, for now
+.rda
+*.rda
+.rda
+*.rds
+.swc
+*.swc
+
+# Example code in package build process
+*-Ex.R
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+images/plotly/*
+
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+
+# knitr and R markdown default cache directories
+/*_cache/
+/cache/
+fig/Identification_PNs/Validation_uPNs_cache/
+fig/Symmetry_PNs/Symmetry_PNs_Connectivity_cache/
+fig/Symmetry_PNs/Symmetry_PNs_Morphology_cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+.Rproj.user
+
+# Python-related stuff
+/.ipynb_checkpoints/
+.ipynb_checkpoints
+
+# OS generated files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.png
+
+# Claude Code files
+.claude/
+CLAUDE.md
+
+# Local data cache (large feather files downloaded from GCS)
+data/cache/
+
+# Large files
+*.nd2
+*.obj
+*.nrrd
+*.tifs
+*.zip
+*.czi
+
+# Jingxuan analysis intermediate files
+**/cascade_results/
+**/__pycache__/
+slurm-*.out
+**/sbatch_logs/
+*.html
+
+# Cascade files — keep README + frankenbrain_v1.6 (paper-version cascade
+# outputs); exclude the older v1.5 by-class subdirs (stale and large).
+data/cascade/frankenbrain_v1.5/
+
+# extra images for figures
+figures/figure_1/links/extra/
+figures/figure_2/links/extra/
+figures/figure_3/links/extra/
+figures/figure_4/links/extra/
+figures/figure_5/links/extra/
+figures/figure_6/links/extra/
+figures/figure_extra/
+
+# PNG files in extra subdirectories
+figures/*/links/extra/*.png
+
+# PNG files in figure_4 links directory (excluding the dirs we explicitly track)
+figures/figure_4/links/**/*.png
+!figures/figure_4/links/neuroanatomy/*.png
+!figures/figure_4/links/head_orienting/sensors/influence_log_minmax/*.png
+!figures/figure_4/links/head_orienting/effectors/influence_log_minmax/*.png
+figures/schematics/*.ai
+figures/biorxiv/*
+figures/biorxiv_v1/*
+figures/biorxiv_v2/*
+figures/submission/*
+figures/resubmission/*
+manuscript/*
+# Re-include manuscript/print/ (numbers.csv, ngl_links.csv, supplemental
+# data, neuroglancer_states, etc.), manuscript/abstracts/ (conference
+# abstracts), and manuscript/scripts/ (paper-orchestration helpers like
+# regenerate_paper.sh, fix_ai_paths.py) so they can be tracked. Keep the
+# figure-asset subdirectories under manuscript/print/ ignored — those
+# are rebuilt by figure scripts and would bloat history. Confidential
+# subdirs (biorxiv, resubmission_1, resubmission_2 — cover letters,
+# response-to-referees, reporting summaries) stay excluded.
+!manuscript/print/
+!manuscript/abstracts/
+!manuscript/scripts/
+manuscript/print/figure*/
+dataverse/*
+*banc_meta.csv
+
+# Working / scratch notes — planning files, session TODOs. These live
+# alongside the committed code (e.g. manuscript/print/dataverse/
+# DATAVERSE_TODO.md) but should not be part of the published history.
+TODO.md
+*_TODO.md
+
+
+# R default plot output
+Rplots.pdf
+
+# R data
+.RDataTmp
+*.Rproj
+BANC-project.Rproj
+BANC-project.Rproj
+/manuscript/*
+!/manuscript/print/
+!/manuscript/abstracts/
+!/manuscript/scripts/
+/manuscript/print/figure*/
+# Local-only Word-export workspace (download_and_clean_gdoc.R outputs)
+/manuscript/print/text/
+data/meta/hemibrain_meta.csv
+data/meta/hemibrain_nt_meta_2024-02-01.csv
+data/meta/bc_orig_cache.feather
+# Private identifiers (Google Doc/Sheet/Drive IDs, etc.) — read by
+# R/startup/load-keys.R as banc.keys. Never committed.
+data/private/

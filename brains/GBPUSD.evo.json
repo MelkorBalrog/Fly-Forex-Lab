@@ -1,0 +1,72 @@
+{
+  "symbol": "GBPUSD",
+  "kind": "evo",
+  "saved_at": "2026-09-23 08:50:51",
+  "fitness": -1243.01,
+  "note": "risk=aggressive  sugar ON\u00d71.11  sdyn ON  fuse-dyn ON  fuse=all  SL 2.48 TP 11.7  snow off  mart off",
+  "genome": {
+    "params": {
+      "sl_atr": 2.4821491,
+      "tp_atr": 11.686491924950857,
+      "trail_arm_atr": 2.8717280857996452,
+      "trail_gap_atr": 1.7895172059899331,
+      "be_atr": 1.4564650940565675,
+      "rsi_buy_arm": 52.632891591502094,
+      "rsi_buy_fire": 62.16965163042876,
+      "rsi_sell_arm": 48.87865140562628,
+      "rsi_sell_fire": 38.0,
+      "rsi_cont_lo": 31.637812658583194,
+      "rsi_cont_hi": 42.603729872942694,
+      "min_impulse": 0.4854758427317702,
+      "cont_impulse": 0.7913165376132203,
+      "cooldown_bars": 8.063392354481861,
+      "lock_win_pips": 8.73589972996511,
+      "max_hold_bars": 65.82787077246817,
+      "min_hold_bars": 4.412147008482591,
+      "n_updates": 3
+    },
+    "risk_tol": "aggressive",
+    "fuse_dynamic": true,
+    "sugar": true,
+    "sugar_amt": 1.1080950943187557,
+    "sugar_dyn": true,
+    "fuse_cats": "",
+    "fuse_inds": "all",
+    "cat_inhibit": 0.577094497795727,
+    "no_snowball": true,
+    "no_martingale": true
+  },
+  "meta": {
+    "n_trades": 3,
+    "da_n": 5,
+    "fitness": -1243.01,
+    "max_dd": 0.0121,
+    "net_usd": 269.49,
+    "evolve": {
+      "pop": 4,
+      "gens": 3,
+      "seed": 1487,
+      "history": [
+        {
+          "gen": 1,
+          "best_fitness": -1399.9099999999999,
+          "best": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=trend,momentum,volatility,volume,breadth,structure  SL 2.45 TP 11.7  snow off  mart off",
+          "net_usd": -624.91
+        },
+        {
+          "gen": 2,
+          "best_fitness": -1243.01,
+          "best": "risk=aggressive  sugar ON\u00d71.11  sdyn ON  fuse-dyn ON  fuse=all  SL 2.48 TP 11.7  snow off  mart off",
+          "net_usd": 269.49
+        },
+        {
+          "gen": 3,
+          "best_fitness": -1243.01,
+          "best": "risk=aggressive  sugar ON\u00d71.11  sdyn ON  fuse-dyn ON  fuse=all  SL 2.48 TP 11.7  snow off  mart off",
+          "net_usd": 269.49
+        }
+      ]
+    },
+    "genome_note": "risk=aggressive  sugar ON\u00d71.11  sdyn ON  fuse-dyn ON  fuse=all  SL 2.48 TP 11.7  snow off  mart off"
+  }
+}

@@ -1,0 +1,25 @@
+st0====================  General
+Action=1
+inpLearnStr=USDCHF.FXANN500222341231014020007106085224503501829227526
+TradeType=2
+MagicNum=2020
+st2====================  Volume 
+VolType2=1
+inpV1000=0.03
+inpVol=0.03
+st1====================  Closing
+CloseType=2
+TPMode=0
+inpTP=200.0
+SLMode=0
+inpSL=2000.0
+AvrDist=7000.0
+AvrVolMultiply=1.5
+AvrVolAdd=0.01
+st3====================  Trailing 
+EnableTrailing=false
+TrailingStart=100
+TrailingStop=100
+TrailingStep=10
+EnableBreakEven=false
+BreakEvenStart=500

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>FlyFOREX — live brains</title>
+  <style>
+    :root {
+      --bg: #07090d;
+      --panel: #10151c;
+      --ink: #d7e0ea;
+      --dim: #7d8b99;
+      --line: #24303c;
+      --buy: #3ee0b0;
+      --sell: #ff6b4a;
+      --hold: #c9b36a;
+      --trend: #5ee0ff;
+      --fade: #d38bff;
+      --conf: #f0c14b;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font: 13px/1.4 "Segoe UI", "IBM Plex Sans", sans-serif;
+    }
+    header {
+      display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+      padding: 14px 18px 10px; border-bottom: 1px solid var(--line);
+    }
+    header h1 { font-size: 15px; letter-spacing: .14em; margin: 0; font-weight: 650; }
+    header .meta { color: var(--dim); }
+    header .eq { font-variant-numeric: tabular-nums; }
+    header .eq.up { color: var(--buy); }
+    header .eq.dn { color: var(--sell); }
+    .wrap { display: grid; grid-template-columns: 1fr 1fr 1fr 280px; gap: 10px; padding: 10px 12px; }
+    @media (max-width: 1100px) { .wrap { grid-template-columns: 1fr 1fr; } }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px 12px;
+      min-height: 320px;
+    }
+    .card h2 {
+      margin: 0 0 8px; font-size: 12px; letter-spacing: .16em; color: var(--dim); font-weight: 650;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .pill {
+      font-size: 11px; letter-spacing: .08em; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line);
+    }
+    .pill.BUY { color: var(--buy); border-color: #1d6b58; background: #0d2a24; }
+    .pill.SELL { color: var(--sell); border-color: #7a3328; background: #2a120e; }
+    .pill.HOLD { color: var(--hold); border-color: #5c5228; background: #221e10; }
+    .eyes { display: flex; gap: 8px; }
+    .eye { flex: 1; }
+    .eye .lbl { color: var(--dim); font-size: 10px; letter-spacing: .12em; margin-bottom: 4px; }
+    .grid {
+      display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; aspect-ratio: 1;
+      background: #0a0d12; padding: 4px; border-radius: 8px;
+    }
+    .cell { border-radius: 2px; background: #182028; }
+    .bar-wrap { margin: 10px 0 6px; }
+    .bar-meta { display: flex; justify-content: space-between; color: var(--dim); font-size: 11px; }
+    .bar {
+      height: 8px; background: #1a222b; border-radius: 99px; overflow: hidden; position: relative; margin-top: 4px;
+    }
+    .bar .tau {
+      position: absolute; top: 0; bottom: 0; width: 2px; background: #fff8; z-index: 2;
+    }
+    .bar .fill { height: 100%; width: 0; transform-origin: left; }
+    .motor { display: flex; gap: 1px; height: 28px; align-items: flex-end; margin-top: 8px; }
+    .motor i { flex: 1; background: #2a3a48; display: block; min-height: 2px; }
+    .job { color: var(--dim); font-size: 11px; min-height: 32px; margin-top: 8px; }
+    .spark { width: 100%; height: 42px; display: block; }
+    .committee .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #1c2630; }
+    .decision {
+      margin-top: 10px; padding: 10px; border-radius: 8px; background: #0c1117; border: 1px solid var(--line);
+      font-size: 16px; letter-spacing: .08em; text-align: center;
+    }
+    .log { grid-column: 1 / -1; max-height: 220px; overflow: auto; }
+    .log table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .log th { text-align: left; color: var(--dim); font-weight: 600; font-size: 10px; letter-spacing: .12em; padding: 4px; }
+    .log td { padding: 3px 4px; border-top: 1px solid #1c2630; }
+    .snow { color: var(--conf); }
+    .stale { opacity: .45; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FLY FOREX LAB</h1>
+    <div class="meta" id="clock">waiting for trader…</div>
+    <div class="meta" id="symbol"></div>
+    <div class="eq" id="equity"></div>
+    <div class="meta" id="pos"></div>
+    <div class="meta snow" id="snow"></div>
+    <div class="meta" id="banc"></div>
+  </header>
+  <div class="wrap">
+    <section class="card" id="card-trend"></section>
+    <section class="card" id="card-fade"></section>
+    <section class="card" id="card-conf"></section>
+    <section class="card committee" id="card-committee"></section>
+    <section class="card log" id="card-log"></section>
+  </div>
+<script>
+const JOB = {
+  trend: "Follows Kalman impulse through the real MaleCNS wiring. Loose τ so it votes with the trend. PAM/PPL dopamine nudges readout + gains after each close.",
+  fade: "Driven by residual / stretch. Full τ — only speaks when the move is extended. Opposite vote is a veto. Same dopamine rule, own eligibility trace.",
+  conf: "Does not see price. Reads p_cast, p_edge, fused mix. Decides if a node is robust enough to vote. Learns which robustness patterns paid.",
+};
+
+function voteClass(v) { return (v === "BUY" || v === "SELL" || v === "HOLD") ? v : "HOLD"; }
+
+function eye(cells, tint) {
+  const g = document.createElement("div");
+  g.className = "grid";
+  (cells || []).forEach(v => {
+    const c = document.createElement("div");
+    c.className = "cell";
+    const a = Math.max(0.08, Math.min(1, Number(v) * 1.6));
+    c.style.background = `rgba(${tint},${a})`;
+    g.appendChild(c);
+  });
+  return g;
+}
+
+function motor(vals, color) {
+  const row = document.createElement("div");
+  row.className = "motor";
+  (vals || []).forEach(v => {
+    const i = document.createElement("i");
+    i.style.height = `${Math.max(2, Number(v) * 28)}px`;
+    i.style.background = color;
+    row.appendChild(i);
+  });
+  return row;
+}
+
+function spark(values, color) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "spark");
+  svg.setAttribute("viewBox", "0 0 120 42");
+  svg.setAttribute("preserveAspectRatio", "none");
+  const pts = values || [];
+  if (pts.length < 2) return svg;
+  const min = Math.min(...pts), max = Math.max(...pts);
+  const span = (max - min) || 1;
+  const d = pts.map((y, i) => {
+    const x = i * 120 / (pts.length - 1);
+    const yy = 40 - ((y - min) / span) * 36;
+    return `${i ? "L" : "M"}${x.toFixed(1)},${yy.toFixed(1)}`;
+  }).join(" ");
+  const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  p.setAttribute("d", d);
+  p.setAttribute("fill", "none");
+  p.setAttribute("stroke", color);
+  p.setAttribute("stroke-width", "1.6");
+  svg.appendChild(p);
+  return svg;
+}
+
+function headCard(el, head, hist, color, tint) {
+  const v = head || { vote: "HOLD", score: 0, tau: 1, nfire: 0, eye_bull: [], eye_bear: [], motor: [] };
+  el.innerHTML = "";
+  const h = document.createElement("h2");
+  h.innerHTML = `<span>${(v.role || "").toUpperCase()}</span>`;
+  const pill = document.createElement("span");
+  pill.className = "pill " + voteClass(v.vote);
+  pill.textContent = v.vote || "HOLD";
+  h.appendChild(pill);
+  el.appendChild(h);
+
+  const eyes = document.createElement("div");
+  eyes.className = "eyes";
+  const left = document.createElement("div"); left.className = "eye";
+  left.innerHTML = `<div class="lbl">RETINA BULL</div>`;
+  left.appendChild(eye(v.eye_bull, "62,224,176"));
+  const right = document.createElement("div"); right.className = "eye";
+  right.innerHTML = `<div class="lbl">RETINA BEAR</div>`;
+  right.appendChild(eye(v.eye_bear, "255,107,74"));
+  eyes.appendChild(left); eyes.appendChild(right);
+  el.appendChild(eyes);
+
+  const bw = document.createElement("div");
+  bw.className = "bar-wrap";
+  const norm = Math.max(-2, Math.min(2, Number(v.norm) || 0));
+  const pct = Math.min(100, Math.abs(norm) * 50);
+  bw.innerHTML = `<div class="bar-meta"><span>descending score ${Number(v.score||0).toFixed(1)}  τ ${Number(v.tau||0).toFixed(1)}</span><span>${v.nfire||0} cells |x|>0.5</span></div>
+    <div class="bar"><div class="tau" style="left:50%"></div><div class="fill" style="width:${pct}%;margin-left:${norm>=0?50:50-pct}%;background:${norm>=0?'var(--buy)':'var(--sell)'}"></div></div>`;
+  el.appendChild(bw);
+  el.appendChild(spark(hist || [], color));
+  el.appendChild(motor(v.motor, color));
+  const job = document.createElement("div");
+  job.className = "job";
+  let extra = "";
+  if (v.n_updates != null) {
+    extra = ` DA r=${Number(v.da || 0).toFixed(2)}  g+ ${Number(v.gain_pos || 1).toFixed(2)} g− ${Number(v.gain_neg || 1).toFixed(2)}  n=${v.n_updates}`;
+  }
+  job.textContent = (JOB[v.role] || "") + extra;
+  el.appendChild(job);
+}
+
+function fmt(n, d=2) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return "—";
+  return x.toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+
+async function tick() {
+  let s;
+  try { s = await (await fetch("/api/state")).json(); }
+  catch { return; }
+  const live = !!s.live;
+  document.getElementById("clock").textContent = s.label || (live ? "live" : "waiting for trader…");
+  document.getElementById("clock").className = "meta" + (live ? "" : " stale");
+  document.getElementById("symbol").textContent = [s.symbol, s.regime, s.close ? Number(s.close).toFixed(5) : ""].filter(Boolean).join("  ·  ");
+  const acc = s.account || {};
+  const eq = document.getElementById("equity");
+  const start = Number(acc.start || acc.equity || 0);
+  const now = Number(acc.equity || 0);
+  eq.textContent = `equity $${fmt(now, 2)}   ${now >= start ? "+" : ""}$${fmt(now - start, 2)}`;
+  eq.className = "eq " + (now >= start ? "up" : "dn");
+  const pos = s.position || {};
+  document.getElementById("pos").textContent = pos.side
+    ? `${pos.side} ${fmt(pos.lots, 2)} lots @ ${Number(pos.entry).toFixed(5)}  float $${fmt(pos.floating, 2)}`
+    : "flat";
+  const snow = s.snowball || {};
+  document.getElementById("snow").textContent = `snowball ${snow.adds || 0}/${snow.max || 2}` + (snow.last ? `  ${snow.last}` : "");
+  const mg = s.martingale || {};
+  const banc = s.banc || {};
+  document.getElementById("banc").textContent = [
+    banc.mult != null ? `BANC ×${Number(banc.mult).toFixed(2)}  threat ${Number(banc.threat || 0).toFixed(2)}  walk ${Number(banc.walk || 0).toFixed(2)}  ${banc.vote || ""}` : "",
+    mg.streak ? `martingale streak ${mg.streak}` : "",
+    mg.note || "",
+    (s.rails && s.rails.kill) ? "KILL SWITCH" : "",
+    (s.rails && s.rails.lock) ? `snowball lock ${s.rails.lock}` : "",
+    (s.rails && s.rails.n != null) ? `admit ×${Number(s.rails.admit || 1).toFixed(2)} PF ${Number(s.rails.pf || 0).toFixed(2)} n=${s.rails.n}` : "",
+  ].filter(Boolean).join("  ·  ");
+
+  const heads = s.heads || {};
+  const hist = s.history || {};
+  headCard(document.getElementById("card-trend"), heads.trend, hist.trend, "rgb(94,224,255)", "trend");
+  headCard(document.getElementById("card-fade"), heads.fade, hist.fade, "rgb(211,139,255)", "fade");
+  headCard(document.getElementById("card-conf"), heads.conf, hist.conf, "rgb(240,193,75)", "conf");
+
+  const c = document.getElementById("card-committee");
+  const votes = s.votes || {};
+  const fusion = s.fusion || {};
+  c.innerHTML = `<h2><span>COMMITTEE 2oo3</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span></h2>
+    <div class="row"><span>tech</span><span class="pill ${voteClass(votes.tech)}">${votes.tech || "HOLD"}</span></div>
+    <div class="row"><span>fly-trend</span><span class="pill ${voteClass(votes.trend)}">${votes.trend || "HOLD"}</span></div>
+    <div class="row"><span>fly-fade</span><span class="pill ${voteClass(votes.fade)}">${votes.fade || "HOLD"}</span></div>
+    <div class="row"><span>fly-conf</span><span class="pill ${voteClass(votes.conf)}">${votes.conf || "HOLD"}</span></div>
+    <div class="row"><span>flow</span><span class="pill ${voteClass(votes.flow)}">${votes.flow || "HOLD"}</span></div>
+    <div class="row"><span>p_cast tech / trend / fade</span><span>${fmt(fusion.tech,2)} · ${fmt(fusion.trend,2)} · ${fmt(fusion.fade,2)}</span></div>
+    <div class="row"><span>BANC female risk</span><span>×${fmt((s.banc||{}).mult,2)}  ${(s.banc||{}).vote || ""}</span></div>
+    <div class="decision ${voteClass(s.decision)}">${s.decision || "HOLD"}  ${s.tag || ""}</div>
+    <div class="job" style="margin-top:10px">${s.note || "Timing from tech. Flies vote or veto. Fusion may only abstain. BANC scales risk. Dopamine retunes each head after close."}</div>`;
+
+  const log = s.log || [];
+  const rows = log.slice().reverse().map(r =>
+    `<tr><td>${r.t || ""}</td><td class="${voteClass(r.side)}">${r.side || ""}</td><td>${r.what || ""}</td><td>${r.detail || ""}</td></tr>`
+  ).join("");
+  document.getElementById("card-log").innerHTML = `<h2>DECISION TAPE</h2>
+    <table><thead><tr><th>TIME</th><th>SIDE</th><th>WHAT</th><th>DETAIL</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+tick();
+setInterval(tick, 140);
+</script>
+</body>
+</html>

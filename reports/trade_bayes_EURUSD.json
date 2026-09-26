@@ -1,0 +1,84 @@
+{
+  "enabled": true,
+  "global": {
+    "a": 5.5,
+    "b": 4.8,
+    "w_sum": 14.225000000000001,
+    "w_n": 2.0,
+    "l_sum": 0.0,
+    "l_n": 0.0
+  },
+  "bins": {
+    "side=SELL|regime=DOWN|vol=mid|session=overlap|impulse=mid|bb=normal|heat=cold|tag=full": {
+      "a": 4.5,
+      "b": 4.8,
+      "w_sum": 1.3625,
+      "w_n": 1.0,
+      "l_sum": 0.0,
+      "l_n": 0.0
+    },
+    "side=SELL|regime=DOWN|vol=mid|session=london|impulse=strong|bb=squeeze|heat=cold|tag=full": {
+      "a": 4.5,
+      "b": 4.8,
+      "w_sum": 12.8625,
+      "w_n": 1.0,
+      "l_sum": 0.0,
+      "l_n": 0.0
+    }
+  },
+  "memory": [
+    {
+      "fp": {
+        "side": "SELL",
+        "regime": "DOWN",
+        "vol": "mid",
+        "session": "overlap",
+        "impulse": "mid",
+        "bb": "normal",
+        "heat": "cold",
+        "tag": "full"
+      },
+      "vec": [
+        -1.0,
+        -1.0,
+        1.0,
+        0.6,
+        0.40399999999999997,
+        1.0,
+        0.0,
+        0.5,
+        0.0
+      ],
+      "won": true,
+      "r_mult": 1.3625,
+      "usd": 1848.11
+    },
+    {
+      "fp": {
+        "side": "SELL",
+        "regime": "DOWN",
+        "vol": "mid",
+        "session": "london",
+        "impulse": "strong",
+        "bb": "squeeze",
+        "heat": "cold",
+        "tag": "full"
+      },
+      "vec": [
+        -1.0,
+        -1.0,
+        1.0,
+        0.9,
+        0.326,
+        1.25,
+        0.0,
+        0.5,
+        0.0
+      ],
+      "won": true,
+      "r_mult": 12.8625,
+      "usd": 16025.76
+    }
+  ],
+  "path": "C:\\Workspace\\FlyFOREXTrader\\reports\\trade_bayes_EURUSD.json"
+}

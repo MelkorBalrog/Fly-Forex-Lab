@@ -1,0 +1,2 @@
+n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
+1,BUY,6.19,67.2,45.0,0.5,2026-09-02 13:40,2026-09-02 14:40,0.85867,0.85833,-4.7,-249.47,43.33,33.15,0.0,-292.8,chop scratch,99707.2

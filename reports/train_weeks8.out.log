@@ -1,0 +1,630 @@
+Fly dopamine trainer  W frozen  per-pair PAM/PPL  EURUSD locked
+Loading connectome...
+  166700 neurons, 25,582,938 synapses
+  retina=3335  descending=1314  DA=340  ol_sensory=6098  vnc_sensory=6370
+  calibrating descending readout...
+  readout tau=9.90  (UP score 39.6)
+eval window  2026-09-09 23:20 -> 2026-09-18 22:55  UTC  (held out)
+
+── train 1/6  GBPUSD ──
+  2500 x M5  yahoo 5m GBPUSD=X  2026-08-28 04:00 -> 2026-09-09 23:15
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00016  quote USD
+sizing  1.00% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+committee  2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  on  ×1.20 after a scratch, ×1.28 cap; never after a full stop; freeze if DD/BANC/pair-admit
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-08-28 04:00] 1.35892  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  eq $100000.00
+[2026-08-28 10:40] 1.35899  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.03 RSI=61  BANC×1.01  eq $100000.00
+[2026-08-28 14:35] SELL GBPUSD 2.85 lots @ 1.35436  margin $3859.92  comm $9.97  3oo3+flow size×1.21  conf 63%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 63%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.80  data-weight=0.00  2.85 lots  risk $440 (0.44% eq)  SL 15.4 pips  ~$440 if stopped  bayes P(edge)=0.60  p=0.42  R=2.38  ½K=0.039  scale=0.65  risk 0.65%  BANC×0.93  admit×0.60  (DOWN, k -0.86)  → OK|1001|PAPER
+[2026-08-28 14:55] CLOSE SELL LOSS  2.85 lots  conf 63%  bar 45%  -32.3 pips  $-919.48  comm $19.95 slip $15.53 swap $0.00  snowball 0  (ATR stop)
+       → OK|1001
+       DA  trend DA r=-0.75  Δ||=0.293  g+=1.00 g-=0.99 | fade DA r=-0.75  Δ||=0.288  g+=1.00 g-=0.99 | conf DA r=-0.75  Δ||=0.296  g+=1.00 g-=1.00
+       adapt  bar 45%  cal P(win)=0.40  P(edge) floor 0.38  params n=1  lr=0.020  sl_atr 2.40->2.42, cooldown_bars 8.00->8.02
+[2026-08-28 17:20] 1.35356  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.93 RSI=39  BANC×0.91  eq $99080.52
+[2026-08-31 01:30] 1.35430  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=56  BANC×0.91  eq $99080.52
+[2026-08-31 08:10] 1.35455  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.27 RSI=50  BANC×1.04  eq $99080.52
+[2026-08-31 14:50] 1.35641  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.21 RSI=73  BANC×1.05  eq $99080.52
+[2026-08-31 21:30] 1.35525  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.09 RSI=61  BANC×1.02  eq $99080.52
+[2026-09-01 04:10] 1.35419  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.63 RSI=44  BANC×1.02  eq $99080.52
+[2026-09-01 10:50] 1.35347  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.23 RSI=38  BANC×1.04  eq $99080.52
+[2026-09-01 17:30] 1.35161  raw t=HOLD f=HOLD tech=SELL  fused T=SELL t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=-0.90 RSI=36  BANC×1.04  eq $99080.52
+[2026-09-02 00:10] 1.35113  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.39 RSI=36  BANC×1.04  eq $99080.52
+[2026-09-02 06:50] 1.34966  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.38 RSI=37  BANC×1.04  eq $99080.52
+[2026-09-02 13:30] 1.34947  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.47 RSI=61  BANC×1.01  eq $99080.52
+[2026-09-02 20:10] 1.34904  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.59 RSI=57  BANC×1.01  eq $99080.52
+[2026-09-03 02:50] 1.34902  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.29 RSI=57  BANC×1.01  eq $99080.52
+[2026-09-03 09:30] 1.34915  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.23 RSI=39  BANC×1.03  eq $99080.52
+[2026-09-03 16:10] 1.35402  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.88 RSI=68  BANC×1.01  eq $99080.52
+[2026-09-03 22:50] 1.35239  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.61 RSI=40  BANC×1.01  eq $99080.52
+[2026-09-04 05:30] 1.35347  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.32 RSI=61  BANC×1.01  eq $99080.52
+[2026-09-04 12:10] 1.35298  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.09 RSI=42  BANC×1.05  eq $99080.52
+[2026-09-04 18:50] 1.35119  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.64 RSI=40  BANC×1.01  eq $99080.52
+[2026-09-07 03:00] 1.35091  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.83 RSI=40  BANC×1.01  eq $99080.52
+[2026-09-07 09:40] 1.35375  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=BUY   → HOLD no-tech  k=+0.94 RSI=55  BANC×1.04  eq $99080.52
+[2026-09-07 16:20] 1.35411  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD wide-spread-need-3oo3  k=+0.51 RSI=50  BANC×1.06  eq $99080.52
+[2026-09-07 23:00] 1.35443  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.21 RSI=59  BANC×1.06  eq $99080.52
+[2026-09-08 05:40] 1.35411  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.38 RSI=57  BANC×1.06  eq $99080.52
+[2026-09-08 12:20] 1.35474  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.57 RSI=68  BANC×1.03  eq $99080.52
+[2026-09-08 19:00] 1.35468  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.11 RSI=58  BANC×1.04  eq $99080.52
+[2026-09-09 01:40] 1.35432  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.36 RSI=46  BANC×1.04  eq $99080.52
+[2026-09-09 08:20] 1.35477  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.33 RSI=36  BANC×1.04  eq $99080.52
+[2026-09-09 15:00] 1.35490  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.53 RSI=38  BANC×1.02  eq $99080.52
+[2026-09-09 21:40] 1.35463  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.26 RSI=46  BANC×1.02  eq $99080.52
+brain   trained  brains/GBPUSD.json
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_GBPUSD.json  bar 45%  skips 0  SL 2.42  TP 12.0  impulse>=0.50  RSI 52/48
+adapt  last param steps:
+       params n=1  lr=0.020  sl_atr 2.40->2.42, cooldown_bars 8.00->8.02
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   2.85    63  1.35436  1.35752   -32.3    -919.48  ATR stop
+──────────────────────────────────────────────
+1 trades  0W/1L  win rate 0%  net -32.3 pips  net $-919.48
+costs  spread≈$45.60  commission=$19.95  slippage=$15.53  swap=$0.00
+account  start $100,000.00  balance $99,080.52  equity $99,080.52  margin $0.00  free $99,080.52  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 2.85 lots  return -0.919%
+confidence  high>=60 0/1 (0%)  low<60 n/a  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-919.48  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-GBPUSD-20260920-170741.csv
+  trained GBPUSD  DA n=1  fills 1  net $-919.48  (train window only, not the eval week)
+
+── train 2/6  USDJPY ──
+  2500 x M5  yahoo 5m USDJPY=X  2026-08-28 03:00 -> 2026-09-09 23:15
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.01200  quote JPY
+sizing  1.00% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+committee  2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  on  ×1.20 after a scratch, ×1.28 cap; never after a full stop; freeze if DD/BANC/pair-admit
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-08-28 03:00] 159.44501  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  eq $100000.00
+[2026-08-28 09:40] 159.65700  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=BUY   → HOLD no-tech  k=+0.78 RSI=74  BANC×1.02  eq $100000.00
+[2026-08-28 10:25] DA-shadow BUY  R=-1.00  2oo3+flow  trend DA r=-0.76  Δ||=0.286  g+=0.99 g-=1.00 | fade DA r=-0.76  Δ||=0.276  g+=1.00 g-=1.00
+[2026-08-28 16:20] 160.14600  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.90 RSI=76  BANC×0.99  eq $100000.00
+[2026-08-28 19:05] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=0.586  g+=0.98 g-=1.00 | fade DA r=-0.76  Δ||=0.567  g+=1.00 g-=1.00
+[2026-08-28 20:10] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=0.885  g+=0.98 g-=1.00 | fade DA r=-0.76  Δ||=0.858  g+=0.99 g-=1.01
+[2026-08-31 01:00] 159.93600  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.34 RSI=31  BANC×1.01  eq $100000.00
+[2026-08-31 02:05] SELL USDJPY 0.15 lots @ 159.79180  margin $23968.77  comm $0.53  3oo3+flow size×1.21  conf 64%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 64%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.62  similar=0.50  TA=0.75  data-weight=0.00  0.15 lots  risk $441 (0.44% eq)  SL 12.8 pips  ~$12 if stopped  bayes P(edge)=0.59  p=0.42  R=2.33  ½K=0.036  scale=0.60  risk 0.60%  admit×0.60  (DOWN, k -0.77)  → OK|1002|PAPER
+[2026-08-31 06:05] CLOSE SELL LOSS  0.15 lots  conf 64%  bar 45%  -0.0 pips  $-7.00  comm $1.05 slip $0.45 swap $0.00  snowball 0  (chop scratch)
+       → OK|1002
+       DA  trend DA r=-0.02  Δ||=0.875  g+=0.98 g-=1.00 | fade DA r=-0.02  Δ||=0.848  g+=0.99 g-=1.00 | conf DA r=-0.02  Δ||=0.878  g+=0.98 g-=1.00
+       adapt  bar 45%  cal P(win)=0.40  P(edge) floor 0.38  params n=1  lr=0.020  trail_arm_atr 3.20->3.20
+[2026-08-31 07:40] 159.62000  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.66 RSI=34  BANC×0.93  eq $99993.00
+[2026-08-31 08:15] SELL USDJPY 0.15 lots @ 159.55651  margin $23933.48  comm $0.53  3oo3+flow size×1.18  conf 61%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 61%  bar 45%  cal P(win)=0.40  n=1  P(edge)=0.60  similar=0.00  TA=0.79  data-weight=0.11  0.15 lots  risk $404 (0.40% eq)  SL 13.9 pips  ~$13 if stopped  bayes P(edge)=0.61  p=0.37  R=3.16  ½K=0.037  scale=0.62  risk 0.62%  BANC×0.92  admit×0.60  (DOWN, k -0.77)  → OK|1003|PAPER
+[2026-08-31 08:50] CLOSE SELL LOSS  0.15 lots  conf 61%  bar 45%  -0.1 pips  $-14.46  comm $1.05 slip $0.45 swap $0.00  snowball 0  (ATR stop)
+       → OK|1003
+       DA  trend DA r=-0.04  Δ||=0.859  g+=0.98 g-=1.00 | fade DA r=-0.04  Δ||=0.831  g+=0.99 g-=1.00 | conf DA r=-0.04  Δ||=0.862  g+=0.98 g-=1.00
+       adapt  bar 45%  cal P(win)=0.33  P(edge) floor 0.38  params n=2  lr=0.033  sl_atr 2.40->2.43, cooldown_bars 8.00->8.03
+[2026-08-31 14:20] 159.78101  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=HOLD f=SELL cf=SELL  → HOLD no-tech  k=+0.44 RSI=46  BANC×0.89  eq $99978.54
+[2026-08-31 21:00] 159.73100  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.10 RSI=46  BANC×0.89  eq $99978.54
+[2026-09-01 03:40] 159.77699  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=48  BANC×1.05  eq $99978.54
+[2026-09-01 10:20] 159.99100  raw t=HOLD f=SELL tech=HOLD  fused T=HOLD t=HOLD f=SELL cf=HOLD  → HOLD no-tech  k=+0.59 RSI=52  BANC×1.04  eq $99978.54
+[2026-09-01 17:00] 160.16901  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.42 RSI=64  BANC×1.02  eq $99978.54
+[2026-09-01 19:05] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=1.146  g+=0.97 g-=1.00 | fade DA r=-0.76  Δ||=1.078  g+=0.99 g-=1.01
+[2026-09-01 20:10] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=1.435  g+=0.96 g-=1.00 | fade DA r=-0.76  Δ||=1.334  g+=0.99 g-=1.01
+[2026-09-01 23:40] 160.17101  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.06 RSI=46  BANC×1.02  eq $99978.54
+[2026-09-02 06:20] 159.61900  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.92 RSI=29  BANC×1.04  eq $99978.54
+[2026-09-02 07:20] SELL USDJPY 0.15 lots @ 159.64454  margin $23946.68  comm $0.53  3oo3+flow size×1.16  conf 60%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 60%  bar 45%  cal P(win)=0.33  n=2  P(edge)=0.61  similar=0.00  TA=0.87  data-weight=0.20  0.15 lots  risk $370 (0.37% eq)  SL 22.8 pips  ~$21 if stopped  bayes P(edge)=0.60  p=0.34  R=3.73  ½K=0.034  scale=0.57  risk 0.57%  BANC×0.93  admit×0.60  (DOWN, k -0.84)  → OK|1004|PAPER
+[2026-09-02 09:30] CLOSE SELL LOSS  0.15 lots  conf 60%  bar 45%  -0.1 pips  $-20.34  comm $1.05 slip $0.44 swap $0.00  snowball 0  (chop scratch)
+       → OK|1004
+       DA  trend DA r=-0.05  Δ||=1.410  g+=0.96 g-=1.00 | fade DA r=-0.05  Δ||=1.311  g+=0.99 g-=1.01 | conf DA r=-0.05  Δ||=1.433  g+=0.96 g-=1.00
+       rails  circuit  3 losses → pause 12 bars
+       adapt  bar 48%  cal P(win)=0.29  P(edge) floor 0.41  params n=3  lr=0.043  trail_arm_atr 3.20->3.19
+[2026-09-02 12:35] SELL USDJPY 0.15 lots @ 159.66282  margin $23949.42  comm $0.53  3oo3+flow size×1.13  conf 57%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 57%  bar 48%  cal P(win)=0.29  n=3  P(edge)=0.60  similar=0.00  TA=0.79  data-weight=0.27  0.15 lots  risk $356 (0.36% eq)  SL 16.0 pips  ~$15 if stopped  bayes P(edge)=0.61  p=0.31  R=4.62  ½K=0.034  scale=0.58  risk 0.58%  BANC×0.91  admit×0.60  (DOWN, k -0.58)  → OK|1005|PAPER
+[2026-09-02 13:00] 159.60600  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.59 RSI=40  BANC×0.87  eq $99962.45
+[2026-09-02 13:25] CLOSE SELL WIN  0.15 lots  conf 57%  bar 48%  +0.5 pips  $+74.49  comm $1.05 slip $0.76 swap $0.00  snowball 0  (ATR target)
+       → OK|1005
+       DA  trend DA r=+0.18  Δ||=1.472  g+=0.96 g-=1.00 | fade DA r=+0.18  Δ||=1.370  g+=0.99 g-=1.01 | conf DA r=+0.18  Δ||=1.494  g+=0.96 g-=1.00
+       adapt  bar 51%  cal P(win)=0.38  P(edge) floor 0.44  params n=4  lr=0.043  tp_atr 12.00->12.02, trail_arm_atr 3.19->3.18
+[2026-09-02 14:20] SELL USDJPY 0.15 lots @ 158.74574  margin $23811.86  comm $0.53  3oo3+flow size×1.15  conf 59%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 59%  bar 51%  cal P(win)=0.38  n=4  P(edge)=0.66  similar=0.17  TA=0.80  data-weight=0.33  0.15 lots  risk $758 (0.76% eq)  SL 45.1 pips  ~$43 if stopped  bayes P(edge)=0.66  p=0.37  R=3.70  ½K=0.051  scale=0.90  risk 0.90%  BANC×0.86  rec×0.85  (DOWN, k -0.85)  → OK|1006|PAPER
+[2026-09-02 18:00] CLOSE SELL LOSS  0.15 lots  conf 59%  bar 51%  -0.1 pips  $-11.48  comm $1.05 slip $0.44 swap $0.00  snowball 0  (session flatten)
+       → OK|1006
+       DA  trend DA r=-0.03  Δ||=1.455  g+=0.96 g-=1.00 | fade DA r=-0.03  Δ||=1.354  g+=0.99 g-=1.01 | conf DA r=-0.03  Δ||=1.477  g+=0.96 g-=1.00
+       adapt  bar 52%  cal P(win)=0.33  P(edge) floor 0.44  params n=5  lr=0.057  held
+[2026-09-02 18:15] DA-shadow SELL  R=+1.50  1oo3-bounce  trend DA r=+0.91  Δ||=1.792  g+=0.96 g-=1.01 | fade DA r=+0.91  Δ||=1.683  g+=0.99 g-=1.01
+[2026-09-02 19:40] 158.88600  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.26 RSI=46  BANC×0.84  eq $100021.21
+[2026-09-02 22:05] DA-shadow SELL  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=1.496  g+=0.96 g-=1.00 | fade DA r=-0.76  Δ||=1.394  g+=0.99 g-=1.01
+[2026-09-03 02:20] 158.14799  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.74 RSI=28  BANC×0.94  eq $100021.21
+[2026-09-03 03:40] skip SELL: skip 3oo3+flow: similar setups win 11%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.11  TA=0.68  data-weight=0.38)
+[2026-09-03 03:40] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=1.833  g+=0.96 g-=1.01 | fade DA r=+0.91  Δ||=1.728  g+=0.99 g-=1.01
+[2026-09-03 03:45] skip SELL: skip 2oo3+flow: similar setups win 10%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.10  TA=0.67  data-weight=0.38)
+[2026-09-03 07:15] skip SELL: skip 3oo3+flow: similar setups win 9%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.09  TA=0.69  data-weight=0.38)
+[2026-09-03 07:15] DA-shadow SELL  R=-1.00  3oo3+flow  trend DA r=-0.76  Δ||=1.541  g+=0.96 g-=1.00 | fade DA r=-0.76  Δ||=1.439  g+=0.99 g-=1.01
+[2026-09-03 07:30] skip SELL: skip 3oo3+flow: similar setups win 13%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.13  TA=0.73  data-weight=0.38)
+[2026-09-03 07:50] skip SELL: skip 3oo3+flow: similar setups win 28%  (conf 58%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.28  TA=0.79  data-weight=0.38)
+[2026-09-03 08:20] skip SELL: skip 3oo3+flow: similar setups win 26%  (conf 57%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.26  TA=0.75  data-weight=0.38)
+[2026-09-03 08:20] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=1.864  g+=0.96 g-=1.01 | fade DA r=+0.91  Δ||=1.762  g+=0.99 g-=1.01
+[2026-09-03 08:40] skip SELL: skip 3oo3+flow: similar setups win 18%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.18  TA=0.68  data-weight=0.38)
+[2026-09-03 08:45] skip SELL: skip 3oo3+flow: similar setups win 15%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.15  TA=0.66  data-weight=0.38)
+[2026-09-03 08:50] skip SELL: skip 3oo3+flow: similar setups win 12%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.12  TA=0.64  data-weight=0.38)
+[2026-09-03 09:00] 156.77499  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.83 RSI=44  BANC×0.93  eq $100021.21
+[2026-09-03 09:05] skip SELL: skip 3oo3+flow: similar setups win 17%  (conf 56%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.66  similar=0.17  TA=0.70  data-weight=0.38)
+[2026-09-03 09:10] skip SELL: skip 3oo3+flow: similar setups win 16%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.16  TA=0.69  data-weight=0.38)
+[2026-09-03 09:15] skip SELL: skip 3oo3+flow: similar setups win 13%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.66  similar=0.13  TA=0.65  data-weight=0.38)
+[2026-09-03 09:25] skip SELL: skip 3oo3+flow: similar setups win 15%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.15  TA=0.68  data-weight=0.38)
+[2026-09-03 09:25] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=2.199  g+=0.96 g-=1.02 | fade DA r=+0.91  Δ||=2.094  g+=0.99 g-=1.01
+[2026-09-03 09:30] skip SELL: skip 3oo3+flow: similar setups win 15%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.15  TA=0.69  data-weight=0.38)
+[2026-09-03 09:35] skip SELL: skip 3oo3+flow: similar setups win 13%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.13  TA=0.67  data-weight=0.38)
+[2026-09-03 09:40] skip SELL: skip 3oo3+flow: similar setups win 11%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.11  TA=0.66  data-weight=0.38)
+[2026-09-03 10:00] skip SELL: skip 3oo3+flow: similar setups win 12%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.12  TA=0.68  data-weight=0.38)
+[2026-09-03 10:25] skip SELL: skip 3oo3+flow: similar setups win 15%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.15  TA=0.70  data-weight=0.38)
+[2026-09-03 10:25] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=2.538  g+=0.96 g-=1.04 | fade DA r=+0.91  Δ||=2.429  g+=0.99 g-=1.01
+[2026-09-03 11:00] skip SELL: skip 3oo3+flow: similar setups win 17%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.17  TA=0.71  data-weight=0.38)
+[2026-09-03 11:05] skip SELL: skip 3oo3+flow: similar setups win 13%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.13  TA=0.68  data-weight=0.38)
+[2026-09-03 11:10] skip SELL: skip 3oo3+flow: similar setups win 11%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.11  TA=0.66  data-weight=0.38)
+[2026-09-03 11:30] skip SELL: skip 3oo3+flow: similar setups win 14%  (conf 56%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.66  similar=0.15  TA=0.72  data-weight=0.38)
+[2026-09-03 11:30] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=2.879  g+=0.96 g-=1.05 | fade DA r=+0.91  Δ||=2.765  g+=0.99 g-=1.01
+[2026-09-03 11:55] skip SELL: skip 3oo3+flow: similar setups win 17%  (conf 56%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.17  TA=0.72  data-weight=0.38)
+[2026-09-03 12:00] skip SELL: skip 3oo3+flow: similar setups win 14%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.14  TA=0.69  data-weight=0.38)
+[2026-09-03 12:05] skip SELL: skip 3oo3+flow: similar setups win 14%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.13  TA=0.69  data-weight=0.38)
+[2026-09-03 12:10] skip SELL: skip 3oo3+flow: similar setups win 12%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.11  TA=0.67  data-weight=0.38)
+[2026-09-03 13:05] skip SELL: skip 3oo3+flow: similar setups win 12%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.12  TA=0.71  data-weight=0.38)
+[2026-09-03 13:05] DA-shadow SELL  R=+0.64  3oo3+flow  trend DA r=+0.56  Δ||=3.088  g+=0.96 g-=1.05 | fade DA r=+0.56  Δ||=2.972  g+=0.99 g-=1.01
+[2026-09-03 13:15] skip SELL: skip 3oo3+flow: similar setups win 11%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.66  similar=0.11  TA=0.69  data-weight=0.38)
+[2026-09-03 13:25] skip SELL: skip 3oo3+flow: similar setups win 11%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.11  TA=0.69  data-weight=0.38)
+[2026-09-03 13:35] skip SELL: skip 3oo3+flow: similar setups win 13%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.13  TA=0.70  data-weight=0.38)
+[2026-09-03 13:40] skip SELL: skip 3oo3+flow: similar setups win 13%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.13  TA=0.70  data-weight=0.38)
+[2026-09-03 13:50] skip SELL: skip 3oo3+flow: similar setups win 10%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.10  TA=0.67  data-weight=0.38)
+[2026-09-03 14:10] skip SELL: skip 3oo3+flow: similar setups win 10%  (conf 54%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.10  TA=0.68  data-weight=0.38)
+[2026-09-03 14:10] DA-shadow SELL  R=-1.00  3oo3+flow  trend DA r=-0.76  Δ||=2.779  g+=0.96 g-=1.04 | fade DA r=-0.76  Δ||=2.668  g+=0.99 g-=1.01
+[2026-09-03 14:20] skip SELL: skip 3oo3+flow: similar setups win 14%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.14  TA=0.71  data-weight=0.38)
+[2026-09-03 14:40] skip SELL: skip 3oo3+flow: similar setups win 31%  (conf 58%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.31  TA=0.81  data-weight=0.38)
+[2026-09-03 14:55] skip SELL: skip 3oo3+flow: similar setups win 17%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.65  similar=0.17  TA=0.69  data-weight=0.38)
+[2026-09-03 15:20] skip SELL: skip 3oo3+flow: similar setups win 31%  (conf 57%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.31  TA=0.76  data-weight=0.38)
+[2026-09-03 15:20] DA-shadow SELL  R=+0.44  3oo3+flow  trend DA r=+0.41  Δ||=2.924  g+=0.96 g-=1.05 | fade DA r=+0.41  Δ||=2.811  g+=0.99 g-=1.01
+[2026-09-03 15:30] skip SELL: skip 3oo3+flow: similar setups win 22%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.22  TA=0.68  data-weight=0.38)
+[2026-09-03 15:40] 155.42400  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.75 RSI=41  BANC×0.92  eq $100021.21
+[2026-09-03 15:55] skip SELL: skip 3oo3+flow: similar setups win 19%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.19  TA=0.67  data-weight=0.38)
+[2026-09-03 17:10] DA-shadow SELL  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=2.625  g+=0.96 g-=1.04 | fade DA r=-0.76  Δ||=2.517  g+=0.99 g-=1.01
+[2026-09-03 18:15] DA-shadow SELL  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=2.328  g+=0.96 g-=1.03 | fade DA r=-0.76  Δ||=2.225  g+=0.99 g-=1.01
+[2026-09-03 22:20] 155.85400  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.81 RSI=59  BANC×0.92  eq $100021.21
+[2026-09-03 23:40] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=2.605  g+=0.96 g-=1.04 | fade DA r=-0.76  Δ||=2.498  g+=0.99 g-=1.01
+[2026-09-04 05:00] 156.39200  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.80 RSI=64  BANC×0.94  eq $100021.21
+[2026-09-04 05:15] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=2.880  g+=0.96 g-=1.04 | fade DA r=-0.76  Δ||=2.745  g+=0.99 g-=1.01
+[2026-09-04 06:15] DA-shadow BUY  R=+0.14  1oo3-bounce  trend DA r=+0.14  Δ||=2.816  g+=0.96 g-=1.04 | fade DA r=+0.14  Δ||=2.687  g+=0.99 g-=1.01
+[2026-09-04 11:40] 156.24699  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.07 RSI=39  BANC×0.98  eq $100021.21
+[2026-09-04 18:20] 156.15800  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.22 RSI=58  BANC×0.92  eq $100021.21
+[2026-09-04 20:45] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=3.085  g+=0.96 g-=1.04 | fade DA r=-0.76  Δ||=2.894  g+=0.99 g-=1.01
+[2026-09-07 03:00] 156.15199  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.19 RSI=55  BANC×0.95  eq $100021.21
+[2026-09-07 07:00] skip SELL: skip 3oo3+flow: similar setups win 29%  (conf 57%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.29  TA=0.70  data-weight=0.38)
+[2026-09-07 07:00] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=3.408  g+=0.96 g-=1.04 | fade DA r=+0.91  Δ||=3.163  g+=0.99 g-=1.01
+[2026-09-07 07:15] skip SELL: skip 3oo3+flow: similar setups win 25%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.25  TA=0.64  data-weight=0.38)
+[2026-09-07 07:45] skip SELL: skip 3oo3+flow: similar setups win 22%  (conf 55%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.22  TA=0.65  data-weight=0.38)
+[2026-09-07 09:40] 154.39400  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.95 RSI=35  BANC×0.91  eq $100021.21
+[2026-09-07 09:55] skip SELL: skip 3oo3+flow: similar setups win 15%  (conf 56%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.15  TA=0.76  data-weight=0.38)
+[2026-09-07 09:55] DA-shadow SELL  R=+0.04  3oo3+flow  trend DA r=+0.04  Δ||=3.411  g+=0.96 g-=1.04 | fade DA r=+0.04  Δ||=3.167  g+=0.99 g-=1.01
+[2026-09-07 10:40] skip SELL: skip 3oo3+flow: similar setups win 27%  (conf 59%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.62  similar=0.27  TA=0.84  data-weight=0.38)
+[2026-09-07 11:05] skip SELL: skip 3oo3+flow: similar setups win 29%  (conf 59%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.29  TA=0.83  data-weight=0.38)
+[2026-09-07 11:05] DA-shadow SELL  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=3.750  g+=0.96 g-=1.06 | fade DA r=+0.91  Δ||=3.500  g+=0.98 g-=1.01
+[2026-09-07 11:20] skip SELL: skip 3oo3+flow: similar setups win 26%  (conf 58%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.26  TA=0.79  data-weight=0.38)
+[2026-09-07 11:30] skip SELL: skip 3oo3+flow: similar setups win 24%  (conf 58%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.63  similar=0.24  TA=0.77  data-weight=0.38)
+[2026-09-07 12:05] SELL USDJPY 0.16 lots @ 154.73454  margin $24757.53  comm $0.56  3oo3+flow size×1.15  conf 59%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 59%  bar 52%  cal P(win)=0.33  n=5  P(edge)=0.64  similar=0.39  TA=0.75  data-weight=0.38  0.16 lots  risk $915 (0.92% eq)  SL 20.3 pips  ~$21 if stopped  bayes P(edge)=0.63  p=0.34  R=4.20  ½K=0.041  scale=0.71  risk 0.71%  BANC×0.94  rec×1.20  (DOWN, k -0.75)  → OK|1007|PAPER
+[2026-09-07 12:55] CLOSE SELL WIN  0.16 lots  conf 59%  bar 52%  +0.2 pips  $+24.37  comm $1.12 slip $0.50 swap $0.00  snowball 0  (trail stop)
+       → OK|1007
+       DA  trend DA r=+0.06  Δ||=3.759  g+=0.96 g-=1.06 | fade DA r=+0.06  Δ||=3.509  g+=0.98 g-=1.01 | conf DA r=+0.06  Δ||=3.795  g+=0.95 g-=1.05
+       adapt  bar 47%  cal P(win)=0.40  P(edge) floor 0.40  params n=6  lr=0.052  trail_gap_atr 1.80->1.83, trail_arm_atr 3.18->3.19, tp_atr 12.02->12.03
+[2026-09-07 13:55] SELL USDJPY 0.16 lots @ 154.49961  margin $24719.94  comm $0.56  3oo3+flow size×1.16  conf 60%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 60%  bar 47%  cal P(win)=0.40  n=6  P(edge)=0.66  similar=0.50  TA=0.71  data-weight=0.43  0.16 lots  risk $1060 (1.06% eq)  SL 24.0 pips  ~$25 if stopped  bayes P(edge)=0.67  p=0.39  R=3.63  ½K=0.058  scale=1.00  risk 1.00%  BANC×0.91  (DOWN, k -0.67)  → OK|1008|PAPER
+[2026-09-07 15:00] SNOWBALL SELL +0.07 lots @ 154.32138  total 0.23  #1  trend=SELL k=-0.66  +16.4 pips  float $17 covers add risk $7  → OK|1009|PAPER
+[2026-09-07 15:20] SNOWBALL SELL +0.07 lots @ 154.32881  total 0.30  #2  trend=SELL k=-0.65  +15.7 pips  float $15 covers add risk $7  → OK|1010|PAPER
+[2026-09-07 16:20] 154.39999  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.55 RSI=51  BANC×0.86  eq $100046.55
+[2026-09-07 18:00] CLOSE SELL WIN  0.30 lots  conf 60%  bar 47%  +0.0 pips  $+8.63  comm $2.10 slip $0.89 swap $0.00  snowball 2  (session flatten)
+       → OK|1008
+       DA  trend DA r=+0.02  Δ||=3.752  g+=0.96 g-=1.06 | fade DA r=+0.02  Δ||=3.504  g+=0.98 g-=1.01 | conf DA r=+0.02  Δ||=3.788  g+=0.95 g-=1.05
+       rails  snowball lock  rest of UTC day + 1% peak protect
+       adapt  bar 46%  cal P(win)=0.45  P(edge) floor 0.39  params n=7  lr=0.055  held
+[2026-09-07 18:05] DA-shadow SELL  R=+0.13  1oo3-bounce  trend DA r=+0.13  Δ||=3.787  g+=0.96 g-=1.06 | fade DA r=+0.13  Δ||=3.538  g+=0.98 g-=1.01
+[2026-09-07 19:20] DA-shadow SELL  R=+1.38  1oo3-bounce  trend DA r=+0.88  Δ||=4.118  g+=0.96 g-=1.07 | fade DA r=+0.88  Δ||=3.863  g+=0.98 g-=1.01
+[2026-09-07 23:00] 154.11501  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.61 RSI=30  BANC×0.86  eq $100054.21
+[2026-09-08 00:45] SELL USDJPY 0.16 lots @ 153.70987  margin $24593.58  comm $0.56  3oo3+flow size×1.15  conf 59%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 59%  bar 46%  cal P(win)=0.45  n=7  P(edge)=0.66  similar=0.40  TA=0.70  data-weight=0.47  0.16 lots  risk $1035 (1.03% eq)  SL 31.3 pips  ~$33 if stopped  bayes P(edge)=0.67  p=0.36  R=3.93  ½K=0.055  scale=0.97  risk 0.97%  BANC×0.92  (DOWN, k -0.82)  → OK|1011|PAPER
+[2026-09-08 01:50] SNOWBALL SELL +0.07 lots @ 153.47665  total 0.23  #1  trend=SELL k=-0.81  +20.9 pips  float $22 covers add risk $10  → OK|1012|PAPER
+[2026-09-08 02:50] CLOSE SELL WIN  0.23 lots  conf 59%  bar 46%  +0.2 pips  $+46.01  comm $1.61 slip $0.76 swap $0.00  snowball 1  (trail stop)
+       → OK|1011
+       DA  trend DA r=+0.11  Δ||=4.146  g+=0.96 g-=1.07 | fade DA r=+0.11  Δ||=3.892  g+=0.98 g-=1.01 | conf DA r=+0.11  Δ||=4.184  g+=0.95 g-=1.06
+       rails  snowball lock  rest of UTC day + 1% peak protect
+       adapt  bar 43%  cal P(win)=0.50  P(edge) floor 0.39  params n=8  lr=0.059  trail_gap_atr 1.83->1.86, trail_arm_atr 3.19->3.20, tp_atr 12.03->12.04
+[2026-09-08 03:40] skip SELL: snowball lock  wait next UTC day (kept pyramid 2026-09-08)
+[2026-09-08 03:40] DA-shadow SELL  R=-1.00  3oo3+flow  trend DA r=-0.76  Δ||=3.833  g+=0.96 g-=1.06 | fade DA r=-0.76  Δ||=3.586  g+=0.98 g-=1.01
+[2026-09-08 05:40] 153.43100  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.21 RSI=50  BANC×0.93  eq $100100.23
+[2026-09-08 12:20] 154.06599  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=HOLD f=SELL cf=SELL  → HOLD no-tech  k=+0.63 RSI=41  BANC×0.93  eq $100100.23
+[2026-09-08 17:05] DA-shadow BUY  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=4.102  g+=0.96 g-=1.06 | fade DA r=-0.76  Δ||=3.787  g+=0.98 g-=1.01
+[2026-09-08 19:00] 153.80499  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.05 RSI=37  BANC×0.95  eq $100100.23
+[2026-09-09 00:25] SELL USDJPY 0.16 lots @ 153.34076  margin $24534.52  comm $0.56  3oo3+flow size×1.17  conf 60%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 61%  bar 43%  cal P(win)=0.50  n=8  P(edge)=0.69  similar=0.40  TA=0.68  data-weight=0.50  0.16 lots  risk $1103 (1.10% eq)  SL 22.0 pips  ~$23 if stopped  bayes P(edge)=0.67  p=0.40  R=3.36  ½K=0.060  scale=1.00  risk 1.00%  BANC×0.94  (DOWN, k -0.92)  → OK|1013|PAPER
+[2026-09-09 00:35] CLOSE SELL LOSS  0.16 lots  conf 60%  bar 43%  -0.2 pips  $-25.77  comm $1.12 slip $0.52 swap $0.00  snowball 0  (ATR stop)
+       → OK|1013
+       DA  trend DA r=-0.06  Δ||=4.063  g+=0.96 g-=1.06 | fade DA r=-0.06  Δ||=3.752  g+=0.98 g-=1.01 | conf DA r=-0.06  Δ||=4.102  g+=0.95 g-=1.05
+       adapt  bar 46%  cal P(win)=0.46  P(edge) floor 0.39  params n=9  lr=0.074  sl_atr 2.43->2.49, cooldown_bars 8.03->8.09
+[2026-09-09 01:40] 153.69901  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.32 RSI=55  BANC×0.86  eq $100074.46
+[2026-09-09 04:55] DA-shadow SELL  R=+1.50  1oo3-bounce  trend DA r=+0.91  Δ||=4.392  g+=0.96 g-=1.06 | fade DA r=+0.91  Δ||=4.030  g+=0.98 g-=1.01
+[2026-09-09 06:45] DA-shadow SELL  R=-1.00  1oo3-bounce  trend DA r=-0.76  Δ||=4.083  g+=0.96 g-=1.06 | fade DA r=-0.76  Δ||=3.767  g+=0.98 g-=1.01
+[2026-09-09 07:00] SELL USDJPY 0.16 lots @ 153.21921  margin $24515.07  comm $0.56  3oo3+flow size×1.16  conf 60%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 60%  bar 46%  cal P(win)=0.46  n=9  P(edge)=0.66  similar=0.61  TA=0.63  data-weight=0.53  0.16 lots  risk $836 (0.84% eq)  SL 27.1 pips  ~$28 if stopped  bayes P(edge)=0.65  p=0.37  R=3.77  ½K=0.057  scale=0.99  risk 0.99%  BANC×0.86  rec×0.85  (DOWN, k -0.52)  → OK|1014|PAPER
+[2026-09-09 08:10] CLOSE SELL LOSS  0.16 lots  conf 60%  bar 46%  -0.1 pips  $-13.56  comm $1.12 slip $0.55 swap $0.00  snowball 0  (chop scratch)
+       → OK|1014
+       DA  trend DA r=-0.03  Δ||=4.054  g+=0.96 g-=1.06 | fade DA r=-0.03  Δ||=3.740  g+=0.98 g-=1.01 | conf DA r=-0.03  Δ||=4.094  g+=0.95 g-=1.05
+       adapt  bar 47%  cal P(win)=0.43  P(edge) floor 0.40  params n=10  lr=0.076  trail_arm_atr 3.20->3.19
+[2026-09-09 08:20] 153.45300  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.22 RSI=60  BANC×0.81  eq $100060.89
+[2026-09-09 15:00] 153.50700  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.29 RSI=62  BANC×0.81  eq $100060.89
+[2026-09-09 21:40] 153.53101  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.09 RSI=43  BANC×0.81  eq $100060.89
+brain   trained  brains/USDJPY.json
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_USDJPY.json  bar 47%  skips 47  SL 2.49  TP 12.0  impulse>=0.50  RSI 52/48
+adapt  last param steps:
+       params n=3  lr=0.043  trail_arm_atr 3.20->3.19
+       params n=4  lr=0.043  tp_atr 12.00->12.02, trail_arm_atr 3.19->3.18
+       params n=5  lr=0.057  held
+       params n=6  lr=0.052  trail_gap_atr 1.80->1.83, trail_arm_atr 3.18->3.19, tp_atr 12.02->12.03
+       params n=7  lr=0.055  held
+       params n=8  lr=0.059  trail_gap_atr 1.83->1.86, trail_arm_atr 3.19->3.20, tp_atr 12.03->12.04
+       params n=9  lr=0.074  sl_atr 2.43->2.49, cooldown_bars 8.03->8.09
+       params n=10  lr=0.076  trail_arm_atr 3.20->3.19
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   0.15    64 159.79180 159.85521    -0.0      -7.00  chop scratch
+  2 SELL   0.15    61 159.55651 159.69931    -0.1     -14.46  ATR stop
+  3 SELL   0.15    60 159.64454 159.85008    -0.1     -20.34  chop scratch
+  4 SELL   0.15    57 159.66282 158.86283    +0.5     +74.49  ATR target
+  5 SELL   0.15    59 158.74574 158.85615    -0.1     -11.48  session flatten
+  6 SELL   0.16    59 154.73454 154.48839    +0.2     +24.37  trail stop
+  7 SELL   0.30    60 154.41817 154.36298    +0.0      +8.63  session flatten
+  8 SELL   0.23    59 153.63889 153.32145    +0.2     +46.01  trail stop
+  9 SELL   0.16    60 153.34076 153.57735    -0.2     -25.77  ATR stop
+ 10 SELL   0.16    60 153.21921 153.33843    -0.1     -13.56  chop scratch
+──────────────────────────────────────────────
+10 trades  4W/6L  win rate 40%  net +0.3 pips  net $+60.89
+costs  spread≈$16.54  commission=$12.32  slippage=$5.76  swap=$0.00
+account  start $100,000.00  balance $100,060.89  equity $100,060.89  margin $0.00  free $100,060.89  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 0.18 lots  return +0.061%
+confidence  high>=60 0/3 (0%)  low<60 4/7 (57%)  (should separate as n grows)
+plausibility  bar 45% -> 46%  mean cal P(win) 0.40
+tax  model=ordinary income / short-term gains at 24.0%  estimated due $14.61  after-tax $46.28  effective 24.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-USDJPY-20260920-172847.csv
+  trained USDJPY  DA n=41  fills 10  net $+60.89  (train window only, not the eval week)
+
+── train 3/6  USDCHF ──
+  2500 x M5  yahoo 5m USDCHF=X  2026-08-28 03:00 -> 2026-09-09 23:15
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00016  quote CHF
+sizing  1.00% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+committee  2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  on  ×1.20 after a scratch, ×1.28 cap; never after a full stop; freeze if DD/BANC/pair-admit
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-08-28 03:00] 0.80428  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  eq $100000.00
+[2026-08-28 09:40] 0.80380  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.65 RSI=33  BANC×1.00  eq $100000.00
+[2026-08-28 10:00] DA-shadow SELL  R=+0.15  3oo3+flow  trend DA r=+0.15  Δ||=0.052  g+=1.00 g-=1.00 | fade DA r=+0.15  Δ||=0.050  g+=1.00 g-=1.00
+[2026-08-28 11:35] DA-shadow SELL  R=-1.00  3oo3+flow  trend DA r=-0.76  Δ||=0.245  g+=1.00 g-=0.99 | fade DA r=-0.76  Δ||=0.237  g+=1.00 g-=1.00
+[2026-08-28 15:00] BUY USDCHF 1.99 lots @ 0.80742  margin $1606.78  comm $6.96  3oo3+flow size×1.21  conf 64%  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 63%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.62  similar=0.50  TA=0.78  data-weight=0.00  1.99 lots  risk $422 (0.42% eq)  SL 17.0 pips  ~$420 if stopped  bayes P(edge)=0.59  p=0.42  R=2.33  ½K=0.036  scale=0.60  risk 0.60%  BANC×0.97  admit×0.60  (UP, k +0.79)  → OK|1015|PAPER
+[2026-08-28 16:20] 0.80969  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.94 RSI=79  BANC×0.98  eq $100524.24
+[2026-08-28 17:00] CLOSE BUY WIN  1.99 lots  conf 64%  bar 45%  +21.6 pips  $+430.56  comm $13.93 slip $11.88 swap $0.00  snowball 0  (session flatten)
+       → OK|1015
+       DA  trend DA r=+0.66  Δ||=0.496  g+=1.01 g-=0.99 | fade DA r=+0.66  Δ||=0.482  g+=1.00 g-=0.99 | conf DA r=+0.66  Δ||=0.496  g+=1.01 g-=0.99
+       adapt  bar 45%  cal P(win)=0.60  P(edge) floor 0.38  params n=1  lr=0.015  held
+[2026-08-31 01:00] 0.80867  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.31 RSI=44  BANC×0.98  eq $100430.56
+[2026-08-31 07:40] 0.80777  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=HOLD  → HOLD no-tech  k=-0.51 RSI=28  BANC×1.04  eq $100430.56
+[2026-08-31 14:20] 0.80763  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=HOLD  → HOLD no-tech  k=-0.37 RSI=31  BANC×1.03  eq $100430.56
+[2026-08-31 21:00] 0.80730  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.05 RSI=25  BANC×1.00  eq $100430.56
+[2026-09-01 03:40] 0.80962  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.83 RSI=60  BANC×1.00  eq $100430.56
+[2026-09-01 10:20] 0.80978  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.12 RSI=47  BANC×1.04  eq $100430.56
+[2026-09-01 17:00] 0.81224  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.84 RSI=63  BANC×1.03  eq $100430.56
+[2026-09-01 23:40] 0.81169  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.13 RSI=57  BANC×1.03  eq $100430.56
+[2026-09-02 06:20] 0.81277  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.10 RSI=50  BANC×1.03  eq $100430.56
+[2026-09-02 13:00] 0.81465  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.19 RSI=53  BANC×1.03  eq $100430.56
+[2026-09-02 19:40] 0.81300  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.18 RSI=44  BANC×1.01  eq $100430.56
+[2026-09-03 02:20] 0.81244  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.19 RSI=42  BANC×1.01  eq $100430.56
+[2026-09-03 09:00] 0.80903  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.78 RSI=45  BANC×1.00  eq $100430.56
+[2026-09-03 14:10] SELL USDCHF 2.08 lots @ 0.80774  margin $1680.09  comm $7.28  3oo3+flow size×1.32  conf 72%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 72%  bar 45%  cal P(win)=0.50  n=1  P(edge)=0.78  similar=0.50  TA=0.83  data-weight=0.11  2.08 lots  risk $388 (0.77% eq)  SL 15.0 pips  ~$387 if stopped  bayes P(edge)=0.79  p=0.48  R=2.73  ½K=0.115  scale=1.00  risk 1.00%  BANC×0.98  admit×0.60  (DOWN, k -0.59)  → OK|1016|PAPER
+[2026-09-03 14:40] CLOSE SELL LOSS  2.08 lots  conf 72%  bar 45%  -21.7 pips  $-451.49  comm $14.56 slip $12.89 swap $0.00  snowball 0  (ATR stop)
+       → OK|1016
+       DA  trend DA r=-0.67  Δ||=0.752  g+=1.01 g-=0.99 | fade DA r=-0.67  Δ||=0.734  g+=1.00 g-=0.99 | conf DA r=-0.67  Δ||=0.758  g+=1.01 g-=0.99
+       adapt  bar 45%  cal P(win)=0.40  P(edge) floor 0.38  params n=2  lr=0.036  sl_atr 2.40->2.43, cooldown_bars 8.00->8.03
+[2026-09-03 15:40] 0.80770  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=HOLD  → HOLD no-tech  k=-0.34 RSI=45  BANC×1.00  eq $99979.07
+[2026-09-03 22:20] 0.80763  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.11 RSI=59  BANC×1.01  eq $99979.07
+[2026-09-04 05:00] 0.80801  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=51  BANC×1.01  eq $99979.07
+[2026-09-04 11:40] 0.80901  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.54 RSI=47  BANC×1.13  eq $99979.07
+[2026-09-04 18:20] 0.81007  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.24 RSI=60  BANC×1.07  eq $99979.07
+[2026-09-07 03:00] 0.81068  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.75 RSI=64  BANC×1.07  eq $99979.07
+[2026-09-07 09:40] 0.80891  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.70 RSI=40  BANC×1.11  eq $99979.07
+[2026-09-07 16:20] 0.80922  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.09 RSI=57  BANC×1.12  eq $99979.07
+[2026-09-07 23:00] 0.80913  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.14 RSI=45  BANC×1.12  eq $99979.07
+[2026-09-08 05:40] 0.80897  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.14 RSI=39  BANC×1.12  eq $99979.07
+[2026-09-08 12:20] 0.81142  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.53 RSI=48  BANC×1.11  eq $99979.07
+[2026-09-08 19:00] 0.80896  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.37 RSI=47  BANC×1.11  eq $99979.07
+[2026-09-09 01:40] 0.80928  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.04 RSI=58  BANC×1.11  eq $99979.07
+[2026-09-09 08:20] 0.80876  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.19 RSI=57  BANC×1.12  eq $99979.07
+[2026-09-09 14:35] SELL USDCHF 2.29 lots @ 0.80763  margin $1849.46  comm $8.02  3oo3+flow size×1.22  conf 64%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 64%  bar 45%  cal P(win)=0.60  n=2  P(edge)=0.56  similar=0.00  TA=0.85  data-weight=0.20  2.29 lots  risk $281 (0.28% eq)  SL 9.9 pips  ~$281 if stopped  bayes P(edge)=0.53  p=0.43  R=1.55  ½K=0.012  scale=0.35  risk 0.35%  BANC×1.10  admit×0.60  (DOWN, k -0.58)  → OK|1017|PAPER
+[2026-09-09 15:00] 0.80940  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.33 RSI=72  BANC×0.97  eq $99446.60
+[2026-09-09 15:00] CLOSE SELL LOSS  2.29 lots  conf 64%  bar 45%  -24.1 pips  $-552.16  comm $16.03 slip $18.39 swap $0.00  snowball 0  (ATR stop)
+       → OK|1017
+       DA  trend DA r=-0.71  Δ||=1.023  g+=1.01 g-=0.98 | fade DA r=-0.71  Δ||=0.988  g+=1.00 g-=0.99 | conf DA r=-0.71  Δ||=1.034  g+=1.01 g-=0.98
+       adapt  bar 47%  cal P(win)=0.50  P(edge) floor 0.39  params n=3  lr=0.044  sl_atr 2.43->2.47, cooldown_bars 8.03->8.06
+[2026-09-09 21:40] 0.80931  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.21 RSI=41  BANC×0.90  eq $99426.91
+brain   trained  brains/USDCHF.json
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_USDCHF.json  bar 47%  skips 0  SL 2.47  TP 12.0  impulse>=0.50  RSI 52/48
+adapt  last param steps:
+       params n=1  lr=0.015  held
+       params n=2  lr=0.036  sl_atr 2.40->2.43, cooldown_bars 8.00->8.03
+       params n=3  lr=0.044  sl_atr 2.43->2.47, cooldown_bars 8.03->8.06
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 BUY    1.99    64  0.80742  0.80923   +21.6    +430.56  session flatten
+  2 SELL   2.08    72  0.80774  0.80944   -21.7    -451.49  ATR stop
+  3 SELL   2.29    64  0.80763  0.80952   -24.1    -552.16  ATR stop
+──────────────────────────────────────────────
+3 trades  1W/2L  win rate 33%  net -24.2 pips  net $-573.09
+costs  spread≈$131.76  commission=$44.52  slippage=$43.15  swap=$0.00
+account  start $100,000.00  balance $99,426.91  equity $99,426.91  margin $0.00  free $99,426.91  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 2.12 lots  return -0.573%
+confidence  high>=60 1/3 (33%)  low<60 n/a  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.53
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-573.09  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-USDCHF-20260920-174356.csv
+  trained USDCHF  DA n=5  fills 3  net $-573.09  (train window only, not the eval week)
+
+── train 4/6  AUDUSD ──
+  2500 x M5  yahoo 5m AUDUSD=X  2026-08-28 04:05 -> 2026-09-09 23:15
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00014  quote USD
+sizing  1.00% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+committee  2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  on  ×1.20 after a scratch, ×1.28 cap; never after a full stop; freeze if DD/BANC/pair-admit
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-08-28 04:05] 0.72031  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  eq $100000.00
+[2026-08-28 10:45] 0.72015  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.34 RSI=60  BANC×1.05  eq $100000.00
+[2026-08-28 14:45] SELL AUDUSD 5.44 lots @ 0.71747  margin $3903.06  comm $19.04  3oo3+flow size×1.22  conf 64%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 64%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.77  data-weight=0.00  5.44 lots  risk $473 (0.47% eq)  SL 8.7 pips  ~$472 if stopped  bayes P(edge)=0.60  p=0.42  R=2.38  ½K=0.039  scale=0.65  risk 0.65%  admit×0.60  (DOWN, k -0.76)  → OK|1018|PAPER
+[2026-08-28 14:50] CLOSE SELL LOSS  5.44 lots  conf 64%  bar 45%  -10.3 pips  $-561.70  comm $38.08 slip $26.84 swap $0.00  snowball 0  (ATR stop)
+       → OK|1018
+       DA  trend DA r=-0.71  Δ||=0.270  g+=1.00 g-=0.99 | fade DA r=-0.71  Δ||=0.268  g+=1.00 g-=0.99 | conf DA r=-0.71  Δ||=0.270  g+=1.00 g-=1.00
+       adapt  bar 45%  cal P(win)=0.40  P(edge) floor 0.38  params n=1  lr=0.020  sl_atr 2.40->2.42, cooldown_bars 8.00->8.02
+[2026-08-28 17:25] 0.71623  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.98 RSI=39  BANC×0.97  eq $99438.30
+[2026-08-31 01:35] 0.71669  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.16 RSI=60  BANC×1.08  eq $99438.30
+[2026-08-31 08:15] 0.71608  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.47 RSI=40  BANC×1.08  eq $99438.30
+[2026-08-31 14:55] 0.71685  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.55 RSI=57  BANC×1.07  eq $99438.30
+[2026-08-31 21:35] 0.71679  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=49  BANC×1.07  eq $99438.30
+[2026-09-01 04:15] 0.71700  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.27 RSI=43  BANC×1.08  eq $99438.30
+[2026-09-01 10:55] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.97 RSI=45  BANC×1.08  eq $99438.30
+[2026-09-01 17:35] 0.71515  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.25 RSI=38  BANC×1.07  eq $99438.30
+[2026-09-02 00:15] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=HOLD  → HOLD no-tech  k=-0.26 RSI=39  BANC×1.09  eq $99438.30
+[2026-09-02 06:55] 0.71429  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.05 RSI=47  BANC×1.08  eq $99438.30
+[2026-09-02 13:35] 0.71628  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=BUY   → HOLD no-tech  k=+0.97 RSI=72  BANC×1.06  eq $99438.30
+[2026-09-02 20:15] 0.71731  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.84 RSI=57  BANC×1.07  eq $99438.30
+[2026-09-03 02:55] 0.71649  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.24 RSI=41  BANC×1.08  eq $99438.30
+[2026-09-03 09:35] 0.71865  raw t=BUY  f=HOLD tech=BUY   fused T=BUY  t=BUY  f=HOLD cf=BUY   → HOLD wide-spread-need-3oo3  k=+0.95 RSI=60  BANC×1.07  eq $99438.30
+[2026-09-03 11:55] DA-shadow BUY  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=0.622  g+=1.01 g-=0.99 | fade DA r=+0.91  Δ||=0.606  g+=1.01 g-=0.99
+[2026-09-03 13:25] BUY AUDUSD 3.11 lots @ 0.72009  margin $2239.47  comm $10.88  3oo3+flow size×1.19  conf 62%  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 62%  bar 45%  cal P(win)=0.40  n=1  P(edge)=0.48  similar=0.50  TA=0.94  data-weight=0.11  3.11 lots  risk $249 (0.25% eq)  SL 8.0 pips  ~$249 if stopped  bayes P(edge)=0.47  p=0.38  R=1.90  ½K=0.000  scale=0.35  risk 0.35%  admit×0.60  (UP, k +0.93)  → OK|1019|PAPER
+[2026-09-03 13:45] CLOSE BUY LOSS  3.11 lots  conf 62%  bar 45%  -9.8 pips  $-305.28  comm $21.77 slip $14.49 swap $0.00  snowball 0  (ATR stop)
+       → OK|1019
+       DA  trend DA r=-0.57  Δ||=0.399  g+=1.00 g-=0.99 | fade DA r=-0.57  Δ||=0.391  g+=1.00 g-=0.99 | conf DA r=-0.57  Δ||=0.389  g+=1.01 g-=1.00
+       adapt  bar 45%  cal P(win)=0.33  P(edge) floor 0.38  params n=2  lr=0.033  sl_atr 2.42->2.45, cooldown_bars 8.02->8.04
+[2026-09-03 16:15] 0.72046  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.77 RSI=69  BANC×0.94  eq $99133.02
+[2026-09-03 22:55] 0.72020  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.34 RSI=44  BANC×0.94  eq $99133.02
+[2026-09-04 01:55] DA-shadow BUY  R=-0.33  3oo3+flow  trend DA r=-0.31  Δ||=0.276  g+=1.00 g-=0.99 | fade DA r=-0.31  Δ||=0.270  g+=0.99 g-=0.99
+[2026-09-04 05:35] 0.72129  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.55 RSI=55  BANC×0.98  eq $99133.02
+[2026-09-04 08:30] DA-shadow SELL  R=-0.13  3oo3+flow  trend DA r=-0.13  Δ||=0.325  g+=1.00 g-=0.99 | fade DA r=-0.13  Δ||=0.318  g+=0.99 g-=0.99
+[2026-09-04 12:15] 0.72067  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.11 RSI=60  BANC×0.97  eq $99133.02
+[2026-09-04 18:55] 0.72051  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=39  BANC×0.95  eq $99133.02
+[2026-09-07 03:00] 0.72046  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.68 RSI=49  BANC×0.96  eq $99133.02
+[2026-09-07 03:30] DA-shadow SELL  R=-1.00  3oo3+flow  trend DA r=-0.76  Δ||=0.623  g+=1.00 g-=0.98 | fade DA r=-0.76  Δ||=0.604  g+=1.00 g-=0.99
+[2026-09-07 09:40] 0.72218  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=BUY   → HOLD no-tech  k=+0.93 RSI=52  BANC×0.98  eq $99133.02
+[2026-09-07 16:20] 0.72207  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.20 RSI=48  BANC×0.98  eq $99133.02
+[2026-09-07 23:00] 0.72218  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=54  BANC×0.98  eq $99133.02
+[2026-09-08 05:40] 0.72197  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.01 RSI=60  BANC×0.97  eq $99133.02
+[2026-09-08 12:20] 0.72171  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.26 RSI=57  BANC×0.97  eq $99133.02
+[2026-09-08 19:00] 0.72249  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD wide-spread-need-3oo3  k=+0.56 RSI=51  BANC×0.97  eq $99133.02
+[2026-09-09 01:40] 0.72223  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.51 RSI=39  BANC×0.98  eq $99133.02
+[2026-09-09 08:20] 0.72275  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=33  BANC×0.97  eq $99133.02
+[2026-09-09 15:00] 0.72228  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.64 RSI=37  BANC×0.96  eq $99133.02
+[2026-09-09 21:40] 0.72187  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=42  BANC×0.96  eq $99133.02
+brain   trained  brains/AUDUSD.json
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json  bar 45%  skips 0  SL 2.45  TP 12.0  impulse>=0.50  RSI 52/48
+adapt  last param steps:
+       params n=1  lr=0.020  sl_atr 2.40->2.42, cooldown_bars 8.00->8.02
+       params n=2  lr=0.033  sl_atr 2.42->2.45, cooldown_bars 8.02->8.04
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   5.44    64  0.71747  0.71844   -10.3    -561.70  ATR stop
+  2 BUY    3.11    62  0.72009  0.71917    -9.8    -305.28  ATR stop
+──────────────────────────────────────────────
+2 trades  0W/2L  win rate 0%  net -20.1 pips  net $-866.98
+costs  spread≈$119.70  commission=$59.85  slippage=$41.33  swap=$0.00
+account  start $100,000.00  balance $99,133.02  equity $99,133.02  margin $0.00  free $99,133.02  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 4.28 lots  return -0.867%
+confidence  high>=60 0/2 (0%)  low<60 n/a  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.45
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-866.98  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-AUDUSD-20260920-180339.csv
+  trained AUDUSD  DA n=6  fills 2  net $-866.98  (train window only, not the eval week)
+
+── train 5/6  EURGBP ──
+  2500 x M5  yahoo 5m EURGBP=X  2026-08-28 04:00 -> 2026-09-09 23:15
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00014  quote GBP
+sizing  1.00% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+committee  2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  on  ×1.20 after a scratch, ×1.28 cap; never after a full stop; freeze if DD/BANC/pair-admit
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-08-28 04:00] 0.85699  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  eq $100000.00
+[2026-08-28 10:40] 0.85690  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.10 RSI=43  BANC×1.03  eq $100000.00
+[2026-08-28 17:20] 0.85600  raw t=HOLD f=HOLD tech=SELL  fused T=SELL t=HOLD f=HOLD cf=HOLD  → HOLD wide-spread-need-3oo3  k=-0.71 RSI=48  BANC×1.01  eq $100000.00
+[2026-08-31 01:30] 0.85588  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.15 RSI=51  BANC×1.01  eq $100000.00
+[2026-08-31 08:10] 0.85620  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.52 RSI=59  BANC×1.03  eq $100000.00
+[2026-08-31 14:50] 0.85616  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=39  BANC×1.02  eq $100000.00
+[2026-08-31 21:30] 0.85723  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.15 RSI=46  BANC×1.02  eq $100000.00
+[2026-09-01 04:10] 0.85700  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.52 RSI=42  BANC×1.02  eq $100000.00
+[2026-09-01 10:50] 0.85643  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.58 RSI=58  BANC×1.04  eq $100000.00
+[2026-09-01 10:55] DA-shadow SELL  R=-0.04  3oo3+flow  trend DA r=-0.04  Δ||=0.015  g+=1.00 g-=1.00 | fade DA r=-0.04  Δ||=0.014  g+=1.00 g-=1.00
+[2026-09-01 17:30] 0.85749  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.77 RSI=77  BANC×1.07  eq $100000.00
+[2026-09-02 00:10] 0.85771  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.39 RSI=55  BANC×1.07  eq $100000.00
+[2026-09-02 06:50] 0.85730  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.26 RSI=38  BANC×1.07  eq $100000.00
+[2026-09-02 08:35] DA-shadow SELL  R=-1.00  3oo3+flow  trend DA r=-0.76  Δ||=0.314  g+=1.00 g-=0.99 | fade DA r=-0.76  Δ||=0.307  g+=1.00 g-=0.99
+[2026-09-02 11:50] DA-shadow BUY  R=+1.50  3oo3+flow  trend DA r=+0.91  Δ||=0.657  g+=1.01 g-=0.99 | fade DA r=+0.91  Δ||=0.648  g+=1.01 g-=0.99
+[2026-09-02 13:30] 0.85894  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.82 RSI=55  BANC×1.06  eq $100000.00
+[2026-09-02 13:40] BUY EURGBP 6.19 lots @ 0.85867  margin $5315.19  comm $21.67  3oo3+flow size×1.25  conf 67%  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 67%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.92  data-weight=0.00  6.19 lots  risk $578 (0.58% eq)  SL 8.0 pips  ~$577 if stopped  bayes P(edge)=0.60  p=0.42  R=2.38  ½K=0.043  scale=0.72  risk 0.72%  BANC×1.06  admit×0.60  (UP, k +0.77)  → OK|1020|PAPER
+[2026-09-02 14:40] CLOSE BUY LOSS  6.19 lots  conf 67%  bar 45%  -4.7 pips  $-292.80  comm $43.33 slip $33.15 swap $0.00  snowball 0  (chop scratch)
+       → OK|1020
+       DA  trend DA r=-0.55  Δ||=0.443  g+=1.01 g-=0.99 | fade DA r=-0.55  Δ||=0.449  g+=1.01 g-=0.99 | conf DA r=-0.55  Δ||=0.442  g+=1.00 g-=1.00
+       adapt  bar 45%  cal P(win)=0.40  P(edge) floor 0.38  params n=1  lr=0.020  trail_arm_atr 3.20->3.20
+[2026-09-02 20:10] 0.85906  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.60 RSI=57  BANC×0.99  eq $99707.20
+[2026-09-03 02:50] 0.85937  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.33 RSI=58  BANC×0.99  eq $99707.20
+[2026-09-03 09:30] 0.85996  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.18 RSI=58  BANC×1.07  eq $99707.20
+[2026-09-03 16:10] 0.85871  raw t=HOLD f=HOLD tech=SELL  fused T=SELL t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=-0.79 RSI=33  BANC×1.06  eq $99707.20
+[2026-09-03 22:50] 0.85946  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.14 RSI=51  BANC×1.06  eq $99707.20
+[2026-09-04 05:30] 0.85918  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.36 RSI=49  BANC×1.06  eq $99707.20
+[2026-09-04 12:10] 0.85897  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.12 RSI=61  BANC×1.08  eq $99707.20
+[2026-09-04 18:50] 0.85916  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.22 RSI=36  BANC×1.08  eq $99707.20
+[2026-09-07 03:00] 0.85939  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.58 RSI=47  BANC×1.08  eq $99707.20
+[2026-09-07 09:40] 0.85851  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.63 RSI=39  BANC×1.08  eq $99707.20
+[2026-09-07 16:20] 0.85865  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.26 RSI=45  BANC×1.09  eq $99707.20
+[2026-09-07 23:00] 0.85840  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.03 RSI=61  BANC×1.09  eq $99707.20
+[2026-09-08 05:40] 0.85864  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.08 RSI=52  BANC×1.09  eq $99707.20
+[2026-09-08 12:20] 0.85725  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.77 RSI=23  BANC×1.07  eq $99707.20
+[2026-09-08 19:00] 0.85844  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.28 RSI=46  BANC×1.07  eq $99707.20
+[2026-09-09 01:40] 0.85868  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.26 RSI=62  BANC×1.07  eq $99707.20
+[2026-09-09 08:20] 0.85900  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.32 RSI=68  BANC×1.08  eq $99707.20
+[2026-09-09 15:00] 0.85876  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.10 RSI=40  BANC×1.07  eq $99707.20
+[2026-09-09 21:40] 0.85869  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.13 RSI=55  BANC×1.07  eq $99707.20
+brain   trained  brains/EURGBP.json
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_EURGBP.json  bar 45%  skips 0  SL 2.40  TP 12.0  impulse>=0.50  RSI 52/48
+adapt  last param steps:
+       params n=1  lr=0.020  trail_arm_atr 3.20->3.20
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 BUY    6.19    67  0.85867  0.85833    -4.7    -292.80  chop scratch
+──────────────────────────────────────────────
+1 trades  0W/1L  win rate 0%  net -4.7 pips  net $-292.80
+costs  spread≈$100.94  commission=$43.33  slippage=$33.15  swap=$0.00
+account  start $100,000.00  balance $99,707.20  equity $99,707.20  margin $0.00  free $99,707.20  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 6.19 lots  return -0.293%
+confidence  high>=60 0/1 (0%)  low<60 n/a  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-292.80  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-EURGBP-20260920-181354.csv
+  trained EURGBP  DA n=4  fills 1  net $-292.80  (train window only, not the eval week)
+
+── train 6/6  USDCAD ──
+  2500 x M5  yahoo 5m USDCAD=X  2026-08-28 03:15 -> 2026-09-09 23:15
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00016  quote CAD
+sizing  1.00% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+committee  2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  on  ×1.20 after a scratch, ×1.28 cap; never after a full stop; freeze if DD/BANC/pair-admit
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-08-28 03:15] 1.38460  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  eq $100000.00
+[2026-08-28 09:55] 1.38580  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.22 RSI=57  BANC×1.00  eq $100000.00
+[2026-08-28 16:35] 1.39019  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.82 RSI=65  BANC×0.89  eq $100000.00
+[2026-08-31 01:05] 1.39026  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.04 RSI=54  BANC×0.89  eq $100000.00
+[2026-08-31 07:45] 1.38961  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.13 RSI=51  BANC×0.89  eq $100000.00
+[2026-08-31 14:25] 1.38708  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.58 RSI=39  BANC×0.91  eq $100000.00
+[2026-08-31 21:05] 1.38515  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.29 RSI=44  BANC×0.91  eq $100000.00
+[2026-09-01 03:45] 1.38610  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.33 RSI=48  BANC×0.91  eq $100000.00
+[2026-09-01 10:25] 1.38709  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.13 RSI=52  BANC×0.92  eq $100000.00
+[2026-09-01 17:05] 1.39031  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.52 RSI=56  BANC×0.90  eq $100000.00
+[2026-09-01 23:45] 1.38939  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.09 RSI=47  BANC×0.90  eq $100000.00
+[2026-09-02 06:25] 1.39143  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.26 RSI=49  BANC×0.90  eq $100000.00
+[2026-09-02 13:05] 1.39164  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.41 RSI=39  BANC×0.91  eq $100000.00
+[2026-09-02 14:30] SELL USDCAD 1.77 lots @ 1.38722  margin $2455.39  comm $6.20  3oo3+flow size×1.17  conf 61%  raw tech=SELL/cont t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 61%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.76  data-weight=0.00  1.77 lots  risk $349 (0.35% eq)  SL 27.3 pips  ~$349 if stopped  bayes P(edge)=0.60  p=0.42  R=2.38  ½K=0.039  scale=0.65  risk 0.65%  BANC×0.89  rec×0.85  admit×0.60  (DOWN, k -0.78)  → OK|1021|PAPER
+[2026-09-02 15:30] SNOWBALL SELL +0.90 lots @ 1.38477  total 2.67  #1  trend=SELL k=-0.91  +22.6 pips  float $289 covers add risk $148  → OK|1022|PAPER
+[2026-09-02 15:50] SNOWBALL SELL +0.90 lots @ 1.38509  total 3.57  #2  trend=SELL k=-0.89  +19.5 pips  float $217 covers add risk $127  → OK|1023|PAPER
+[2026-09-02 18:00] CLOSE SELL WIN  3.57 lots  conf 61%  bar 45%  +13.3 pips  $+474.98  comm $24.99 slip $13.06 swap $0.00  snowball 2  (session flatten)
+       → OK|1021
+       DA  trend DA r=+0.68  Δ||=0.270  g+=1.00 g-=1.01 | fade DA r=+0.68  Δ||=0.257  g+=1.00 g-=1.00 | conf DA r=+0.68  Δ||=0.270  g+=1.00 g-=1.01
+       rails  snowball lock  rest of UTC day + 1% peak protect
+       adapt  bar 45%  cal P(win)=0.60  P(edge) floor 0.38  params n=1  lr=0.016  held
+[2026-09-02 19:45] 1.38385  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.68 RSI=46  BANC×0.92  eq $100474.98
+[2026-09-03 02:25] 1.38340  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.30 RSI=44  BANC×0.92  eq $100474.98
+[2026-09-03 09:05] 1.38085  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.66 RSI=37  BANC×0.96  eq $100474.98
+[2026-09-03 12:25] SELL USDCAD 2.99 lots @ 1.38007  margin $4126.40  comm $10.46  3oo3+flow size×1.29  conf 70%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 70%  bar 45%  cal P(win)=0.50  n=1  P(edge)=0.75  similar=1.00  TA=0.81  data-weight=0.11  2.99 lots  risk $427 (0.73% eq)  SL 19.7 pips  ~$427 if stopped  bayes P(edge)=0.74  p=0.48  R=2.45  ½K=0.095  scale=1.00  risk 1.00%  BANC×0.94  admit×0.60  (DOWN, k -0.56)  → OK|1024|PAPER
+[2026-09-03 13:45] CLOSE SELL LOSS  2.99 lots  conf 70%  bar 45%  -4.1 pips  $-122.70  comm $20.93 slip $10.80 swap $0.00  snowball 0  (chop scratch)
+       → OK|1024
+       DA  trend DA r=-0.29  Δ||=0.163  g+=1.00 g-=1.01 | fade DA r=-0.29  Δ||=0.160  g+=1.00 g-=1.00 | conf DA r=-0.29  Δ||=0.155  g+=1.00 g-=1.00
+       adapt  bar 45%  cal P(win)=0.40  P(edge) floor 0.38  params n=2  lr=0.036  trail_arm_atr 3.20->3.19
+[2026-09-03 15:45] 1.37875  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.43 RSI=41  BANC×0.92  eq $100352.28
+[2026-09-03 22:25] 1.37936  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.17 RSI=57  BANC×0.92  eq $100352.28
+[2026-09-04 05:05] 1.37910  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.06 RSI=51  BANC×0.92  eq $100352.28
+[2026-09-04 11:45] 1.38053  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=HOLD  → HOLD no-tech  k=+0.38 RSI=53  BANC×1.02  eq $100352.28
+[2026-09-04 18:25] 1.38381  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.06 RSI=52  BANC×0.99  eq $100352.28
+[2026-09-07 03:00] 1.38387  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.19 RSI=55  BANC×0.99  eq $100352.28
+[2026-09-07 09:40] 1.38242  raw t=SELL f=HOLD tech=HOLD  fused T=HOLD t=SELL f=HOLD cf=SELL  → HOLD no-tech  k=-0.33 RSI=47  BANC×1.02  eq $100352.28
+[2026-09-07 16:20] 1.38100  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.20 RSI=49  BANC×1.03  eq $100352.28
+[2026-09-07 23:00] 1.38090  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.12 RSI=43  BANC×1.03  eq $100352.28
+[2026-09-08 05:40] 1.37910  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.31 RSI=29  BANC×1.03  eq $100352.28
+[2026-09-08 12:20] 1.38067  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.18 RSI=55  BANC×1.01  eq $100352.28
+[2026-09-08 15:00] SELL USDCAD 2.42 lots @ 1.37727  margin $3333.00  comm $8.47  3oo3+flow size×1.22  conf 64%  raw tech=SELL/bounce t=SELL f=SELL  fused T=SELL t=SELL f=SELL cf=SELL@0.32 fam {} 3oo3+flow  conf 64%  bar 45%  cal P(win)=0.60  n=2  P(edge)=0.69  similar=0.39  TA=0.78  data-weight=0.20  2.42 lots  risk $427 (1.44% eq)  SL 24.3 pips  ~$426 if stopped  bayes P(edge)=0.69  p=0.43  R=2.60  ½K=0.073  scale=1.00  risk 1.00%  rec×1.20  (DOWN, k -0.62)  → OK|1025|PAPER
+[2026-09-08 16:05] CLOSE SELL LOSS  2.42 lots  conf 64%  bar 45%  -12.0 pips  $-289.82  comm $16.94 slip $8.89 swap $0.00  snowball 0  (chop scratch)
+       → OK|1025
+       DA  trend DA r=-0.55  Δ||=0.100  g+=1.00 g-=1.00 | fade DA r=-0.55  Δ||=0.108  g+=1.00 g-=1.00 | conf DA r=-0.55  Δ||=0.066  g+=1.00 g-=1.00
+       adapt  bar 47%  cal P(win)=0.50  P(edge) floor 0.39  params n=3  lr=0.045  trail_arm_atr 3.19->3.18
+[2026-09-08 19:00] 1.37783  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.17 RSI=44  BANC×0.97  eq $100062.46
+[2026-09-09 01:40] 1.37805  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.10 RSI=54  BANC×0.97  eq $100062.46
+[2026-09-09 08:20] 1.37749  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.03 RSI=53  BANC×0.97  eq $100062.46
+[2026-09-09 15:00] 1.38047  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=BUY   → HOLD no-tech  k=+0.57 RSI=70  BANC×0.97  eq $100062.46
+[2026-09-09 21:40] 1.37980  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.11 RSI=40  BANC×0.97  eq $100062.46
+brain   trained  brains/USDCAD.json
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_USDCAD.json  bar 47%  skips 0  SL 2.40  TP 12.0  impulse>=0.50  RSI 52/48
+adapt  last param steps:
+       params n=1  lr=0.016  held
+       params n=2  lr=0.036  trail_arm_atr 3.20->3.19
+       params n=3  lr=0.045  trail_arm_atr 3.19->3.18
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   3.57    61  1.38607  1.38413   +13.3    +474.98  session flatten
+  2 SELL   2.99    70  1.38007  1.38054    -4.1    -122.70  chop scratch
+  3 SELL   2.42    64  1.37727  1.37883   -12.0    -289.82  chop scratch
+──────────────────────────────────────────────
+3 trades  1W/2L  win rate 33%  net -2.8 pips  net $+62.46
+costs  spread≈$114.40  commission=$62.86  slippage=$32.75  swap=$0.00
+account  start $100,000.00  balance $100,062.46  equity $100,062.46  margin $0.00  free $100,062.46  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 2.99 lots  return +0.062%
+confidence  high>=60 1/3 (33%)  low<60 n/a  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.53
+tax  model=ordinary income / short-term gains at 24.0%  estimated due $14.99  after-tax $47.47  effective 24.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-USDCAD-20260920-182405.csv
+  trained USDCAD  DA n=3  fills 3  net $+62.46  (train window only, not the eval week)
+
+Saved brains/ for trained pairs. Evaluate with:
+  python fly_forex.py --hst auto --bars 2000 --reset-adapt --interval-ms 0 --overfit --use-brain --no-plastic
+  python fly_forex.py --hst auto --bars 2000 --reset-adapt --interval-ms 0 --holdout --use-brain --no-plastic

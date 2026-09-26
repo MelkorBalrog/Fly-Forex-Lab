@@ -1,0 +1,50 @@
+{
+  "enabled": true,
+  "global": {
+    "a": 4.5,
+    "b": 4.8,
+    "w_sum": 6.039197195026733,
+    "w_n": 1.0,
+    "l_sum": 0.0,
+    "l_n": 0.0
+  },
+  "bins": {
+    "side=BUY|regime=UP|vol=mid|session=asia|impulse=strong|bb=wide|heat=cold|tag=other": {
+      "a": 4.5,
+      "b": 4.8,
+      "w_sum": 6.039197195026733,
+      "w_n": 1.0,
+      "l_sum": 0.0,
+      "l_n": 0.0
+    }
+  },
+  "memory": [
+    {
+      "fp": {
+        "side": "BUY",
+        "regime": "UP",
+        "vol": "mid",
+        "session": "asia",
+        "impulse": "strong",
+        "bb": "wide",
+        "heat": "cold",
+        "tag": "other"
+      },
+      "vec": [
+        1.0,
+        1.0,
+        1.0,
+        0.9,
+        0.6459999999999999,
+        0.7692307692307693,
+        0.0,
+        0.5,
+        0.0
+      ],
+      "won": true,
+      "r_mult": 6.039197195026733,
+      "usd": 8449.96
+    }
+  ],
+  "path": "C:\\Workspace\\FlyFOREXTrader\\reports\\trade_bayes_USDCAD.json"
+}

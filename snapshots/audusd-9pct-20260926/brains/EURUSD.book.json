@@ -1,0 +1,16 @@
+{
+  "symbol": "EURUSD",
+  "kind": "book",
+  "net_usd": 8486.45,
+  "return": 0.0849,
+  "cfg": {
+    "spike_mult": 1.85,
+    "spike_floor": 2000.0,
+    "worth_impulse": 0.92,
+    "worth_frac": 0.7,
+    "worth_span": 0.3,
+    "day_lock_usd": 1000.0,
+    "tape_floor": 0.9,
+    "target_return": 0.07
+  }
+}

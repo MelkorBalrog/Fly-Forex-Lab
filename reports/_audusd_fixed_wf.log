@@ -1,0 +1,449 @@
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00014  quote USD
+sizing  fixed 0.10 lots
+bank    off  hold-risk off
+risk-tol  balanced  factory geometry  risk-factor exits off
+recycle  off
+adapt  reset C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json
+trade-bayes  reset C:\Workspace\FlyFOREXTrader\reports\trade_bayes_AUDUSD.json
+trade-bayes  off
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+learn  frozen for this replay (traces loaded, rewards off)
+volume  freeze risk-% sizing  (legacy-2oo3 balanced: lots from equity×risk/stop, not margin VOL%)
+risk  dynamic tape  spread/stop, ATR regime, London-NY liquidity, chase, heat  (same rules on every pair; stored pair risk_factors not applied this run)
+committee  legacy 2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  OFF (--no-snowball)
+martingale  OFF (--no-martingale)
+plastic  OFF (--no-plastic)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+sugar   native GRN lamp  23 cells  0.45×nice on the risk pass  (4k-era: eat every 2oo3, no skip/flatten; check sugar feed for the overlay)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+appetite  off
+[2026-08-28 04:05] 0.72031  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-08-28 10:45] 0.72015  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.34 RSI=60  BANC×1.05  sugar lamp feed 0.25  eq $100000.00
+[2026-08-28 14:40] SELL AUDUSD 0.10 lots @ 0.71773  margin $71.77  comm $0.35  2oo3+flow size×1.00  conf 62%  factory-entry  raw tech=SELL/cont t=SELL f=HOLD  fused T=SELL t=SELL f=HOLD cf=SELL@0.32 fam {} 2oo3+flow  conf 62%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.78  data-weight=0.00  fixed 0.10 lots  SL 8.9 pips  tape×0.36  cost×0.74  vol×0.48  liq×1.00  chase×1.00  heat×1.00  freeze risk-% sizing  (DOWN, k -0.75)  → OK|1001|PAPER
+[2026-08-28 14:40] forecast 0.89 ATR in 12 bars  cut 0.45R
+[2026-08-28 14:55] CLOSE SELL LOSS  0.10 lots  conf 62%  bar 45%  -12.3 pips  $-12.34  comm $0.70 slip $0.44 swap $0.00  snowball 0  (ATR stop)
+       → OK|1001
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-08-28 15:50] SELL AUDUSD 0.10 lots @ 0.71686  margin $71.69  comm $0.35  2oo3+flow size×0.98  conf 60%  factory-entry  raw tech=SELL/cont t=SELL f=HOLD  fused T=SELL t=SELL f=HOLD cf=SELL@0.32 fam {} 2oo3+flow  conf 60%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.71  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.27  cost×0.69  vol×0.78  liq×1.00  chase×0.72  heat×0.70  freeze risk-% sizing  (DOWN, k -0.90)  → OK|1002|PAPER
+[2026-08-28 15:50] forecast 1.20 ATR in 12 bars  cut 0.45R
+[2026-08-28 17:00] CLOSE SELL WIN  0.10 lots  conf 60%  bar 45%  +5.4 pips  $+5.43  comm $0.70 slip $0.47 swap $0.00  snowball 0  (session flatten)
+       → OK|1002
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-08-28 17:25] 0.71623  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.98 RSI=39  BANC×1.00  sugar lamp feed 0.26  eq $99993.09
+[2026-08-31 01:35] 0.71669  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.16 RSI=60  BANC×1.08  sugar lamp feed 0.27  eq $99993.09
+[2026-08-31 08:15] 0.71608  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.47 RSI=40  BANC×1.08  sugar lamp feed 0.27  eq $99993.09
+[2026-08-31 14:55] 0.71685  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.55 RSI=57  BANC×1.07  sugar lamp feed 0.26  eq $99993.09
+[2026-08-31 21:35] 0.71679  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=49  BANC×1.07  sugar lamp feed 0.26  eq $99993.09
+[2026-09-01 01:05] DA-shadow BUY  R=-0.26  3oo3+flow  banc DA r=-0.25  Δ||=0.005  g+=1.00 g-=1.00
+[2026-09-01 04:15] 0.71700  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.27 RSI=43  BANC×1.09  sugar lamp feed 0.27  eq $99993.09
+[2026-09-01 10:55] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.97 RSI=45  BANC×1.09  sugar lamp feed 0.27  eq $99993.09
+[2026-09-01 17:35] 0.71515  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.25 RSI=38  BANC×1.08  sugar lamp feed 0.27  eq $99993.09
+[2026-09-02 00:15] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.26 RSI=39  BANC×1.10  sugar lamp feed 0.28  eq $99993.09
+[2026-09-02 06:55] 0.71429  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.05 RSI=47  BANC×1.09  sugar lamp feed 0.27  eq $99993.09
+[2026-09-02 13:35] 0.71628  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=HOLD  → HOLD no-tech  k=+0.97 RSI=72  BANC×1.07  sugar lamp feed 0.27  eq $99993.09
+[2026-09-02 20:15] 0.71731  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.84 RSI=57  BANC×1.08  sugar lamp feed 0.27  eq $99993.09
+[2026-09-03 02:55] 0.71649  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.24 RSI=41  BANC×1.09  sugar lamp feed 0.28  eq $99993.09
+[2026-09-03 08:45] DA-shadow BUY  R=+1.10  2oo3+flow  banc DA r=+0.80  Δ||=0.011  g+=1.01 g-=1.00
+[2026-09-03 09:35] 0.71865  raw t=BUY  f=HOLD tech=BUY   fused T=BUY  t=BUY  f=HOLD cf=BUY   → BUY  2oo3+flow  k=+0.95 RSI=60  BANC×1.08  sugar lamp feed 0.26  eq $99993.09
+[2026-09-03 09:45] DA-shadow BUY  R=+1.50  3oo3+flow  banc DA r=+0.91  Δ||=0.029  g+=1.03 g-=1.00
+[2026-09-03 11:45] DA-shadow BUY  R=+1.50  2oo3+flow  banc DA r=+0.91  Δ||=0.047  g+=1.04 g-=1.00
+[2026-09-03 13:25] BUY AUDUSD 0.10 lots @ 0.72009  margin $72.01  comm $0.35  3oo3+flow size×1.23  conf 66%  factory-entry  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 66%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.61  similar=0.50  TA=0.94  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.46  cost×0.70  vol×1.00  liq×1.00  chase×0.66  heat×1.00  freeze risk-% sizing  (UP, k +0.93)  → OK|1003|PAPER
+[2026-09-03 13:25] forecast 1.28 ATR in 12 bars  cut 0.45R
+[2026-09-03 13:45] CLOSE BUY LOSS  0.10 lots  conf 66%  bar 45%  -9.8 pips  $-9.82  comm $0.70 slip $0.47 swap $0.00  snowball 0  (ATR stop)
+       → OK|1003
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-03 16:15] 0.72046  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.77 RSI=69  BANC×1.00  sugar lamp feed 0.27  eq $99983.27
+[2026-09-03 22:55] 0.72020  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.34 RSI=44  BANC×1.00  sugar lamp feed 0.27  eq $99983.27
+[2026-09-04 01:55] DA-shadow BUY  R=-0.33  3oo3+flow  banc DA r=-0.31  Δ||=0.040  g+=1.04 g-=1.00
+[2026-09-04 03:30] DA-shadow BUY  R=+0.13  3oo3+flow  banc DA r=+0.13  Δ||=0.042  g+=1.04 g-=1.00
+[2026-09-04 05:35] 0.72129  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.55 RSI=55  BANC×1.09  sugar lamp feed 0.27  eq $99983.27
+[2026-09-04 12:15] 0.72067  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.11 RSI=60  BANC×1.10  sugar lamp feed 0.27  eq $99983.27
+[2026-09-04 18:55] 0.72051  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=39  BANC×1.09  sugar lamp feed 0.27  eq $99983.27
+[2026-09-07 03:00] 0.72046  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.68 RSI=49  BANC×1.09  sugar lamp feed 0.27  eq $99983.27
+[2026-09-07 07:00] DA-shadow BUY  R=+0.39  2oo3+flow  banc DA r=+0.37  Δ||=0.050  g+=1.05 g-=1.00
+[2026-09-07 08:25] DA-shadow BUY  R=-0.65  2oo3+flow  banc DA r=-0.57  Δ||=0.038  g+=1.04 g-=1.00
+[2026-09-07 09:25] DA-shadow BUY  R=-0.46  3oo3+flow  banc DA r=-0.43  Δ||=0.030  g+=1.03 g-=1.00
+[2026-09-07 09:40] 0.72218  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.93 RSI=52  BANC×1.09  sugar lamp feed 0.28  eq $99983.27
+[2026-09-07 10:40] DA-shadow BUY  R=-0.20  3oo3+flow  banc DA r=-0.19  Δ||=0.026  g+=1.02 g-=1.00
+[2026-09-07 14:35] DA-shadow BUY  R=-0.13  3oo3+flow  banc DA r=-0.13  Δ||=0.023  g+=1.02 g-=1.00
+[2026-09-07 16:20] 0.72207  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.20 RSI=48  BANC×1.09  sugar lamp feed 0.28  eq $99983.27
+[2026-09-07 23:00] 0.72218  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=54  BANC×1.09  sugar lamp feed 0.28  eq $99983.27
+[2026-09-08 00:00] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.009  g+=1.01 g-=1.00
+[2026-09-08 05:40] 0.72197  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.01 RSI=60  BANC×1.09  sugar lamp feed 0.27  eq $99983.27
+[2026-09-08 09:15] DA-shadow SELL  R=-0.46  3oo3+flow  banc DA r=-0.43  Δ||=0.017  g+=1.01 g-=1.00
+[2026-09-08 12:20] 0.72171  raw t=HOLD f=BUY  tech=HOLD  fused T=HOLD t=HOLD f=BUY  cf=HOLD  → HOLD no-tech  k=+0.26 RSI=57  BANC×1.08  sugar lamp feed 0.27  eq $99983.27
+[2026-09-08 13:35] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.002  g+=1.00 g-=1.00
+[2026-09-08 14:35] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.013  g+=0.98 g-=1.00
+[2026-09-08 15:40] DA-shadow BUY  R=+0.85  3oo3+flow  banc DA r=+0.69  Δ||=0.001  g+=1.00 g-=1.00
+[2026-09-08 19:00] 0.72249  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD wide-spread-need-3oo3  k=+0.56 RSI=51  BANC×1.07  sugar lamp feed 0.27  eq $99983.27
+[2026-09-09 01:05] DA-shadow BUY  R=-0.20  3oo3+flow  banc DA r=-0.19  Δ||=0.003  g+=0.99 g-=1.00
+[2026-09-09 01:40] 0.72223  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.51 RSI=39  BANC×1.10  sugar lamp feed 0.28  eq $99983.27
+[2026-09-09 07:05] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.018  g+=0.98 g-=1.00
+[2026-09-09 08:20] 0.72275  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=33  BANC×1.09  sugar lamp feed 0.27  eq $99983.27
+[2026-09-09 13:45] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.033  g+=0.97 g-=1.00
+[2026-09-09 14:50] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.048  g+=0.95 g-=1.00
+[2026-09-09 15:00] 0.72228  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.64 RSI=37  BANC×1.07  sugar lamp feed 0.27  eq $99983.27
+[2026-09-09 21:40] 0.72187  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=42  BANC×1.07  sugar lamp feed 0.27  eq $99983.27
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json  bar 45%  skips 0  SL 2.40  TP 12.0  impulse>=0.50  RSI 52/48
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   0.10    62  0.71773  0.71890   -12.3     -12.34  ATR stop
+  2 SELL   0.10    60  0.71686  0.71624    +5.4      +5.43  session flatten
+  3 BUY    0.10    66  0.72009  0.71917    -9.8      -9.82  ATR stop
+──────────────────────────────────────────────
+3 trades  1W/2L  win rate 33%  net -16.7 pips  net $-16.73
+costs  spread≈$4.41  commission=$2.10  slippage=$1.38  swap=$0.00
+account  start $100,000.00  balance $99,983.27  equity $99,983.27  margin $0.00  free $99,983.27  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 0.10 lots  return -0.017%
+confidence  high>=60 1/3 (33%)  low<60 n/a  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-16.73  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-AUDUSD-20260924-010656.csv
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00014  quote USD
+sizing  fixed 0.10 lots
+bank    off  hold-risk off
+risk-tol  balanced  factory geometry  risk-factor exits off
+recycle  off
+adapt  reset C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json
+trade-bayes  off
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 3.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.40
+tax  24.0%  model=ordinary  (estimate at report time)
+learn  frozen for this replay (traces loaded, rewards off)
+volume  freeze risk-% sizing  (legacy-2oo3 balanced: lots from equity×risk/stop, not margin VOL%)
+risk  dynamic tape  spread/stop, ATR regime, London-NY liquidity, chase, heat  (same rules on every pair; stored pair risk_factors not applied this run)
+committee  legacy 2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  OFF (--no-snowball)
+martingale  OFF (--no-martingale)
+plastic  OFF (--no-plastic)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+sugar   native GRN lamp  23 cells  0.45×nice on the risk pass  (4k-era: eat every 2oo3, no skip/flatten; check sugar feed for the overlay)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+appetite  off
+[2026-08-28 04:05] 0.72031  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-08-28 09:25] DA-shadow SELL  R=-0.06  3oo3+flow  banc DA r=-0.06  Δ||=0.001  g+=1.00 g-=1.00
+[2026-08-28 10:45] 0.72015  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.34 RSI=60  BANC×1.09  sugar lamp feed 0.27  eq $100000.00
+[2026-08-28 14:40] SELL AUDUSD 0.10 lots @ 0.71773  margin $71.77  comm $0.35  2oo3+flow size×0.99  conf 61%  factory-entry  raw tech=SELL/cont t=SELL f=HOLD  fused T=SELL t=SELL f=HOLD cf=SELL@0.32 fam {} 2oo3+flow  conf 61%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.78  data-weight=0.00  fixed 0.10 lots  SL 12.6 pips  tape×0.42  cost×0.87  vol×0.48  liq×1.00  chase×1.00  heat×1.00  freeze risk-% sizing  (DOWN, k -0.75)  → OK|1004|PAPER
+[2026-08-28 14:40] forecast 0.89 ATR in 12 bars  cut 0.45R
+[2026-08-28 16:50] CLOSE SELL WIN  0.10 lots  conf 61%  bar 45%  +10.6 pips  $+10.63  comm $0.70 slip $0.43 swap $0.00  snowball 0  (trail stop)
+       → OK|1004
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-08-28 17:25] 0.71623  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.98 RSI=39  BANC×1.05  sugar lamp feed 0.26  eq $100010.63
+[2026-08-31 01:35] 0.71669  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.16 RSI=60  BANC×1.08  sugar lamp feed 0.27  eq $100010.63
+[2026-08-31 08:15] 0.71608  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.47 RSI=40  BANC×1.08  sugar lamp feed 0.27  eq $100010.63
+[2026-08-31 14:55] 0.71685  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.55 RSI=57  BANC×1.07  sugar lamp feed 0.26  eq $100010.63
+[2026-08-31 21:35] 0.71679  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=49  BANC×1.07  sugar lamp feed 0.26  eq $100010.63
+[2026-09-01 01:05] DA-shadow BUY  R=-0.26  3oo3+flow  banc DA r=-0.25  Δ||=0.004  g+=1.00 g-=1.00
+[2026-09-01 02:10] BUY AUDUSD 0.10 lots @ 0.71763  margin $71.76  comm $0.35  3oo3+flow size×1.13  conf 58%  factory-entry  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 57%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.61  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.29  cost×0.57  vol×0.78  liq×0.65  chase×1.00  heat×1.00  freeze risk-% sizing  (UP, k +0.47)  → OK|1005|PAPER
+[2026-09-01 02:10] forecast 2.08 ATR in 12 bars  cut 0.45R
+[2026-09-01 03:00] CLOSE BUY LOSS  0.10 lots  conf 58%  bar 45%  -5.6 pips  $-5.59  comm $0.70 slip $0.50 swap $0.00  snowball 0  (chop scratch)
+       → OK|1005
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-01 04:15] 0.71700  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.27 RSI=43  BANC×1.08  sugar lamp feed 0.27  eq $100005.03
+[2026-09-01 10:55] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.97 RSI=45  BANC×1.00  sugar lamp feed 0.26  eq $100005.03
+[2026-09-01 17:35] 0.71515  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.25 RSI=38  BANC×0.99  sugar lamp feed 0.26  eq $100005.03
+[2026-09-02 00:15] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.26 RSI=39  BANC×1.09  sugar lamp feed 0.27  eq $100005.03
+[2026-09-02 06:55] 0.71429  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.05 RSI=47  BANC×1.08  sugar lamp feed 0.27  eq $100005.03
+[2026-09-02 13:35] 0.71628  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=HOLD  → HOLD no-tech  k=+0.97 RSI=72  BANC×1.06  sugar lamp feed 0.26  eq $100005.03
+[2026-09-02 20:15] 0.71731  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.84 RSI=57  BANC×1.07  sugar lamp feed 0.26  eq $100005.03
+[2026-09-03 02:55] 0.71649  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.24 RSI=41  BANC×1.08  sugar lamp feed 0.27  eq $100005.03
+[2026-09-03 08:20] BUY AUDUSD 0.10 lots @ 0.71823  margin $71.82  comm $0.35  2oo3+flow size×1.00  conf 62%  factory-entry  raw tech=BUY/cont t=BUY f=HOLD  fused T=BUY t=BUY f=HOLD cf=BUY@0.32 fam {} 2oo3+flow  conf 62%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.76  data-weight=0.00  fixed 0.10 lots  SL 9.1 pips  tape×0.37  cost×0.75  vol×0.78  liq×0.90  chase×1.00  heat×0.70  freeze risk-% sizing  (UP, k +0.72)  → OK|1006|PAPER
+[2026-09-03 08:20] forecast 1.25 ATR in 12 bars  cut 0.45R
+[2026-09-03 09:35] 0.71865  raw t=BUY  f=HOLD tech=BUY   fused T=BUY  t=BUY  f=HOLD cf=BUY   → BUY  2oo3+flow  k=+0.95 RSI=60  BANC×1.08  sugar lamp feed 0.27  eq $100008.01
+[2026-09-03 10:10] CLOSE BUY LOSS  0.10 lots  conf 62%  bar 45%  -0.7 pips  $-0.74  comm $0.70 slip $0.49 swap $0.00  snowball 0  (ATR stop)
+       → OK|1006
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-03 11:45] DA-shadow BUY  R=+1.50  2oo3+flow  banc DA r=+0.91  Δ||=0.015  g+=1.01 g-=1.00
+[2026-09-03 13:25] BUY AUDUSD 0.10 lots @ 0.72009  margin $72.01  comm $0.35  3oo3+flow size×1.24  conf 66%  factory-entry  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 66%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.62  similar=0.50  TA=0.94  data-weight=0.00  fixed 0.10 lots  SL 8.8 pips  tape×0.25  cost×0.74  vol×1.00  liq×1.00  chase×0.66  heat×0.50  freeze risk-% sizing  (UP, k +0.93)  → OK|1007|PAPER
+[2026-09-03 13:25] forecast 1.28 ATR in 12 bars  cut 0.45R
+[2026-09-03 13:45] CLOSE BUY LOSS  0.10 lots  conf 66%  bar 45%  -9.8 pips  $-9.82  comm $0.70 slip $0.47 swap $0.00  snowball 0  (ATR stop)
+       → OK|1007
+       rails  circuit  3 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-03 16:15] 0.72046  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.77 RSI=69  BANC×0.93  sugar lamp feed 0.27  eq $99994.48
+[2026-09-03 22:55] 0.72020  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.34 RSI=44  BANC×0.93  sugar lamp feed 0.27  eq $99994.48
+[2026-09-04 01:55] DA-shadow BUY  R=-0.33  3oo3+flow  banc DA r=-0.31  Δ||=0.009  g+=1.01 g-=1.00
+[2026-09-04 03:30] DA-shadow BUY  R=+0.13  3oo3+flow  banc DA r=+0.13  Δ||=0.011  g+=1.01 g-=1.00
+[2026-09-04 05:35] 0.72129  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.55 RSI=55  BANC×1.08  sugar lamp feed 0.27  eq $99994.48
+[2026-09-04 12:15] 0.72067  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.11 RSI=60  BANC×1.09  sugar lamp feed 0.27  eq $99994.48
+[2026-09-04 15:55] BUY AUDUSD 0.10 lots @ 0.72128  margin $72.13  comm $0.35  3oo3+flow size×1.16  conf 60%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 60%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.71  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.25  cost×0.69  vol×1.00  liq×1.00  chase×1.00  heat×0.35  freeze risk-% sizing  (UP, k +0.67)  → OK|1008|PAPER
+[2026-09-04 15:55] forecast 1.83 ATR in 12 bars  cut 0.45R
+[2026-09-04 17:00] CLOSE BUY LOSS  0.10 lots  conf 60%  bar 45%  -4.9 pips  $-4.89  comm $0.70 slip $0.50 swap $0.00  snowball 0  (session flatten)
+       → OK|1008
+       rails  circuit  4 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-04 18:55] 0.72051  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=39  BANC×1.07  sugar lamp feed 0.27  eq $99989.59
+[2026-09-07 03:00] 0.72046  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.68 RSI=49  BANC×1.08  sugar lamp feed 0.27  eq $99989.59
+[2026-09-07 07:00] DA-shadow BUY  R=+0.39  2oo3+flow  banc DA r=+0.37  Δ||=0.018  g+=1.02 g-=1.00
+[2026-09-07 08:25] DA-shadow BUY  R=-0.65  2oo3+flow  banc DA r=-0.57  Δ||=0.007  g+=1.00 g-=1.00
+[2026-09-07 09:25] DA-shadow BUY  R=-0.46  3oo3+flow  banc DA r=-0.43  Δ||=0.002  g+=1.00 g-=1.00
+[2026-09-07 09:40] 0.72218  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.93 RSI=52  BANC×1.09  sugar lamp feed 0.28  eq $99989.59
+[2026-09-07 10:40] DA-shadow BUY  R=-0.20  3oo3+flow  banc DA r=-0.19  Δ||=0.006  g+=0.99 g-=1.00
+[2026-09-07 14:35] DA-shadow BUY  R=-0.13  3oo3+flow  banc DA r=-0.13  Δ||=0.008  g+=0.99 g-=1.00
+[2026-09-07 15:35] DA-shadow BUY  R=-0.13  3oo3+flow  banc DA r=-0.13  Δ||=0.010  g+=0.99 g-=1.00
+[2026-09-07 16:20] 0.72207  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.20 RSI=48  BANC×1.09  sugar lamp feed 0.27  eq $99989.59
+[2026-09-07 23:00] 0.72218  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=54  BANC×1.09  sugar lamp feed 0.27  eq $99989.59
+[2026-09-08 00:00] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.025  g+=0.98 g-=1.00
+[2026-09-08 05:40] 0.72197  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.01 RSI=60  BANC×1.08  sugar lamp feed 0.27  eq $99989.59
+[2026-09-08 09:15] DA-shadow SELL  R=-0.46  3oo3+flow  banc DA r=-0.43  Δ||=0.016  g+=0.98 g-=1.00
+[2026-09-08 12:20] 0.72171  raw t=HOLD f=BUY  tech=HOLD  fused T=HOLD t=HOLD f=BUY  cf=HOLD  → HOLD no-tech  k=+0.26 RSI=57  BANC×1.08  sugar lamp feed 0.27  eq $99989.59
+[2026-09-08 13:35] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.031  g+=0.96 g-=1.00
+[2026-09-08 13:45] BUY AUDUSD 0.10 lots @ 0.72274  margin $72.27  comm $0.35  3oo3+flow size×1.18  conf 61%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 61%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.61  similar=0.50  TA=0.74  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.25  cost×0.68  vol×1.00  liq×1.00  chase×0.72  heat×0.35  freeze risk-% sizing  (UP, k +0.91)  → OK|1009|PAPER
+[2026-09-08 13:45] forecast 1.95 ATR in 12 bars  cut 0.45R
+[2026-09-08 14:50] CLOSE BUY LOSS  0.10 lots  conf 61%  bar 45%  -1.1 pips  $-1.09  comm $0.70 slip $0.56 swap $0.00  snowball 0  (ATR stop)
+       → OK|1009
+       rails  circuit  5 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-08 15:40] skip BUY: circuit pause 2 bars
+[2026-09-08 15:40] DA-shadow BUY  R=+0.85  3oo3+flow  banc DA r=+0.69  Δ||=0.017  g+=0.98 g-=1.00
+[2026-09-08 19:00] 0.72249  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD wide-spread-need-3oo3  k=+0.56 RSI=51  BANC×1.03  sugar lamp feed 0.27  eq $99988.50
+[2026-09-09 00:25] DA-shadow BUY  R=-0.26  3oo3+flow  banc DA r=-0.26  Δ||=0.022  g+=0.97 g-=1.00
+[2026-09-09 01:25] DA-shadow BUY  R=+0.39  3oo3+flow  banc DA r=+0.37  Δ||=0.015  g+=0.98 g-=1.00
+[2026-09-09 01:40] 0.72223  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.51 RSI=39  BANC×1.08  sugar lamp feed 0.27  eq $99988.50
+[2026-09-09 07:05] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.029  g+=0.97 g-=1.00
+[2026-09-09 08:20] 0.72275  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=33  BANC×1.08  sugar lamp feed 0.27  eq $99988.50
+[2026-09-09 13:45] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.044  g+=0.95 g-=1.00
+[2026-09-09 14:00] BUY AUDUSD 0.10 lots @ 0.72332  margin $72.33  comm $0.35  3oo3+flow size×1.14  conf 58%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 58%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.63  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.25  cost×0.68  vol×1.00  liq×1.00  chase×1.00  heat×0.35  freeze risk-% sizing  (UP, k +0.67)  → OK|1010|PAPER
+[2026-09-09 14:00] forecast 2.00 ATR in 12 bars  cut 0.45R
+[2026-09-09 15:00] 0.72228  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.64 RSI=37  BANC×1.06  sugar lamp feed 0.26  eq $99977.10
+[2026-09-09 15:00] CLOSE BUY LOSS  0.10 lots  conf 58%  bar 45%  -12.2 pips  $-12.18  comm $0.70 slip $0.68 swap $0.00  snowball 0  (ATR stop)
+       → OK|1010
+       rails  circuit  6 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-09 21:40] 0.72187  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=42  BANC×1.01  sugar lamp feed 0.26  eq $99976.32
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json  bar 45%  skips 0  SL 3.40  TP 12.0  impulse>=0.40  RSI 52/48
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   0.10    61  0.71773  0.71660   +10.6     +10.63  trail stop
+  2 BUY    0.10    58  0.71763  0.71714    -5.6      -5.59  chop scratch
+  3 BUY    0.10    62  0.71823  0.71822    -0.7      -0.74  ATR stop
+  4 BUY    0.10    66  0.72009  0.71917    -9.8      -9.82  ATR stop
+  5 BUY    0.10    60  0.72128  0.72086    -4.9      -4.89  session flatten
+  6 BUY    0.10    61  0.72274  0.72270    -1.1      -1.09  ATR stop
+  7 BUY    0.10    58  0.72332  0.72217   -12.2     -12.18  ATR stop
+──────────────────────────────────────────────
+7 trades  1W/6L  win rate 14%  net -23.7 pips  net $-23.68
+costs  spread≈$10.85  commission=$4.90  slippage=$3.63  swap=$0.00
+account  start $100,000.00  balance $99,976.32  equity $99,976.32  margin $0.00  free $99,976.32  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 0.10 lots  return -0.024%
+confidence  high>=60 1/4 (25%)  low<60 0/3 (0%)  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-23.68  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-AUDUSD-20260924-011121.csv
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00014  quote USD
+sizing  fixed 0.10 lots
+bank    off  hold-risk off
+risk-tol  balanced  factory geometry  risk-factor exits off
+recycle  off
+adapt  reset C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json
+trade-bayes  off
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 3.40 ATR  TP 14.0 ATR  trail 2.20/1.20  RSI arm 46/46  min |impulse| 0.40
+tax  24.0%  model=ordinary  (estimate at report time)
+learn  frozen for this replay (traces loaded, rewards off)
+volume  freeze risk-% sizing  (legacy-2oo3 balanced: lots from equity×risk/stop, not margin VOL%)
+risk  dynamic tape  spread/stop, ATR regime, London-NY liquidity, chase, heat  (same rules on every pair; stored pair risk_factors not applied this run)
+committee  legacy 2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  OFF (--no-snowball)
+martingale  OFF (--no-martingale)
+plastic  OFF (--no-plastic)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+sugar   native GRN lamp  23 cells  0.45×nice on the risk pass  (4k-era: eat every 2oo3, no skip/flatten; check sugar feed for the overlay)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+appetite  off
+[2026-08-28 04:05] 0.72031  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-08-28 09:25] DA-shadow SELL  R=-0.06  3oo3+flow  banc DA r=-0.06  Δ||=0.001  g+=1.00 g-=1.00
+[2026-08-28 10:45] 0.72015  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.34 RSI=60  BANC×1.09  sugar lamp feed 0.27  eq $100000.00
+[2026-08-28 14:40] SELL AUDUSD 0.10 lots @ 0.71773  margin $71.77  comm $0.35  2oo3+flow size×0.99  conf 62%  factory-entry  raw tech=SELL/cont t=SELL f=HOLD  fused T=SELL t=SELL f=HOLD cf=SELL@0.32 fam {} 2oo3+flow  conf 62%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.61  similar=0.50  TA=0.78  data-weight=0.00  fixed 0.10 lots  SL 12.6 pips  tape×0.42  cost×0.87  vol×0.48  liq×1.00  chase×1.00  heat×1.00  freeze risk-% sizing  (DOWN, k -0.75)  → OK|1011|PAPER
+[2026-08-28 14:40] forecast 0.89 ATR in 12 bars  cut 0.45R
+[2026-08-28 16:30] CLOSE SELL WIN  0.10 lots  conf 62%  bar 45%  +12.2 pips  $+12.15  comm $0.70 slip $0.45 swap $0.00  snowball 0  (trail stop)
+       → OK|1011
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-08-28 17:25] 0.71623  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.98 RSI=39  BANC×1.05  sugar lamp feed 0.26  eq $100012.15
+[2026-08-31 01:35] 0.71669  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.16 RSI=60  BANC×1.08  sugar lamp feed 0.27  eq $100012.15
+[2026-08-31 08:15] 0.71608  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.47 RSI=40  BANC×1.08  sugar lamp feed 0.27  eq $100012.15
+[2026-08-31 14:55] 0.71685  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.55 RSI=57  BANC×1.07  sugar lamp feed 0.27  eq $100012.15
+[2026-08-31 21:35] 0.71679  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=49  BANC×1.08  sugar lamp feed 0.27  eq $100012.15
+[2026-09-01 01:05] DA-shadow BUY  R=-0.26  3oo3+flow  banc DA r=-0.25  Δ||=0.004  g+=1.00 g-=1.00
+[2026-09-01 04:15] 0.71700  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.27 RSI=43  BANC×1.09  sugar lamp feed 0.27  eq $100012.15
+[2026-09-01 10:55] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.97 RSI=45  BANC×1.09  sugar lamp feed 0.27  eq $100012.15
+[2026-09-01 17:35] 0.71515  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.25 RSI=38  BANC×1.08  sugar lamp feed 0.27  eq $100012.15
+[2026-09-02 00:15] 0.71464  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.26 RSI=39  BANC×1.10  sugar lamp feed 0.28  eq $100012.15
+[2026-09-02 06:55] 0.71429  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.05 RSI=47  BANC×1.09  sugar lamp feed 0.27  eq $100012.15
+[2026-09-02 13:35] 0.71628  raw t=BUY  f=SELL tech=HOLD  fused T=HOLD t=BUY  f=SELL cf=HOLD  → HOLD no-tech  k=+0.97 RSI=72  BANC×1.07  sugar lamp feed 0.27  eq $100012.15
+[2026-09-02 20:15] 0.71731  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.84 RSI=57  BANC×1.08  sugar lamp feed 0.27  eq $100012.15
+[2026-09-03 02:55] 0.71649  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.24 RSI=41  BANC×1.09  sugar lamp feed 0.28  eq $100012.15
+[2026-09-03 08:20] BUY AUDUSD 0.10 lots @ 0.71823  margin $71.82  comm $0.35  2oo3+flow size×0.99  conf 62%  factory-entry  raw tech=BUY/cont t=BUY f=HOLD  fused T=BUY t=BUY f=HOLD cf=BUY@0.32 fam {} 2oo3+flow  conf 62%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.76  data-weight=0.00  fixed 0.10 lots  SL 9.1 pips  tape×0.53  cost×0.75  vol×0.78  liq×0.90  chase×1.00  heat×1.00  freeze risk-% sizing  (UP, k +0.72)  → OK|1012|PAPER
+[2026-09-03 08:20] forecast 1.25 ATR in 12 bars  cut 0.45R
+[2026-09-03 09:30] CLOSE BUY WIN  0.10 lots  conf 62%  bar 45%  +2.4 pips  $+2.35  comm $0.70 slip $0.50 swap $0.00  snowball 0  (trail stop)
+       → OK|1012
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-03 09:35] 0.71865  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=HOLD  → HOLD no-tech  k=+0.95 RSI=60  BANC×1.07  sugar lamp feed 0.26  eq $100014.50
+[2026-09-03 10:00] DA-shadow BUY  R=+1.50  2oo3+flow  banc DA r=+0.91  Δ||=0.014  g+=1.01 g-=1.00
+[2026-09-03 11:30] DA-shadow BUY  R=+1.50  2oo3+flow  banc DA r=+0.91  Δ||=0.031  g+=1.03 g-=1.00
+[2026-09-03 13:10] BUY AUDUSD 0.10 lots @ 0.72087  margin $72.09  comm $0.35  2oo3+flow size×1.00  conf 62%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=HOLD cf=BUY@0.32 fam {} 2oo3+flow  conf 62%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.79  data-weight=0.00  fixed 0.10 lots  SL 8.5 pips  tape×0.44  cost×0.71  vol×1.00  liq×1.00  chase×0.62  heat×1.00  freeze risk-% sizing  (UP, k +0.97)  → OK|1013|PAPER
+[2026-09-03 13:10] forecast 1.37 ATR in 12 bars  cut 0.45R
+[2026-09-03 13:15] CLOSE BUY LOSS  0.10 lots  conf 62%  bar 45%  -9.9 pips  $-9.86  comm $0.70 slip $0.50 swap $0.00  snowball 0  (ATR stop)
+       → OK|1013
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-03 13:50] BUY AUDUSD 0.10 lots @ 0.71962  margin $71.96  comm $0.35  3oo3+flow size×1.24  conf 66%  factory-entry  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 66%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.94  data-weight=0.00  fixed 0.10 lots  SL 9.4 pips  tape×0.50  cost×0.76  vol×1.00  liq×1.00  chase×0.94  heat×0.70  freeze risk-% sizing  (UP, k +0.80)  → OK|1014|PAPER
+[2026-09-03 13:50] forecast 1.22 ATR in 12 bars  cut 0.45R
+[2026-09-03 14:45] CLOSE BUY LOSS  0.10 lots  conf 66%  bar 45%  -5.7 pips  $-5.70  comm $0.70 slip $0.49 swap $0.00  snowball 0  (chop scratch)
+       → OK|1014
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-03 16:15] 0.72046  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.77 RSI=69  BANC×0.92  sugar lamp feed 0.26  eq $99998.95
+[2026-09-03 22:55] 0.72020  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.34 RSI=44  BANC×0.92  sugar lamp feed 0.26  eq $99998.95
+[2026-09-04 01:55] DA-shadow BUY  R=-0.33  3oo3+flow  banc DA r=-0.31  Δ||=0.025  g+=1.02 g-=1.00
+[2026-09-04 03:45] DA-shadow BUY  R=+0.13  3oo3+flow  banc DA r=+0.13  Δ||=0.028  g+=1.02 g-=1.00
+[2026-09-04 05:35] 0.72129  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.55 RSI=55  BANC×1.09  sugar lamp feed 0.27  eq $99998.95
+[2026-09-04 12:15] 0.72067  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.11 RSI=60  BANC×1.10  sugar lamp feed 0.27  eq $99998.95
+[2026-09-04 15:55] BUY AUDUSD 0.10 lots @ 0.72128  margin $72.13  comm $0.35  3oo3+flow size×1.16  conf 60%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 60%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.71  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.35  cost×0.69  vol×1.00  liq×1.00  chase×1.00  heat×0.50  freeze risk-% sizing  (UP, k +0.67)  → OK|1015|PAPER
+[2026-09-04 15:55] forecast 1.83 ATR in 12 bars  cut 0.45R
+[2026-09-04 17:00] CLOSE BUY LOSS  0.10 lots  conf 60%  bar 45%  -4.9 pips  $-4.89  comm $0.70 slip $0.50 swap $0.00  snowball 0  (session flatten)
+       → OK|1015
+       rails  circuit  3 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-04 18:55] 0.72051  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=39  BANC×1.08  sugar lamp feed 0.27  eq $99994.05
+[2026-09-07 03:00] 0.72046  raw t=SELL f=SELL tech=HOLD  fused T=HOLD t=SELL f=SELL cf=SELL  → HOLD no-tech  k=-0.68 RSI=49  BANC×1.08  sugar lamp feed 0.27  eq $99994.05
+[2026-09-07 07:00] DA-shadow BUY  R=+0.39  2oo3+flow  banc DA r=+0.37  Δ||=0.035  g+=1.03 g-=1.00
+[2026-09-07 08:25] DA-shadow BUY  R=-0.65  2oo3+flow  banc DA r=-0.57  Δ||=0.023  g+=1.02 g-=1.00
+[2026-09-07 09:25] DA-shadow BUY  R=-0.46  3oo3+flow  banc DA r=-0.43  Δ||=0.015  g+=1.01 g-=1.00
+[2026-09-07 09:40] 0.72218  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.93 RSI=52  BANC×1.09  sugar lamp feed 0.28  eq $99994.05
+[2026-09-07 10:40] DA-shadow BUY  R=-0.20  3oo3+flow  banc DA r=-0.19  Δ||=0.011  g+=1.01 g-=1.00
+[2026-09-07 16:20] 0.72207  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.20 RSI=48  BANC×1.09  sugar lamp feed 0.27  eq $99994.05
+[2026-09-07 23:00] 0.72218  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=54  BANC×1.09  sugar lamp feed 0.27  eq $99994.05
+[2026-09-08 05:40] 0.72197  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.01 RSI=60  BANC×1.08  sugar lamp feed 0.27  eq $99994.05
+[2026-09-08 09:15] DA-shadow SELL  R=-0.46  3oo3+flow  banc DA r=-0.43  Δ||=0.019  g+=1.01 g-=1.00
+[2026-09-08 12:20] 0.72171  raw t=HOLD f=BUY  tech=HOLD  fused T=HOLD t=HOLD f=BUY  cf=HOLD  → HOLD no-tech  k=+0.26 RSI=57  BANC×1.08  sugar lamp feed 0.27  eq $99994.05
+[2026-09-08 13:35] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.004  g+=1.00 g-=1.00
+[2026-09-08 13:45] BUY AUDUSD 0.10 lots @ 0.72274  margin $72.27  comm $0.35  3oo3+flow size×1.17  conf 60%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 60%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.74  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.25  cost×0.68  vol×1.00  liq×1.00  chase×0.72  heat×0.35  freeze risk-% sizing  (UP, k +0.91)  → OK|1016|PAPER
+[2026-09-08 13:45] forecast 1.95 ATR in 12 bars  cut 0.45R
+[2026-09-08 14:50] CLOSE BUY LOSS  0.10 lots  conf 60%  bar 45%  -1.1 pips  $-1.09  comm $0.70 slip $0.56 swap $0.00  snowball 0  (ATR stop)
+       → OK|1016
+       rails  circuit  4 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-08 15:25] skip BUY: circuit pause 5 bars
+[2026-09-08 15:25] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.011  g+=0.99 g-=1.00
+[2026-09-08 15:40] skip BUY: circuit pause 2 bars
+[2026-09-08 19:00] 0.72249  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.56 RSI=51  BANC×1.02  sugar lamp feed 0.26  eq $99992.97
+[2026-09-09 00:25] DA-shadow BUY  R=-0.26  3oo3+flow  banc DA r=-0.26  Δ||=0.016  g+=0.98 g-=1.00
+[2026-09-09 01:40] 0.72223  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.51 RSI=39  BANC×1.08  sugar lamp feed 0.27  eq $99992.97
+[2026-09-09 01:45] DA-shadow BUY  R=+0.78  3oo3+flow  banc DA r=+0.65  Δ||=0.003  g+=0.99 g-=1.00
+[2026-09-09 07:00] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.018  g+=0.98 g-=1.00
+[2026-09-09 08:20] 0.72275  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.34 RSI=33  BANC×1.07  sugar lamp feed 0.27  eq $99992.97
+[2026-09-09 13:45] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.033  g+=0.97 g-=1.00
+[2026-09-09 14:00] BUY AUDUSD 0.10 lots @ 0.72332  margin $72.33  comm $0.35  3oo3+flow size×1.14  conf 58%  factory-entry  raw tech=BUY/cont t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 58%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.63  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.25  cost×0.68  vol×1.00  liq×1.00  chase×1.00  heat×0.35  freeze risk-% sizing  (UP, k +0.67)  → OK|1017|PAPER
+[2026-09-09 14:00] forecast 2.00 ATR in 12 bars  cut 0.45R
+[2026-09-09 15:00] 0.72228  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.64 RSI=37  BANC×1.06  sugar lamp feed 0.26  eq $99981.57
+[2026-09-09 15:00] CLOSE BUY LOSS  0.10 lots  conf 58%  bar 45%  -12.2 pips  $-12.18  comm $0.70 slip $0.68 swap $0.00  snowball 0  (ATR stop)
+       → OK|1017
+       rails  circuit  5 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-09 21:40] 0.72187  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.40 RSI=42  BANC×1.01  sugar lamp feed 0.26  eq $99980.79
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json  bar 45%  skips 0  SL 3.40  TP 14.0  impulse>=0.40  RSI 46/46
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   0.10    62  0.71773  0.71645   +12.2     +12.15  trail stop
+  2 BUY    0.10    62  0.71823  0.71853    +2.4      +2.35  trail stop
+  3 BUY    0.10    62  0.72087  0.71995    -9.9      -9.86  ATR stop
+  4 BUY    0.10    66  0.71962  0.71912    -5.7      -5.70  chop scratch
+  5 BUY    0.10    60  0.72128  0.72086    -4.9      -4.89  session flatten
+  6 BUY    0.10    60  0.72274  0.72270    -1.1      -1.09  ATR stop
+  7 BUY    0.10    58  0.72332  0.72217   -12.2     -12.18  ATR stop
+──────────────────────────────────────────────
+7 trades  2W/5L  win rate 29%  net -19.2 pips  net $-19.22
+costs  spread≈$10.43  commission=$4.90  slippage=$3.67  swap=$0.00
+account  start $100,000.00  balance $99,980.79  equity $99,980.79  margin $0.00  free $99,980.79  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 0.10 lots  return -0.019%
+confidence  high>=60 2/6 (33%)  low<60 0/1 (0%)  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-19.22  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-AUDUSD-20260924-011544.csv
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00014  quote USD
+sizing  fixed 0.10 lots
+bank    off  hold-risk off
+risk-tol  balanced  factory geometry  risk-factor exits off
+recycle  off
+adapt  reset C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json
+trade-bayes  off
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.40 ATR  TP 12.0 ATR  trail 3.20/1.80  RSI arm 52/48  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+learn  frozen for this replay (traces loaded, rewards off)
+volume  freeze risk-% sizing  (legacy-2oo3 balanced: lots from equity×risk/stop, not margin VOL%)
+risk  dynamic tape  spread/stop, ATR regime, London-NY liquidity, chase, heat  (same rules on every pair; stored pair risk_factors not applied this run)
+committee  legacy 2oo3  {tech, fly-trend, fly-fade}   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  OFF (--no-pair-book)
+snowball  OFF (--no-snowball)
+martingale  OFF (--no-martingale)
+plastic  OFF (--no-plastic)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+sugar   native GRN lamp  23 cells  0.45×nice on the risk pass  (4k-era: eat every 2oo3, no skip/flatten; check sugar feed for the overlay)
+rails   fly-trader kill 2.5% DD  (1.0% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+appetite  off
+[2026-09-09 16:40] 0.72233  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.00 RSI=50  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-09-09 23:20] 0.72223  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.08 RSI=59  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-09-10 06:00] 0.72197  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.09 RSI=42  BANC×1.04  sugar lamp feed 0.25  eq $100000.00
+[2026-09-10 08:30] DA-shadow SELL  R=+1.50  2oo3+flow  banc DA r=+0.91  Δ||=0.017  g+=0.99 g-=1.00
+[2026-09-10 12:40] 0.71659  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-1.00 RSI=18  BANC×1.04  sugar lamp feed 0.26  eq $100000.00
+[2026-09-10 19:20] 0.71587  raw t=HOLD f=HOLD tech=SELL  fused T=SELL t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=-0.95 RSI=34  BANC×1.07  sugar lamp feed 0.26  eq $100000.00
+[2026-09-11 02:00] 0.71602  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.13 RSI=40  BANC×1.08  sugar lamp feed 0.26  eq $100000.00
+[2026-09-11 08:30] DA-shadow BUY  R=+0.64  2oo3+flow  banc DA r=+0.57  Δ||=0.006  g+=1.00 g-=1.00
+[2026-09-11 08:40] 0.71715  raw t=BUY  f=HOLD tech=BUY   fused T=BUY  t=BUY  f=HOLD cf=BUY   → BUY  2oo3+flow  k=+0.71 RSI=49  BANC×1.07  sugar lamp feed 0.26  eq $100000.00
+[2026-09-11 11:55] DA-shadow BUY  R=-1.00  2oo3+flow  banc DA r=-0.76  Δ||=0.020  g+=0.99 g-=1.00
+[2026-09-11 13:20] BUY AUDUSD 0.10 lots @ 0.71833  margin $71.83  comm $0.35  3oo3+flow size×1.14  conf 58%  factory-entry  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 58%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.63  data-weight=0.00  fixed 0.10 lots  SL 8.0 pips  tape×0.54  cost×0.69  vol×0.78  liq×1.00  chase×1.00  heat×1.00  freeze risk-% sizing  (UP, k +0.61)  → OK|1018|PAPER
+[2026-09-11 13:20] forecast 1.10 ATR in 12 bars  cut 0.45R
+[2026-09-11 14:35] CLOSE BUY LOSS  0.10 lots  conf 58%  bar 45%  -9.3 pips  $-9.27  comm $0.70 slip $0.47 swap $0.00  snowball 0  (ATR stop)
+       → OK|1018
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-11 15:20] 0.71746  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.03 RSI=45  BANC×1.00  sugar lamp feed 0.26  eq $99990.73
+[2026-09-13 23:25] 0.71613  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.94 RSI=21  BANC×1.00  sugar lamp feed 0.26  eq $99990.73
+[2026-09-14 06:05] 0.71459  raw t=HOLD f=HOLD tech=SELL  fused T=SELL t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=-0.81 RSI=34  BANC×1.08  sugar lamp feed 0.27  eq $99990.73
+[2026-09-14 12:45] 0.71190  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.93 RSI=25  BANC×1.07  sugar lamp feed 0.27  eq $99990.73
+[2026-09-14 19:25] 0.71439  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD wide-spread-need-3oo3  k=+0.95 RSI=42  BANC×1.06  sugar lamp feed 0.26  eq $99990.73
+[2026-09-15 02:05] 0.71327  raw t=SELL f=BUY  tech=SELL  fused T=SELL t=SELL f=BUY  cf=SELL  → HOLD veto BUY (t=SELL f=BUY tech=SELL)  k=-0.86 RSI=39  BANC×1.09  sugar lamp feed 0.27  eq $99990.73
+[2026-09-15 08:45] 0.71286  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.06 RSI=56  BANC×1.08  sugar lamp feed 0.27  eq $99990.73
+[2026-09-15 15:25] 0.71332  raw t=HOLD f=BUY  tech=HOLD  fused T=HOLD t=HOLD f=BUY  cf=HOLD  → HOLD no-tech  k=+0.26 RSI=55  BANC×1.08  sugar lamp feed 0.27  eq $99990.73
+[2026-09-15 22:05] 0.71342  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.08 RSI=53  BANC×1.08  sugar lamp feed 0.27  eq $99990.73
+[2026-09-16 04:45] 0.71311  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.16 RSI=57  BANC×1.09  sugar lamp feed 0.27  eq $99990.73
+[2026-09-16 11:25] 0.71367  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.48 RSI=63  BANC×1.09  sugar lamp feed 0.27  eq $99990.73
+[2026-09-16 11:50] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.035  g+=0.98 g-=1.00
+[2026-09-16 18:05] 0.71245  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.30 RSI=38  BANC×1.08  sugar lamp feed 0.27  eq $99990.73
+[2026-09-17 00:45] 0.70937  raw t=SELL f=BUY  tech=SELL  fused T=SELL t=SELL f=BUY  cf=SELL  → HOLD veto BUY (t=SELL f=BUY tech=SELL)  k=-0.62 RSI=53  BANC×1.07  sugar lamp feed 0.27  eq $99990.73
+[2026-09-17 07:20] DA-shadow BUY  R=-0.95  2oo3+flow  banc DA r=-0.74  Δ||=0.049  g+=0.96 g-=1.00
+[2026-09-17 07:25] 0.71200  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=BUY   → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.94 RSI=61  BANC×1.08  sugar lamp feed 0.27  eq $99990.73
+[2026-09-17 08:35] DA-shadow BUY  R=-0.70  3oo3+flow  banc DA r=-0.60  Δ||=0.061  g+=0.95 g-=1.00
+[2026-09-17 14:05] 0.71205  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.43 RSI=55  BANC×1.06  sugar lamp feed 0.26  eq $99990.73
+[2026-09-17 14:40] DA-shadow BUY  R=-1.00  3oo3+flow  banc DA r=-0.76  Δ||=0.076  g+=0.94 g-=1.00
+[2026-09-17 20:45] 0.71134  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.42 RSI=50  BANC×1.06  sugar lamp feed 0.26  eq $99990.73
+[2026-09-18 02:50] DA-shadow BUY  R=+1.50  3oo3+flow  banc DA r=+0.91  Δ||=0.058  g+=0.96 g-=1.00
+[2026-09-18 03:25] 0.71301  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.94 RSI=75  BANC×1.09  sugar lamp feed 0.27  eq $99990.73
+[2026-09-18 10:05] 0.71276  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.09 RSI=48  BANC×1.09  sugar lamp feed 0.27  eq $99990.73
+[2026-09-18 16:45] 0.71240  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.21 RSI=73  BANC×1.09  sugar lamp feed 0.27  eq $99990.73
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_train_AUDUSD.json  bar 45%  skips 0  SL 2.40  TP 12.0  impulse>=0.50  RSI 52/48
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 BUY    0.10    58  0.71833  0.71747    -9.3      -9.27  ATR stop
+──────────────────────────────────────────────
+1 trades  0W/1L  win rate 0%  net -9.3 pips  net $-9.27
+costs  spread≈$1.40  commission=$0.70  slippage=$0.47  swap=$0.00
+account  start $100,000.00  balance $99,990.73  equity $99,990.73  margin $0.00  free $99,990.73  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 0.10 lots  return -0.009%
+confidence  high>=60 n/a  low<60 0/1 (0%)  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-9.27  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-AUDUSD-20260924-011906.csv

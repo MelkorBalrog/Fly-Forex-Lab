@@ -1,0 +1,144 @@
+evo     loaded  brains/EURUSD.evo.json  risk=conservative  sugar OFF×1.00  sdyn OFF  fuse-dyn ON  fuse=trend,momentum,volume,breadth,structure  SL 2.76 TP 11.8  snow on  mart off
+sim account $100,000  leverage 1:100  commission $7.00/lot RT  slip 0.2 pip  spread 0.00010  quote USD
+sizing  0.70% of equity per trade, scaled by Bayesian half-Kelly  lot 0.01-20.00  margin cap 25% of free  (conservative ×0.70)
+risk-tol  conservative  overlay SL 1.90 / TP 8.0 ATR  BANC exit <0.72  fade flatten  uncertainty ≥0.78  vol spike ATR×1.85  kill flatten
+adapt  reset C:\Workspace\FlyFOREXTrader\reports\adapt_payoff_EURUSD.json
+confidence  plausibility bar starts 45% (base 45%; evolves with calibration)
+params  SL 2.76 ATR  TP 11.8 ATR  trail 3.21/1.86  RSI arm 51/47  min |impulse| 0.50
+tax  24.0%  model=ordinary  (estimate at report time)
+learn  frozen for this replay (traces loaded, rewards off)
+brain   params  SL 2.76 ATR  RSI arm 51/47  impulse>=0.50
+brain   loaded brains/EURUSD.json  DA n=394
+risk  dynamic tape  spread/stop, ATR regime, London-NY liquidity, chase, heat  (same rules on every pair; stored pair risk_factors are not applied)
+committee  cat-fuse  DYNAMIC TREND/RANGE/BREAK/QUIET  allow {trend, momentum, volume, breadth, structure} inverse-var mix → {tech, fly-trend, fly-fade} 2oo3   both BUY and SELL   parallel: flow-algo   fusion: Kalman+Bayes gate + fly-conf (native votes, abstain only)
+pair-book  off  EURUSD frozen factory 2oo3
+snowball  on  add up to 2×55% of first lots  when fly-trend agrees, profit is past BE but not yet trailing, pullback from the extreme
+martingale  OFF (--no-martingale)
+plastic  on  PAM/PPL dopamine × eligibility on readout + sensory gains (connectome W frozen)
+BANC    female cluster net n=36  banc-clusters  risk voter mixed with MaleCNS ol_sensory+vnc_sensory  (full 188k edgelist needs CAVE_TOKEN)
+sugar   native GRN lamp  23 cells  0.45×nice on the risk pass  (4k-era: eat every 2oo3, no skip/flatten; check sugar feed for the overlay)
+rails   fly-trader kill 1.5% DD  (0.8% after snowball)  circuit 3 losses  pair-admit 2 trades / PF≥1.00 then full size
+[2026-09-07 18:20] 1.16279  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.58 RSI=50  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-09-08 01:00] 1.16293  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → BUY  1oo3-bounce  k=+0.63 RSI=47  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-09-08 07:40] 1.16144  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.02 RSI=26  BANC×1.00  sugar lamp feed 0.09  eq $100000.00
+[2026-09-08 14:20] 1.16279  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=BUY   → HOLD no-tech  k=+0.26 RSI=59  BANC×1.05  sugar lamp feed 0.25  eq $100000.00
+[2026-09-08 21:00] 1.16266  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.30 RSI=44  BANC×1.06  sugar lamp feed 0.25  eq $100000.00
+[2026-09-09 03:40] 1.16347  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.72 RSI=57  BANC×1.06  sugar lamp feed 0.25  eq $100000.00
+[2026-09-09 10:00] skip BUY: day bias DOWN
+[2026-09-09 10:20] 1.16293  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.13 RSI=37  BANC×1.10  sugar lamp feed 0.27  eq $100000.00
+[2026-09-09 15:15] skip BUY: day bias DOWN
+[2026-09-09 15:25] skip BUY: day bias DOWN
+[2026-09-09 15:35] skip BUY: day bias DOWN
+[2026-09-09 17:00] 1.16414  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.21 RSI=56  BANC×1.07  sugar lamp feed 0.26  eq $100000.00
+[2026-09-09 23:40] 1.16387  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.58 RSI=47  BANC×1.07  sugar lamp feed 0.26  eq $100000.00
+[2026-09-10 06:20] 1.16428  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.73 RSI=57  BANC×1.07  sugar lamp feed 0.26  eq $100000.00
+[2026-09-10 09:35] skip BUY: day bias DOWN
+[2026-09-10 12:25] SELL EURUSD 1.70 lots @ 1.16245  margin $1976.16  comm $5.95  bias-down  raw tech=HOLD/hold t=SELL f=BUY  fused T=HOLD t=SELL f=BUY cf=SELL@0.40 fam {} bias-down  conf 67%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.87  data-weight=0.00  1.70 lots  risk $136 (0.14% eq)  SL 8.0 pips  ~$136 if stopped  bayes P(edge)=0.60  p=0.43  R=2.37  ½K=0.047  scale=0.78  risk 0.55%  BANC×1.09  admit×0.60  tape×0.45  cost×0.78  vol×0.78  liq×1.00  chase×0.74  heat×1.00  (DOWN, k -0.90)  → OK|1001|PAPER
+[2026-09-10 12:35] CLOSE SELL WIN  1.70 lots  conf 67%  bar 45%  +26.1 pips  $+443.16  comm $11.90 slip $9.24 swap $0.00  snowball 0  (ATR target)
+       → OK|1001
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-10 13:00] 1.16090  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=SELL  → HOLD no-tech  k=-0.91 RSI=40  BANC×1.05  sugar lamp feed 0.26  eq $100443.16
+[2026-09-10 13:05] SELL EURUSD 1.40 lots @ 1.16042  margin $1624.59  comm $4.90  bias-down  raw tech=SELL/cont t=SELL f=BUY  fused T=SELL t=SELL f=BUY cf=HOLD@0.42 fam {} bias-down  conf 65%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.73  data-weight=0.00  1.40 lots  risk $122 (0.12% eq)  SL 8.7 pips  ~$121 if stopped  bayes P(edge)=0.61  p=0.42  R=2.35  ½K=0.044  scale=0.73  risk 0.51%  BANC×1.05  admit×0.60  tape×0.44  cost×0.81  vol×0.78  liq×1.00  chase×0.70  heat×1.00  (DOWN, k -0.91)  → OK|1002|PAPER
+[2026-09-10 13:30] CLOSE SELL LOSS  1.40 lots  conf 65%  bar 45%  -10.3 pips  $-144.33  comm $9.80 slip $7.32 swap $0.00  snowball 0  (ATR stop)
+       → OK|1002
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-10 19:40] 1.16144  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.70 RSI=37  BANC×1.01  sugar lamp feed 0.27  eq $100298.84
+[2026-09-11 02:20] 1.16104  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.63 RSI=27  BANC×1.01  sugar lamp feed 0.27  eq $100298.84
+[2026-09-11 07:20] skip BUY: day bias DOWN
+[2026-09-11 07:30] skip BUY: day bias DOWN
+[2026-09-11 09:00] 1.16023  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=HOLD  → HOLD no-tech  k=-0.69 RSI=35  BANC×1.10  sugar lamp feed 0.27  eq $100298.84
+[2026-09-11 12:35] SELL EURUSD 2.35 lots @ 1.15894  margin $2723.52  comm $8.22  bias-down  raw tech=HOLD/hold t=SELL f=BUY  fused T=HOLD t=SELL f=BUY cf=SELL@0.40 fam {} bias-down  conf 64%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.72  data-weight=0.00  2.35 lots  risk $189 (0.19% eq)  SL 8.0 pips  ~$188 if stopped  bayes P(edge)=0.61  p=0.42  R=2.36  ½K=0.040  scale=0.68  risk 0.47%  BANC×1.08  tape×0.43  cost×0.79  vol×0.78  liq×1.00  chase×1.00  heat×0.70  (DOWN, k -0.59)  → OK|1003|PAPER
+[2026-09-11 12:45] CLOSE SELL LOSS  2.35 lots  conf 64%  bar 45%  -11.6 pips  $-272.15  comm $16.45 slip $11.06 swap $0.00  snowball 0  (ATR stop)
+       → OK|1003
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-11 15:40] 1.16063  raw t=BUY  f=BUY  tech=BUY   fused T=BUY  t=BUY  f=BUY  cf=BUY   → BUY  3oo3+flow  k=+0.79 RSI=42  BANC×1.01  sugar lamp feed 0.27  eq $100026.68
+[2026-09-13 23:50] 1.15955  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.04 RSI=45  BANC×1.02  sugar lamp feed 0.27  eq $100026.68
+[2026-09-14 06:30] 1.15594  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.81 RSI=31  BANC×1.02  sugar lamp feed 0.27  eq $100026.68
+[2026-09-14 07:00] SELL EURUSD 1.22 lots @ 1.15586  margin $1410.15  comm $4.27  bias-down  raw tech=HOLD/hold t=SELL f=BUY  fused T=HOLD t=SELL f=BUY cf=HOLD@0.42 fam {} bias-down  conf 63%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.59  similar=0.50  TA=0.67  data-weight=0.00  1.22 lots  risk $98 (0.10% eq)  SL 8.0 pips  ~$98 if stopped  bayes P(edge)=0.59  p=0.42  R=2.33  ½K=0.038  scale=0.62  risk 0.44%  BANC×1.06  tape×0.25  cost×0.77  vol×0.78  liq×0.75  chase×1.00  heat×0.50  (DOWN, k -0.76)  → OK|1004|PAPER
+[2026-09-14 09:00] CLOSE SELL WIN  1.22 lots  conf 63%  bar 45%  +13.6 pips  $+166.33  comm $8.54 slip $6.44 swap $0.00  snowball 0  (trail stop)
+       → OK|1004
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-14 13:10] 1.15393  raw t=HOLD f=BUY  tech=HOLD  fused T=HOLD t=HOLD f=BUY  cf=BUY   → HOLD no-tech  k=-0.31 RSI=44  BANC×1.09  sugar lamp feed 0.27  eq $100193.01
+[2026-09-14 14:00] SELL EURUSD 4.63 lots @ 1.15280  margin $5337.45  comm $16.20  bias-down  raw tech=HOLD/hold t=SELL f=BUY  fused T=HOLD t=SELL f=BUY cf=HOLD@0.42 fam {} bias-down  conf 61%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.62  similar=0.50  TA=0.56  data-weight=0.00  4.63 lots  risk $371 (0.37% eq)  SL 8.0 pips  ~$370 if stopped  bayes P(edge)=0.61  p=0.42  R=2.35  ½K=0.043  scale=0.72  risk 0.50%  BANC×1.09  tape×0.79  cost×0.79  vol×1.00  liq×1.00  chase×1.00  heat×1.00  (DOWN, k -0.65)  → OK|1005|PAPER
+[2026-09-14 14:10] CLOSE SELL LOSS  4.63 lots  conf 62%  bar 45%  -11.5 pips  $-533.81  comm $32.41 slip $23.98 swap $0.00  snowball 0  (ATR stop)
+       → OK|1005
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-14 19:50] 1.15527  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.88 RSI=27  BANC×1.01  sugar lamp feed 0.26  eq $99659.20
+[2026-09-15 02:30] 1.15393  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.89 RSI=23  BANC×1.01  sugar lamp feed 0.26  eq $99659.20
+[2026-09-15 09:10] 1.15393  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=HOLD  → HOLD no-tech  k=-0.64 RSI=51  BANC×1.11  sugar lamp feed 0.28  eq $99659.20
+[2026-09-15 14:40] skip BUY: day bias DOWN
+[2026-09-15 14:50] BUY EURUSD 2.71 lots @ 1.15508  margin $3130.26  comm $9.48  3oo3+flow size×1.25  conf 67%  raw tech=BUY/bounce t=BUY f=BUY  fused T=BUY t=BUY f=BUY cf=BUY@0.32 fam {} 3oo3+flow  conf 67%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.62  similar=0.50  TA=0.79  data-weight=0.00  2.71 lots  risk $217 (0.22% eq)  SL 8.0 pips  ~$217 if stopped  bayes P(edge)=0.60  p=0.42  R=2.37  ½K=0.042  scale=0.70  risk 0.49%  BANC×1.09  admit×0.60  tape×0.55  cost×0.78  vol×1.00  liq×1.00  chase×1.00  heat×0.70  (UP, k +0.74)  → OK|1006|PAPER
+[2026-09-15 15:20] CLOSE BUY LOSS  2.71 lots  conf 67%  bar 45%  -3.5 pips  $-95.69  comm $18.97 slip $13.47 swap $0.00  snowball 0  (scalp scratch)
+       → OK|1006
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-15 15:50] 1.15447  raw t=BUY  f=HOLD tech=BUY   fused T=BUY  t=BUY  f=HOLD cf=BUY   → BUY  2oo3+flow  k=+0.61 RSI=44  BANC×1.01  sugar lamp feed 0.27  eq $99563.51
+[2026-09-15 22:30] 1.15447  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.32 RSI=51  BANC×1.01  sugar lamp feed 0.27  eq $99563.51
+[2026-09-16 05:10] 1.15487  raw t=HOLD f=HOLD tech=BUY   fused T=BUY  t=HOLD f=HOLD cf=HOLD  → HOLD 1oo3-skip (cont t=HOLD f=HOLD)  k=+0.84 RSI=67  BANC×1.01  sugar lamp feed 0.27  eq $99563.51
+[2026-09-16 08:55] skip BUY: day bias DOWN
+[2026-09-16 09:25] skip BUY: day bias DOWN
+[2026-09-16 11:50] 1.15393  raw t=SELL f=BUY  tech=SELL  fused T=SELL t=SELL f=BUY  cf=SELL  → HOLD veto BUY (t=SELL f=BUY tech=SELL)  k=-0.78 RSI=44  BANC×1.10  sugar lamp feed 0.27  eq $99563.51
+[2026-09-16 18:30] 1.14850  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.09 RSI=17  BANC×1.10  sugar lamp feed 0.27  eq $99563.51
+[2026-09-17 01:10] 1.14639  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.00 RSI=36  BANC×1.10  sugar lamp feed 0.27  eq $99563.51
+[2026-09-17 07:50] 1.14758  raw t=BUY  f=HOLD tech=HOLD  fused T=HOLD t=BUY  f=HOLD cf=BUY   → HOLD no-tech  k=+0.65 RSI=45  BANC×1.09  sugar lamp feed 0.27  eq $99563.51
+[2026-09-17 07:55] skip BUY: day bias DOWN
+[2026-09-17 08:05] skip BUY: day bias DOWN
+[2026-09-17 08:15] skip BUY: day bias DOWN
+[2026-09-17 08:25] skip BUY: day bias DOWN
+[2026-09-17 08:35] skip BUY: day bias DOWN
+[2026-09-17 08:45] skip BUY: day bias DOWN
+[2026-09-17 08:55] skip BUY: day bias DOWN
+[2026-09-17 09:55] skip BUY: day bias DOWN
+[2026-09-17 11:25] skip BUY: day bias DOWN
+[2026-09-17 11:35] skip BUY: day bias DOWN
+[2026-09-17 12:15] BUY EURUSD 1.32 lots @ 1.14924  margin $1517.00  comm $4.62  bias-up  raw tech=HOLD/hold t=BUY f=HOLD  fused T=HOLD t=BUY f=HOLD cf=BUY@0.40 fam {} bias-up  conf 59%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.47  data-weight=0.00  1.32 lots  risk $106 (0.11% eq)  SL 8.0 pips  ~$106 if stopped  bayes P(edge)=0.60  p=0.42  R=2.33  ½K=0.043  scale=0.73  risk 0.51%  BANC×1.08  admit×0.60  tape×0.38  cost×0.76  vol×1.00  liq×1.00  chase×1.00  heat×0.50  (UP, k +0.43)  → OK|1007|PAPER
+[2026-09-17 12:45] CLOSE BUY LOSS  1.32 lots  conf 59%  bar 45%  -4.9 pips  $-64.12  comm $9.24 slip $6.82 swap $0.00  snowball 0  (scalp scratch)
+       → OK|1007
+       rails  circuit  3 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-17 14:30] 1.14943  raw t=BUY  f=BUY  tech=HOLD  fused T=HOLD t=BUY  f=BUY  cf=HOLD  → HOLD no-tech  k=+0.87 RSI=54  BANC×1.00  sugar lamp feed 0.26  eq $99499.39
+[2026-09-17 21:10] 1.14837  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.14 RSI=63  BANC×1.01  sugar lamp feed 0.27  eq $99499.39
+[2026-09-18 03:50] 1.14916  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.49 RSI=68  BANC×1.01  sugar lamp feed 0.27  eq $99499.39
+[2026-09-18 10:30] 1.14837  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.26 RSI=41  BANC×1.07  sugar lamp feed 0.27  eq $99499.39
+[2026-09-18 12:35] SELL EURUSD 0.78 lots @ 1.14658  margin $894.34  comm $2.73  bias-down  raw tech=HOLD/hold t=SELL f=BUY  fused T=HOLD t=SELL f=BUY cf=SELL@0.40 fam {} bias-down  conf 68%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.60  similar=0.50  TA=0.87  data-weight=0.00  0.78 lots  risk $63 (0.06% eq)  SL 8.0 pips  ~$62 if stopped  bayes P(edge)=0.60  p=0.42  R=2.29  ½K=0.039  scale=0.65  risk 0.45%  BANC×1.09  admit×0.60  tape×0.25  cost×0.79  vol×1.00  liq×1.00  chase×0.81  heat×0.35  (DOWN, k -0.87)  → OK|1008|PAPER
+[2026-09-18 13:35] CLOSE SELL LOSS  0.78 lots  conf 68%  bar 45%  -0.9 pips  $-6.96  comm $5.46 slip $3.95 swap $0.00  snowball 0  (scalp scratch)
+       → OK|1008
+       rails  circuit  4 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-18 17:10] 1.14863  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.08 RSI=78  BANC×1.01  sugar lamp feed 0.27  eq $99492.44
+[2026-09-21 01:20] 1.14877  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.06 RSI=61  BANC×1.01  sugar lamp feed 0.27  eq $99492.44
+[2026-09-21 08:00] 1.14784  raw t=SELL f=BUY  tech=SELL  fused T=SELL t=SELL f=BUY  cf=SELL  → HOLD veto BUY (t=SELL f=BUY tech=SELL)  k=-0.71 RSI=49  BANC×1.11  sugar lamp feed 0.28  eq $99492.44
+[2026-09-21 14:05] skip BUY: day bias DOWN
+[2026-09-21 14:40] 1.14771  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.14 RSI=43  BANC×1.09  sugar lamp feed 0.27  eq $99492.44
+[2026-09-21 21:20] 1.14705  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.76 RSI=54  BANC×1.10  sugar lamp feed 0.27  eq $99492.44
+[2026-09-22 04:00] 1.14758  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=+0.57 RSI=57  BANC×1.10  sugar lamp feed 0.27  eq $99492.44
+[2026-09-22 08:15] SELL EURUSD 0.93 lots @ 1.14422  margin $1064.13  comm $3.26  bias-down  raw tech=HOLD/hold t=SELL f=BUY  fused T=HOLD t=SELL f=BUY cf=HOLD@0.42 fam {} bias-down  conf 65%  bar 45%  cal P(win)=0.50  n=0  P(edge)=0.61  similar=0.50  TA=0.71  data-weight=0.00  0.93 lots  risk $75 (0.08% eq)  SL 8.0 pips  ~$74 if stopped  bayes P(edge)=0.61  p=0.43  R=2.30  ½K=0.046  scale=0.77  risk 0.54%  BANC×1.09  admit×0.60  tape×0.25  cost×0.80  vol×0.78  liq×0.90  chase×0.90  heat×0.35  (DOWN, k -0.82)  → OK|1009|PAPER
+[2026-09-22 08:40] CLOSE SELL LOSS  0.93 lots  conf 65%  bar 45%  -14.1 pips  $-131.26  comm $6.51 slip $5.74 swap $0.00  snowball 0  (ATR stop)
+       → OK|1009
+       rails  circuit  5 losses → pause 12 bars
+       adapt  bar 45%  cal P(win)=0.50  P(edge) floor 0.38  learn frozen
+[2026-09-22 10:40] 1.14705  raw t=SELL f=BUY  tech=HOLD  fused T=HOLD t=SELL f=BUY  cf=HOLD  → HOLD no-tech  k=-0.40 RSI=61  BANC×1.00  sugar lamp feed 0.26  eq $99361.18
+[2026-09-22 17:20] 1.14338  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.95 RSI=32  BANC×1.02  sugar lamp feed 0.27  eq $99361.18
+[2026-09-23 00:00] 1.14495  raw t=HOLD f=HOLD tech=HOLD  fused T=HOLD t=HOLD f=HOLD cf=HOLD  → HOLD no-tech  k=-0.22 RSI=42  BANC×1.02  sugar lamp feed 0.27  eq $99361.18
+adapt  saved C:\Workspace\FlyFOREXTrader\reports\adapt_payoff_EURUSD.json  bar 45%  skips 0  SL 2.76  TP 11.8  impulse>=0.50  RSI 51/47
+
+──────── trade report (costs included) ────────
+  # side   lots  conf    entry     exit    pips        USD  reason
+  1 SELL   1.70    67  1.16245  1.15977   +26.1    +443.16  ATR target
+  2 SELL   1.40    65  1.16042  1.16138   -10.3    -144.33  ATR stop
+  3 SELL   2.35    64  1.15894  1.16003   -11.6    -272.15  ATR stop
+  4 SELL   1.22    63  1.15586  1.15443   +13.6    +166.33  trail stop
+  5 SELL   4.63    62  1.15280  1.15388   -11.5    -533.81  ATR stop
+  6 BUY    2.71    67  1.15508  1.15479    -3.5     -95.69  scalp scratch
+  7 BUY    1.32    59  1.14924  1.14883    -4.9     -64.12  scalp scratch
+  8 SELL   0.78    68  1.14658  1.14660    -0.9      -6.96  scalp scratch
+  9 SELL   0.93    65  1.14422  1.14556   -14.1    -131.26  ATR stop
+──────────────────────────────────────────────
+9 trades  2W/7L  win rate 22%  net -17.1 pips  net $-638.83
+costs  spread≈$172.23  commission=$119.28  slippage=$88.03  swap=$0.00
+account  start $100,000.00  balance $99,361.18  equity $99,361.18  margin $0.00  free $99,361.18  level n/a
+leverage 1:100  rejected 0  stop-outs 0  avg 1.89 lots  return -0.639%
+confidence  high>=60 2/8 (25%)  low<60 0/1 (0%)  (should separate as n grows)
+plausibility  bar 45% -> 45%  mean cal P(win) 0.50
+tax  model=no tax due on a net loss; the loss may carry forward depending on local rules  estimated due $0.00  after-tax $-638.83  effective 0.0%
+      estimate only - not tax advice; set --tax-rate / --tax-model for your jurisdiction
+saved C:\Workspace\FlyFOREXTrader\reports\trades-EURUSD-20260922-234419.csv

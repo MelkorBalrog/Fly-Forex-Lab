@@ -1,0 +1,66 @@
+{
+  "symbol": "EURGBP",
+  "kind": "evo",
+  "saved_at": "2026-09-23 06:28:21",
+  "fitness": -1000000.0,
+  "note": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.40 TP 12.0  snow on  mart on",
+  "genome": {
+    "params": {
+      "sl_atr": 2.4,
+      "tp_atr": 12.0,
+      "trail_arm_atr": 3.195949066666667,
+      "trail_gap_atr": 1.8,
+      "be_atr": 1.5,
+      "rsi_buy_arm": 52.0,
+      "rsi_buy_fire": 62.0,
+      "rsi_sell_arm": 48.0,
+      "rsi_sell_fire": 38.0,
+      "rsi_cont_lo": 32.0,
+      "rsi_cont_hi": 42.0,
+      "min_impulse": 0.5,
+      "cont_impulse": 0.75,
+      "cooldown_bars": 8.0,
+      "lock_win_pips": 8.0,
+      "max_hold_bars": 64.0,
+      "min_hold_bars": 4.0,
+      "n_updates": 0
+    },
+    "risk_tol": "balanced",
+    "fuse_dynamic": false,
+    "sugar": false,
+    "sugar_amt": 1.0,
+    "sugar_dyn": false,
+    "fuse_cats": "",
+    "fuse_inds": "all",
+    "cat_inhibit": 0.5,
+    "no_snowball": false,
+    "no_martingale": false
+  },
+  "meta": {
+    "n_trades": 0,
+    "da_n": 4,
+    "fitness": -1000000.0,
+    "max_dd": 0.0,
+    "net_usd": 0.0,
+    "evolve": {
+      "pop": 3,
+      "gens": 2,
+      "seed": 1470,
+      "history": [
+        {
+          "gen": 1,
+          "best_fitness": -1000000.0,
+          "best": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.40 TP 12.0  snow on  mart on",
+          "net_usd": 0.0
+        },
+        {
+          "gen": 2,
+          "best_fitness": -1000000.0,
+          "best": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.40 TP 12.0  snow on  mart on",
+          "net_usd": 0.0
+        }
+      ]
+    },
+    "genome_note": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.40 TP 12.0  snow on  mart on"
+  }
+}

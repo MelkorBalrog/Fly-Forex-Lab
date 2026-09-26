@@ -1,0 +1,2 @@
+# Optional CUDA/tensor 4th voter (3oo4). Without this, a numpy MLP is used.
+torch>=2.1.0

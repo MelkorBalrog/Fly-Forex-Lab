@@ -1,0 +1,29 @@
+{
+  "symbol": "EURUSD",
+  "kind": "book",
+  "net_usd": 12336.45,
+  "return": 0.1234,
+  "cfg": {
+    "spike_mult": 2.3,
+    "spike_floor": 80000.0,
+    "worth_impulse": 0.5,
+    "worth_frac": 0.7,
+    "worth_span": 0.3,
+    "day_lock_usd": 8000.0,
+    "tape_floor": 0.9,
+    "target_return": 0.07,
+    "side": -1.0,
+    "entry_impulse": 0.0,
+    "be_atr": 200.0,
+    "trail_arm_atr": 400.0,
+    "trail_gap_atr": 8.0,
+    "max_hold_bars": 1600.0,
+    "flat_hour": 24.0,
+    "peak_bank": 0.2,
+    "kill_dd": 0.08,
+    "tp_atr": 40.0,
+    "sl_atr": 8.0,
+    "hold_risk": 0.0,
+    "max_trades": 2.0
+  }
+}

@@ -1,0 +1,3 @@
+n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
+1,SELL,11.61,62.7,45.0,0.5,2026-09-14 08:45,2026-09-14 09:40,1.1554,1.155,3.3,460.55,81.27,67.71,0.0,379.28,prediction hit,100379.28
+2,SELL,0.05,68.6,45.0,0.5,2026-09-14 11:10,2026-09-14 11:20,1.15371,1.15413,-4.9,-2.11,0.35,0.26,0.0,-2.46,prediction fail,100376.82

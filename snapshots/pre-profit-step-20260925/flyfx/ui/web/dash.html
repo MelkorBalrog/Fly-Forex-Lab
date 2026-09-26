@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>FlyFOREX — live brains</title>
+  <style>
+    :root {
+      --bg: #07090d;
+      --panel: #10151c;
+      --ink: #d7e0ea;
+      --dim: #7d8b99;
+      --line: #24303c;
+      --buy: #3ee0b0;
+      --sell: #ff6b4a;
+      --hold: #c9b36a;
+      --trend: #5ee0ff;
+      --fade: #d38bff;
+      --conf: #f0c14b;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+      font: 13px/1.4 "Segoe UI", "IBM Plex Sans", sans-serif;
+    }
+    header {
+      display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+      padding: 12px 16px 8px; border-bottom: 1px solid var(--line);
+    }
+    header h1 { font-size: 15px; letter-spacing: .14em; margin: 0; font-weight: 650; }
+    header .meta { color: var(--dim); }
+    header .eq { font-variant-numeric: tabular-nums; }
+    header .eq.up { color: var(--buy); }
+    header .eq.dn { color: var(--sell); }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      padding: 10px 16px; border-bottom: 1px solid var(--line); background: #0b1016;
+    }
+    .controls label { color: var(--dim); font-size: 11px; letter-spacing: .08em; }
+    .controls input[type=number], .controls input[type=text], .controls select {
+      background: #10151c; color: var(--ink); border: 1px solid var(--line);
+      border-radius: 6px; padding: 6px 8px; font: inherit;
+    }
+    .controls input#sugar-amt { width: 4.6em; }
+    .controls input:disabled,
+    .controls select:disabled,
+    .fuse-picks input:disabled,
+    .fuse-inds input:disabled {
+      opacity: .72;
+      cursor: not-allowed;
+    }
+    .controls button {
+      background: #1a2733; color: var(--ink); border: 1px solid var(--line);
+      border-radius: 6px; padding: 6px 12px; font: inherit; cursor: pointer;
+    }
+    .controls button.primary { background: #14352e; border-color: #1d6b58; color: var(--buy); }
+    .controls button.danger { background: #2a120e; border-color: #7a3328; color: var(--sell); }
+    .controls .cfg-sep {
+      display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center;
+      padding: 2px 8px; border: 1px solid var(--line); border-radius: 6px;
+      color: var(--dim); font-size: 11px; letter-spacing: .08em;
+    }
+    .controls .hint { color: var(--dim); font-size: 11px; flex: 1 0 100%; }
+    .controls .chk {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--dim); font-size: 11px; letter-spacing: .04em;
+    }
+    .controls .chk.dyn { color: var(--conf); font-weight: 650; letter-spacing: .06em; }
+    .fuse-picks {
+      display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
+      padding: 6px 16px; border-bottom: 1px solid var(--line); background: #0b1016;
+      font-size: 11px; color: var(--dim);
+    }
+    .fuse-picks .fuse-lab { letter-spacing: .14em; font-weight: 650; color: var(--conf); }
+    .fuse-picks .chk.dyn { color: var(--conf); font-weight: 650; letter-spacing: .06em; }
+    .fuse-inds {
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 6px 16px 8px; border-bottom: 1px solid var(--line); background: #0b1016;
+      font-size: 11px; color: var(--dim);
+    }
+    .fuse-inds .ind-row {
+      display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center;
+    }
+    .fuse-inds .ind-row.out { opacity: .38; }
+    .fuse-inds .ind-cat {
+      min-width: 88px; letter-spacing: .1em; font-weight: 650; color: var(--ink);
+    }
+    .cat-row.out { opacity: .38; }
+    .controls button.train { background: #241a33; border-color: #6b4a8a; color: var(--fade); }
+    .wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 10px 12px; }
+    @media (max-width: 1100px) { .wrap { grid-template-columns: 1fr 1fr; } }
+    .pipeline {
+      display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+      padding: 8px 16px; border-bottom: 1px solid var(--line);
+      font-size: 11px; color: var(--dim); letter-spacing: .03em; background: #0b1016;
+    }
+    .pipeline b { color: var(--ink); font-weight: 650; }
+    .pipeline .arr { color: #3d4d5c; }
+    .pipeline .now { color: var(--conf); }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px 12px;
+      min-height: 280px;
+    }
+    .card.committee, .card.log, .card.nodes, .card.cns { grid-column: 1 / -1; min-height: 0; }
+    .cns-head {
+      margin: 0 0 8px; font-size: 12px; letter-spacing: .16em; color: var(--dim); font-weight: 650;
+      display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .cns-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cns-tools button {
+      background: #1a2733; color: var(--ink); border: 1px solid var(--line);
+      border-radius: 99px; padding: 3px 10px; font: inherit; font-size: 11px;
+      letter-spacing: .08em; cursor: pointer;
+    }
+    .cns-tools button.on { background: #14352e; border-color: #1d6b58; color: var(--buy); }
+    .cns-body { display: grid; grid-template-columns: 720px 210px; gap: 12px; align-items: start; justify-content: start; }
+    @media (max-width: 980px) { .cns-body { grid-template-columns: minmax(0, 720px); } }
+    .cns-stage {
+      position: relative; width: 720px; max-width: 100%; aspect-ratio: 720 / 380; height: auto;
+      background: #f3eee4; border-radius: 8px; overflow: hidden; border: 1px solid #d5cbbd;
+    }
+    .cns-stage canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair;
+    }
+    .cns-hover {
+      position: absolute; left: 10px; bottom: 8px; font-size: 11px;
+      color: #3d4650; background: #f3eee4d8; padding: 2px 8px; border-radius: 4px;
+      pointer-events: none; letter-spacing: .04em;
+    }
+    .cns-legend { font-size: 11px; color: var(--dim); display: flex; flex-direction: column; gap: 4px; }
+    .cns-legend .rg {
+      display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center;
+    }
+    .cns-legend .sw { width: 10px; height: 10px; border-radius: 2px; }
+    .cns-legend .rg.hot .nm { color: var(--ink); }
+    .cns-legend .val { font-variant-numeric: tabular-nums; }
+    .cns-note { color: var(--dim); font-size: 10px; margin-top: 8px; line-height: 1.35; }
+    .node-board { display: flex; flex-direction: column; gap: 8px; }
+    .cat-row {
+      display: grid; grid-template-columns: 140px repeat(4, minmax(0, 1fr)); gap: 8px;
+      padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: #0c1117;
+    }
+    .cat-row.sensors { grid-template-columns: 1fr; }
+    @media (max-width: 1100px) { .cat-row { grid-template-columns: 1fr 1fr; } }
+    .cat-row.winner { border-color: #1d6b58; background: #10241f; }
+    .cat-row.ghost { opacity: .42; }
+    .cat-row.inhibited { opacity: .7; }
+    .cat-lab .nm { color: var(--ink); font-weight: 650; letter-spacing: .08em; display: block; }
+    .cat-lab .sub { margin-top: 4px; }
+    .mini {
+      background: var(--panel); border: 1px solid #24303c; border-radius: 8px; padding: 6px 8px 8px;
+    }
+    .mini h3 {
+      margin: 0 0 4px; font-size: 10px; letter-spacing: .12em; color: var(--dim); font-weight: 650;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .mini .eyes { gap: 4px; }
+    .mini .eye-stage { border-radius: 8px; }
+    .mini .bar-wrap { margin: 6px 0 0; }
+    .mini .motor { height: 16px; margin-top: 4px; }
+    .mini .reason { color: var(--dim); font-size: 10px; margin-top: 4px; min-height: 14px; }
+    .cat-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .cat-table th {
+      text-align: left; color: var(--dim); font-weight: 600; font-size: 10px;
+      letter-spacing: .1em; padding: 4px 6px; border-bottom: 1px solid var(--line);
+    }
+    .cat-table td { padding: 5px 6px; border-top: 1px solid #1c2630; vertical-align: top; }
+    .cat-table tr.winner { background: #10241f; }
+    .cat-table tr.inhibited { opacity: .55; }
+    .cat-table tr.ghost { opacity: .4; }
+    .cat-table .sub { color: var(--dim); font-size: 10px; display: block; }
+    .card h2 {
+      margin: 0 0 8px; font-size: 12px; letter-spacing: .16em; color: var(--dim); font-weight: 650;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .pill {
+      font-size: 11px; letter-spacing: .08em; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line);
+    }
+    .pill.BUY { color: var(--buy); border-color: #1d6b58; background: #0d2a24; }
+    .pill.SELL { color: var(--sell); border-color: #7a3328; background: #2a120e; }
+    .pill.HOLD { color: var(--hold); border-color: #5c5228; background: #221e10; }
+    .eyes { display: flex; gap: 8px; align-items: stretch; }
+    .eye { flex: 1; min-width: 0; }
+    .eye .lbl {
+      color: var(--dim); font-size: 10px; letter-spacing: .14em; margin-bottom: 5px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .eye .lbl::before {
+      content: ""; width: 7px; height: 8px; flex: 0 0 auto;
+      background: currentColor; opacity: .7;
+      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    }
+    .eye.bull .lbl { color: #7ee8ffc8; }
+    .eye.bear .lbl { color: #ff8ac6c8; }
+    .eye-stage {
+      position: relative;
+      aspect-ratio: 1;
+      background: #070b10;
+      border: 1px solid #1a2834;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        inset 0 0 22px rgba(0,0,0,.72),
+        inset 0 1px 0 rgba(180,220,255,.05);
+    }
+    .eye-stage.bull { border-color: #1b4554; }
+    .eye-stage.bear { border-color: #4a2444; }
+    .eye-stage canvas { display: block; width: 100%; height: 100%; }
+    .bar-wrap { margin: 10px 0 6px; }
+    .bar-meta { display: flex; justify-content: space-between; color: var(--dim); font-size: 11px; }
+    .bar {
+      height: 8px; background: #1a222b; border-radius: 99px; overflow: hidden; position: relative; margin-top: 4px;
+    }
+    .bar .tau {
+      position: absolute; top: 0; bottom: 0; width: 2px; background: #fff8; z-index: 2;
+    }
+    .bar .fill { height: 100%; width: 0; transform-origin: left; }
+    .motor { display: flex; gap: 1px; height: 28px; align-items: flex-end; margin-top: 8px; }
+    .motor i { flex: 1; background: #2a3a48; display: block; min-height: 2px; }
+    .job { color: var(--dim); font-size: 11px; min-height: 32px; margin-top: 8px; }
+    .spark { width: 100%; height: 42px; display: block; }
+    .committee .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #1c2630; }
+    .decision {
+      margin-top: 10px; padding: 10px; border-radius: 8px; background: #0c1117; border: 1px solid var(--line);
+      font-size: 16px; letter-spacing: .08em; text-align: center;
+    }
+    .log { grid-column: 1 / -1; max-height: 220px; overflow: auto; }
+    .log table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .log th { text-align: left; color: var(--dim); font-weight: 600; font-size: 10px; letter-spacing: .12em; padding: 4px; }
+    .log td { padding: 3px 4px; border-top: 1px solid #1c2630; }
+    .snow { color: var(--conf); }
+    .stale { opacity: .45; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FLY FOREX LAB</h1>
+    <div class="meta" id="clock">waiting for trader…</div>
+    <div class="meta" id="symbol"></div>
+    <div class="eq" id="equity"></div>
+    <div class="meta" id="pos"></div>
+    <div class="meta snow" id="snow"></div>
+    <div class="meta" id="banc"></div>
+  </header>
+  <div class="controls">
+    <label>PAIR
+      <select id="pair"></select>
+    </label>
+    <label>TF
+      <select id="timeframe">
+        <option value="NATIVE">file native</option>
+        <option value="M1">M1 1m</option>
+        <option value="M5" selected>M5 5m</option>
+        <option value="M10">M10 10m</option>
+        <option value="M15">M15 15m</option>
+        <option value="M30">M30 30m</option>
+        <option value="H1">H1 1h</option>
+        <option value="H4">H4 4h</option>
+        <option value="D1">D1 1d</option>
+      </select>
+    </label>
+    <label>BARS
+      <input id="bars" type="number" min="0" max="50000" step="100" value="2000"/>
+    </label>
+    <label>CAPITAL $
+      <input id="capital" type="number" min="100" max="10000000" step="1000" value="100000"/>
+    </label>
+    <label>RISK
+      <select id="risk-tol" title="scalp (default) = 4k cat-fuse companion: factory SL/TP, VOL 12%, snowball on, bank off. balanced = freeze factory closes (use with CLI --legacy-2oo3 for the +$1.9k book).">
+        <option value="conservative">conservative</option>
+        <option value="balanced">balanced</option>
+        <option value="aggressive">aggressive</option>
+        <option value="scalp" selected>scalp</option>
+      </select>
+    </label>
+    <label title="Percent of available money (free margin / equity) pledged as position margin. Blank = RISK profile (cons 50 / bal 100 / scalp 12 / agg 100). max-lots can still clamp.">VOL %
+      <input id="volume-pct" type="number" min="0" max="100" step="5" placeholder="auto" title="50 = half of available money as margin. Blank follows RISK profile (scalp → 12%)."/>
+    </label>
+    <label>VOL mode
+      <select id="volume-mode" title="equity: %% of available money as margin; fixed: use VOL %; auto: profile × tape × BANC">
+        <option value="equity">equity</option>
+        <option value="fixed">fixed</option>
+        <option value="auto" selected>auto</option>
+      </select>
+    </label>
+    <label>DATA
+      <input id="datafile" type="file" accept=".csv,.txt,.tsv,.json,.hst"/>
+    </label>
+    <label>or path
+      <input id="datapath" type="text" placeholder="C:\\data\\EURUSD_M10.csv" spellcheck="false"/>
+    </label>
+    <button class="primary" id="btn-replay" type="button">Replay sim</button>
+    <button class="train" id="btn-train" type="button">Train DA</button>
+    <button class="train" id="btn-recalibrate" type="button" title="Full evolve + fit_latent on the loaded window. Writes brains/{PAIR}.evo.json and reports/risk_factors_{PAIR}.json.">Recalibrate</button>
+    <label title="Before Replay: train AI only (fast), calibrate knobs only (slow), both, or off.">RECAL
+      <select id="recalibrate-mode">
+        <option value="train" selected>train AI</option>
+        <option value="search">calibrate</option>
+        <option value="both">train+calibrate</option>
+        <option value="off">off</option>
+      </select>
+    </label>
+    <label class="chk" title="CUDA/tensor MLP as 4th voter → committee 3oo4. Trains when RECAL is train or train+calibrate. Retrain keeps prior weights (warm-start + distill + replay) unless Fresh ANN is checked."><input type="checkbox" id="nn-vote" checked/> AI 3oo4</label>
+    <label class="chk" title="OHLC chart-CNN + features (needs PyTorch). Not a language VLM — tiny Conv2d on rasterized candles."><input type="checkbox" id="nn-vision" checked/> chart vision</label>
+    <label class="chk" title="Train ANNs from scratch on this RECAL (ignore brains/{PAIR}.bma.* and .nn_mem.npz). Leave unchecked to transfer knowledge from prior training."><input type="checkbox" id="nn-fresh"/> Fresh ANN</label>
+    <label class="chk" title="Feature-space FGSM/PGD adversarial training while fitting the 10-net BMA — makes the 4th voter more reliable under noisy tape. On by default."><input type="checkbox" id="nn-adv" checked/> adv train</label>
+    <label class="chk" title="Train the separate group of 20 settings nets. They do not vote buy/sell. On each closed trade all 20 take one learning step and Bayesian-average a trim of SL/TP/trail/RSI/impulse. Uncheck to leave those weights alone. This is not the 10-net AI 3oo4 voter."><input type="checkbox" id="settings-ann" checked/> train 20 ANNs</label>
+    <label class="chk" title="With the trend, also enter when price holds a 38.2, 50, 61.8, or 78.6 retracement of the latest impulse. Uncheck to leave those levels out of the book."><input type="checkbox" id="fib-trade" checked/> Fibonacci</label>
+    <label class="chk" title="When behind the TRADE rate target, lower impulse floors and allow soft 2oo3 if the NN HOLDs. Does not bypass costs, circuit, or fly veto."><input type="checkbox" id="entry-appetite" checked/> dynamic entries</label>
+    <label title="Target sealed entries per 1000 bars when dynamic entries is on (default 8). Higher → more trades.">TRADE/1k
+      <input id="trade-rate" type="number" min="1" max="40" step="1" value="8" placeholder="8"/>
+    </label>
+    <label title="Close when floating profit ≥ this %% of complete balance (CAPITAL). 0 = off. Example: 1.5 on $100k banks at +$1,500 so winners cannot give it back.">BANK %
+      <input id="bank-pct" type="number" min="0" max="50" step="0.25" value="0" placeholder="0"/>
+    </label>
+    <label class="chk" title="Rate-of-change hold-risk: fast adverse moves raise keep-risk and bank early / flatten givebacks before full BANK %."><input type="checkbox" id="hold-risk" checked/> hold risk</label>
+    <label title="Hold-risk sensitivity 0–2 (1 = default). Higher = earlier early-bank / giveback exits.">HOLD×
+      <input id="hold-risk-sens" type="number" min="0" max="2" step="0.1" value="1"/>
+    </label>
+    <label class="chk" title="After a win: wait until Bollinger bands squeeze then expand, and size the next trade with at most 1.5× that profit (e.g. $1k win → $1.5k budget)."><input type="checkbox" id="profit-recycle" checked/> profit recycle</label>
+    <label class="chk" title="Bayesian risk from sealed trade history + market bins (side/regime/vol/session/impulse/BB/heat). Inhibits bad setups, scales volume, trims open winners when conditions turn, gates snowball adds."><input type="checkbox" id="trade-bayes" checked/> trade bayes</label>
+    <label class="chk"><input type="checkbox" id="evolve" checked/> evolve</label>
+    <label>pop
+      <input id="evo-pop" type="number" min="3" max="16" step="1" value="6" title="How many genomes per generation (3–16)"/>
+    </label>
+    <label>gens
+      <input id="evo-gens" type="number" min="2" max="12" step="1" value="4" title="How many generations (2–12)"/>
+    </label>
+    <label class="chk"><input type="checkbox" id="use-brain"/> use DA brain</label>
+    <label class="chk" title="Load brains/{PAIR}.evo.json — evolved SL/TP and DYNAMIC / FUSE / RISK / sugar flags. Independent of DA traces."><input type="checkbox" id="use-evo"/> use evolved</label>
+    <label class="chk"><input type="checkbox" id="continue-da" checked/> continue DA</label>
+    <label class="chk" title="Overlay: skip/size/flatten. Unchecked keeps the 4k-era native GRN lamp (0.45×nice, eat every 2oo3)."><input type="checkbox" id="use-sugar" checked/> sugar feed</label>
+    <label>amt
+      <input id="sugar-amt" type="number" min="0" max="2" step="0.1" value="1" title="Fixed dose when DYNAMIC sugar is off. Scale when it is on (1=machine as designed). 0=none 1=full 2=extra"/>
+    </label>
+    <label class="chk dyn"><input type="checkbox" id="sugar-dyn"/> DYNAMIC sugar</label>
+    <label class="chk" title="Each FlySwarm head (trend/fade/conf/risk) gets its own satiety tank and attributed dopamine. Requires sugar feed. Replay / Train DA."><input type="checkbox" id="fly-crops"/> per-fly crops</label>
+    <button id="btn-live" type="button">Live (MT4)</button>
+    <button class="danger" id="btn-stop" type="button">Stop</button>
+    <span class="cfg-sep" title="Named lab presets in configs/*.json">CFG
+      <input id="config-name" type="text" placeholder="my-setup" spellcheck="false" style="width:7.5rem"/>
+      <select id="config-pick" title="Saved configurations">
+        <option value="default">default (lab)</option>
+      </select>
+      <button type="button" id="btn-cfg-save" class="train" title="Save current dials to configs/{name}.json">Save</button>
+      <button type="button" id="btn-cfg-load" title="Load the selected configuration">Load</button>
+      <button type="button" id="btn-cfg-default" title="Reset dials to the built-in lab default">Default</button>
+    </span>
+    <span class="hint" id="hint">Replay is full-speed. <b>RECAL</b>: <b>train AI</b> (fast), <b>calibrate</b> (slow genome search), <b>train+calibrate</b>, or <b>off</b>. <b>AI 3oo4</b> is the 10-net voter. <b>train 20 ANNs</b> is the other group: one learning step on each closed trade. <b>dynamic entries</b> loosens impulse / soft-2oo3 when behind <b>TRADE/1k</b>. Default FUSE is the lab selective set. Sugar feed on. Use <b>CFG Save/Load</b> for presets.</span>
+  </div>
+  <div class="fuse-picks" id="fuse-picks">
+    <label class="chk dyn"><input type="checkbox" id="fuse-dynamic" checked/> DYNAMIC mix</label>
+    <span class="fuse-lab">FUSE</span>
+    <label class="chk"><input type="checkbox" id="fuse-trend" checked/> trend</label>
+    <label class="chk"><input type="checkbox" id="fuse-momentum" checked/> momentum</label>
+    <label class="chk"><input type="checkbox" id="fuse-volatility" checked/> volatility</label>
+    <label class="chk"><input type="checkbox" id="fuse-volume" checked/> volume</label>
+    <label class="chk"><input type="checkbox" id="fuse-breadth" checked/> breadth</label>
+    <label class="chk"><input type="checkbox" id="fuse-structure" checked/> structure</label>
+    <label class="chk"><input type="checkbox" id="fuse-sentiment" checked/> sentiment</label>
+  </div>
+  <div class="fuse-inds" id="fuse-inds"></div>
+  <div class="pipeline" id="pipeline">
+    <b>OHLCV</b><span class="arr">→</span>
+    <b>7 category Kalmans</b><span class="arr">→</span>
+    <b class="now">inverse-var fuse</b><span class="arr">→</span>
+    <b>tech + fly-trend + fly-fade + AI</b><span class="arr">→</span>
+    <b>3oo4</b><span class="arr">→</span>
+    <b>BANC / size</b><span class="arr">→</span>
+    <b>trade</b>
+  </div>
+  <div class="wrap">
+    <section class="card cns" id="card-cns"></section>
+    <section class="card nodes" id="card-nodes"></section>
+    <section class="card" id="card-trend"></section>
+    <section class="card" id="card-fade"></section>
+    <section class="card" id="card-conf"></section>
+    <section class="card committee" id="card-committee"></section>
+    <section class="card log" id="card-log"></section>
+  </div>
+<script>
+const JOB = {
+  trend: "Follows that category's Kalman impulse through MaleCNS. Loose τ.",
+  fade: "Fades that category's Kalman residual / extension. Full τ. Opposite vote still counts in the 2oo3.",
+  conf: "Plausibility fly. Low |score|/τ inhibits that category even if 2oo3 would fire.",
+  mix: "Fusion fly: Bollinger %b + RSI + MACD + stochastic in one MaleCNS pass. Used as the third card when --koo9 is on.",
+};
+function selectedFuseCats() {
+  const names = CATEGORY_NODES.map(([k]) => k);
+  const on = names.filter(k => {
+    const el = document.getElementById("fuse-" + k);
+    return el ? el.checked : true;
+  });
+  if (!on.length || on.length === names.length) return "all";
+  return on.join(",");
+}
+
+// Lab default indicators (operator screenshot). Alias: gui-default / lab-default.
+const DEFAULT_INDS = [
+  "macd", "sar", "ichimoku", "supertrend",
+  "rsi", "stoch",
+  "bb", "keltner",
+  "obv", "vwap",
+  "ad_line",
+  "pivot", "fib",
+  "put_call",
+];
+const DEFAULT_LAB_CONFIG = {
+  symbol: "EURUSD",
+  timeframe: "M5",
+  bars: 2000,
+  balance: 100000,
+  risk_tol: "scalp",
+  volume_pct: null,
+  volume_mode: "auto",
+  recalibrate_mode: "train",
+  nn_vote: true,
+  nn_vision: true,
+  nn_fresh: false,
+  nn_adv: true,
+  entry_appetite: true,
+  trade_rate: 8,
+  bank_pct: 0,
+  hold_risk: true,
+  hold_risk_sens: 1,
+  profit_recycle: true,
+  trade_bayes: true,
+  settings_ann: true,
+  evolve: true,
+  evo_pop: 6,
+  evo_gens: 4,
+  use_brain: false,
+  use_evo: false,
+  continue_da: true,
+  use_sugar: true,
+  sugar_amt: 1,
+  sugar_dyn: false,
+  fly_crops: false,
+  fuse_dynamic: true,
+  fuse_cats: "all",
+  fuse_inds: DEFAULT_INDS.join(","),
+};
+
+const CATEGORY_CHANNELS = {
+  trend: ["sma","ema","wma","macd","adx","sar","ichimoku","supertrend"],
+  momentum: ["rsi","stoch","cci","willr","roc"],
+  volatility: ["bb","atr","keltner","stdev","donchian"],
+  volume: ["obv","cmf","vwap","ad","profile"],
+  breadth: ["ad_line","mcclellan","trin"],
+  structure: ["pivot","fib","channel"],
+  sentiment: ["put_call","vix","cot"],
+};
+
+function selectedFuseInds() {
+  const all = [];
+  const on = [];
+  Object.keys(CATEGORY_CHANNELS).forEach(cat => {
+    CATEGORY_CHANNELS[cat].forEach(ch => {
+      all.push(ch);
+      const el = document.getElementById("ind-" + ch);
+      if (!el || el.checked) on.push(ch);
+    });
+  });
+  if (!on.length) return "none";
+  if (on.length === all.length) return "all";
+  return on.join(",");
+}
+
+function syncIndDim() {
+  Object.keys(CATEGORY_CHANNELS).forEach(cat => {
+    const box = document.getElementById("fuse-" + cat);
+    const row = document.getElementById("fuse-ind-row-" + cat);
+    if (row) row.classList.toggle("out", !!(box && !box.checked));
+  });
+}
+
+function buildFuseInds() {
+  const host = document.getElementById("fuse-inds");
+  if (!host || host.dataset.ready) return;
+  host.innerHTML = "";
+  Object.keys(CATEGORY_CHANNELS).forEach(cat => {
+    const row = document.createElement("div");
+    row.className = "ind-row";
+    row.id = "fuse-ind-row-" + cat;
+    const lab = document.createElement("span");
+    lab.className = "ind-cat";
+    lab.textContent = cat;
+    row.appendChild(lab);
+    CATEGORY_CHANNELS[cat].forEach(ch => {
+      const wrap = document.createElement("label");
+      wrap.className = "chk";
+      // Lab default: selective channels (see DEFAULT_INDS / CFG default).
+      const on = DEFAULT_INDS.includes(ch);
+      wrap.innerHTML = `<input type="checkbox" id="ind-${ch}"${on ? " checked" : ""}/> ${ch}`;
+      row.appendChild(wrap);
+    });
+    host.appendChild(row);
+  });
+  host.dataset.ready = "1";
+  CATEGORY_NODES.forEach(([k]) => {
+    const el = document.getElementById("fuse-" + k);
+    if (el) el.addEventListener("change", syncIndDim);
+  });
+  syncIndDim();
+}
+
+function parseRole(role) {
+  const raw = String(role || "");
+  const parts = raw.split("-");
+  if (parts.length >= 2 && ["trend", "fade", "conf"].includes(parts[parts.length - 1])) {
+    return { cat: parts.slice(0, -1).join("-"), head: parts[parts.length - 1] };
+  }
+  return { cat: "", head: raw || "trend" };
+}
+const CATEGORY_NODES = [
+  ["trend", "trend follow"],
+  ["momentum", "oscillator fade"],
+  ["volatility", "squeeze break"],
+  ["volume", "flow confirm"],
+  ["breadth", "participation"],
+  ["structure", "S/R bounce"],
+  ["sentiment", "fear/greed"],
+];
+const NINE_NODES = [
+  ["trend", "Kalman impulse"],
+  ["fade", "residual fade"],
+  ["boll", "Bollinger %b"],
+  ["vol", "range / ATR volume"],
+  ["rsi", "RSI momentum"],
+  ["macd", "MACD vs signal"],
+  ["flow", "Kalman + impulse"],
+  ["mix", "BB + RSI + MACD + stoch"],
+  ["struct", "EMA + candle + RSI"],
+];
+const FALLBACK_PAIRS = ["EURUSD","GBPUSD","USDJPY","USDCHF","AUDUSD","EURGBP","USDCAD","NZDUSD","EURJPY","GBPJPY"];
+const RETINA_BULL = "94,224,255";
+const RETINA_BEAR = "255,92,186";
+const HEX_LAYOUTS = new Map();
+const SQRT3 = Math.sqrt(3);
+
+function voteClass(v) { return (v === "BUY" || v === "SELL" || v === "HOLD") ? v : "HOLD"; }
+
+function retinaLayout(n) {
+  const key = n | 0;
+  if (HEX_LAYOUTS.has(key)) return HEX_LAYOUTS.get(key);
+  const dirs = [[1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1], [0, 1]];
+  const axial = [{ q: 0, r: 0 }];
+  let ring = 1;
+  while (axial.length < key) {
+    let q = dirs[4][0] * ring, r = dirs[4][1] * ring;
+    for (let d = 0; d < 6 && axial.length < key; d++) {
+      for (let s = 0; s < ring && axial.length < key; s++) {
+        axial.push({ q, r });
+        q += dirs[d][0];
+        r += dirs[d][1];
+      }
+    }
+    ring++;
+  }
+  const pts = axial.map(({ q, r }) => ({
+    x: SQRT3 * q + SQRT3 * 0.5 * r,
+    y: 1.5 * r,
+  }));
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  pts.forEach(p => {
+    minX = Math.min(minX, p.x);
+    maxX = Math.max(maxX, p.x);
+    minY = Math.min(minY, p.y);
+    maxY = Math.max(maxY, p.y);
+  });
+  const layout = { pts, minX, maxX, minY, maxY };
+  HEX_LAYOUTS.set(key, layout);
+  return layout;
+}
+
+function hexPath(ctx, x, y, r) {
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI / 3 * i - Math.PI / 6;
+    const px = x + r * Math.cos(a);
+    const py = y + r * Math.sin(a);
+    if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+  }
+  ctx.closePath();
+}
+
+function paintRetina(canvas, cells, tint, mini) {
+  const list = Array.isArray(cells) ? cells : [];
+  const n = mini ? Math.min(16, list.length || 16) : (list.length || 64);
+  const src = list.length ? list : new Array(n).fill(0);
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const css = mini ? 112 : 196;
+  const W = css, H = css;
+  const pw = Math.floor(W * dpr), ph = Math.floor(H * dpr);
+  if (canvas.width !== pw || canvas.height !== ph) {
+    canvas.width = pw;
+    canvas.height = ph;
+  }
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+
+  const [tr, tg, tb] = String(tint).split(",").map(s => Number(s.trim()) || 0);
+  const well = ctx.createRadialGradient(W * 0.50, H * 0.40, W * 0.06, W * 0.50, H * 0.52, W * 0.62);
+  well.addColorStop(0, "#18222c");
+  well.addColorStop(0.45, "#0c1218");
+  well.addColorStop(1, "#06090d");
+  ctx.fillStyle = well;
+  ctx.fillRect(0, 0, W, H);
+
+  const { pts, minX, maxX, minY, maxY } = retinaLayout(n);
+  const pad = 1.12;
+  const bw = (maxX - minX) + pad * 2;
+  const bh = (maxY - minY) + pad * 2;
+  const scale = Math.min(W, H) * 0.88 / Math.max(bw, bh);
+  const ox = W * 0.5 - ((minX + maxX) * 0.5) * scale;
+  const oy = H * 0.5 - ((minY + maxY) * 0.5) * scale;
+  const R = scale * 0.90;
+  const corneaR = Math.min(W, H) * 0.47;
+
+  ctx.beginPath();
+  ctx.arc(W * 0.5, H * 0.5, corneaR, 0, Math.PI * 2);
+  const glass = ctx.createRadialGradient(W * 0.42, H * 0.36, 4, W * 0.5, H * 0.52, corneaR);
+  glass.addColorStop(0, `rgba(${tr},${tg},${tb},0.05)`);
+  glass.addColorStop(0.72, "rgba(0,0,0,0.08)");
+  glass.addColorStop(1, "rgba(0,0,0,0.38)");
+  ctx.fillStyle = glass;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(${tr},${tg},${tb},0.22)`;
+  ctx.lineWidth = 1.15;
+  ctx.stroke();
+
+  const placed = [];
+  for (let i = 0; i < n; i++) {
+    const a = Math.max(0, Math.min(1, Number(src[i]) || 0));
+    placed.push({
+      x: ox + pts[i].x * scale,
+      y: oy + pts[i].y * scale,
+      a,
+      lit: Math.min(1, Math.pow(a, 0.82) * 1.45),
+    });
+  }
+
+  placed.forEach(c => {
+    if (c.lit < 0.18) return;
+    const g = ctx.createRadialGradient(c.x, c.y, R * 0.12, c.x, c.y, R * 1.65);
+    g.addColorStop(0, `rgba(${tr},${tg},${tb},${0.40 * c.lit})`);
+    g.addColorStop(1, `rgba(${tr},${tg},${tb},0)`);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, R * 1.65, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  placed.forEach(c => {
+    hexPath(ctx, c.x, c.y, R);
+    ctx.fillStyle = "#0b1117";
+    ctx.fill();
+    hexPath(ctx, c.x, c.y, R);
+    ctx.fillStyle = `rgba(${tr},${tg},${tb},${0.16 + c.lit * 0.80})`;
+    ctx.fill();
+    if (R > 5.5) {
+      hexPath(ctx, c.x, c.y + R * 0.04, R * 0.58);
+      ctx.fillStyle = `rgba(4,8,12,${0.28 * (1 - c.lit * 0.78)})`;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(c.x - R * 0.20, c.y - R * 0.26, R * 0.16, R * 0.09, -0.55, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${0.07 + c.lit * 0.20})`;
+      ctx.fill();
+    }
+    hexPath(ctx, c.x, c.y, R);
+    ctx.strokeStyle = c.lit > 0.32
+      ? `rgba(${tr},${tg},${tb},${0.28 + c.lit * 0.5})`
+      : "rgba(78, 102, 122, 0.55)";
+    ctx.lineWidth = R > 8 ? 0.85 : 0.65;
+    ctx.stroke();
+  });
+}
+
+function eye(cells, tint, mini, pole) {
+  const stage = document.createElement("div");
+  stage.className = "eye-stage" + (pole ? " " + pole : "");
+  const c = document.createElement("canvas");
+  stage.appendChild(c);
+  paintRetina(c, cells, tint, mini);
+  return stage;
+}
+
+function miniFly(head, title, tint) {
+  const v = head || { vote: "HOLD", score: 0, tau: 1, norm: 0, eye_bull: [], eye_bear: [], motor: [] };
+  const box = document.createElement("div");
+  box.className = "mini";
+  const h = document.createElement("h3");
+  h.innerHTML = `<span>${title}</span>`;
+  const pill = document.createElement("span");
+  pill.className = "pill " + voteClass(v.vote);
+  pill.textContent = v.vote || "HOLD";
+  h.appendChild(pill);
+  box.appendChild(h);
+  const eyes = document.createElement("div");
+  eyes.className = "eyes";
+  eyes.appendChild(eye(v.eye_bull, RETINA_BULL, true, "bull"));
+  eyes.appendChild(eye(v.eye_bear, RETINA_BEAR, true, "bear"));
+  box.appendChild(eyes);
+  const norm = Math.max(-2, Math.min(2, Number(v.norm) || 0));
+  const pct = Math.min(100, Math.abs(norm) * 50);
+  const bw = document.createElement("div");
+  bw.className = "bar-wrap";
+  bw.innerHTML = `<div class="bar-meta"><span>${Number(v.score||0).toFixed(1)} / τ ${Number(v.tau||0).toFixed(1)}</span></div>
+    <div class="bar"><div class="tau" style="left:50%"></div><div class="fill" style="width:${pct}%;margin-left:${norm>=0?50:50-pct}%;background:${norm>=0?'var(--buy)':'var(--sell)'}"></div></div>`;
+  box.appendChild(bw);
+  box.appendChild(motor(v.motor, tint));
+  return box;
+}
+
+function miniTech(tech) {
+  const t = tech || { vote: "HOLD", reason: "", strength: 0 };
+  const box = document.createElement("div");
+  box.className = "mini";
+  const h = document.createElement("h3");
+  h.innerHTML = "<span>TECH</span>";
+  const pill = document.createElement("span");
+  pill.className = "pill " + voteClass(t.vote);
+  pill.textContent = t.vote || "HOLD";
+  h.appendChild(pill);
+  box.appendChild(h);
+  const pct = Math.min(100, Math.abs(Number(t.strength) || 0) * 100);
+  const bw = document.createElement("div");
+  bw.className = "bar-wrap";
+  bw.innerHTML = `<div class="bar-meta"><span>strength ${fmt(t.strength, 2)}</span></div>
+    <div class="bar"><div class="fill" style="width:${pct}%;background:var(--trend)"></div></div>`;
+  box.appendChild(bw);
+  const why = document.createElement("div");
+  why.className = "reason";
+  why.textContent = t.reason || "—";
+  box.appendChild(why);
+  return box;
+}
+
+function renderNodeBoard(s) {
+  const el = document.getElementById("card-nodes");
+  if (!el) return;
+  const board = s.nodes || {};
+  const mode = s.committee_mode || "";
+  const hide = mode === "koo9" || mode === "nest" || mode === "ensemble" || mode === "legacy";
+  if (hide) {
+    el.style.display = "none";
+    el.innerHTML = "";
+    return;
+  }
+  el.style.display = "";
+  const isCat = mode === "categories";
+  const fuse = s.cat_fuse || {};
+  const body = document.createElement("div");
+  body.className = "node-board";
+  CATEGORY_NODES.forEach(([k, lab]) => {
+    const row = board[k] || {};
+    const wrap = document.createElement("div");
+    const ghost = row.available === false;
+    const selected = fuse.selected || [];
+    const mixAll = !selected.length || selected.length >= CATEGORY_NODES.length;
+    const inMix = row.in_fuse === false ? false : (row.in_fuse === true || mixAll || selected.includes(k));
+    wrap.className = "cat-row"
+      + (isCat ? "" : " sensors")
+      + (row.winner ? " winner" : "")
+      + (row.inhibited ? " inhibited" : "")
+      + (ghost ? " ghost" : "")
+      + (!isCat && !inMix ? " out" : "");
+    const labEl = document.createElement("div");
+    labEl.className = "cat-lab";
+    const fused = row.fused != null ? row.fused : row.impulse;
+    const vote = row.vote_type || "HOLD";
+    const mark = row.winner ? " ★" : "";
+    labEl.innerHTML = `<span class="nm">${k.toUpperCase()}${mark}</span>
+      <span class="sub">${lab}</span>
+      <span class="sub">${!isCat && !inMix ? "not in mix" : (ghost ? "empty" : `fused ${fmt(fused, 2)} · agr ${fmt(row.agreement, 2)}${row.n_live != null ? ` · ${row.n_live}/${row.n_expected || "?"}` : ""}`)}</span>
+      ${!isCat && (row.channels || []).length ? `<span class="sub">${(row.channels || []).join("+")}</span>` : ""}
+      ${row.regime && !ghost ? `<span class="sub">${row.regime}</span>` : ""}
+      ${isCat ? `<span class="pill ${voteClass(row.decision)}" style="margin-top:6px;display:inline-block">${row.decision || "HOLD"} ${vote}</span>` : ""}
+      ${row.inhibited ? `<span class="sub">${row.inhibit_reason || "inhibit"}</span>` : ""}`;
+    wrap.appendChild(labEl);
+    if (isCat) {
+      wrap.appendChild(miniTech(row.tech));
+      const heads = row.heads || {};
+      wrap.appendChild(miniFly(heads.trend, "FLY-TREND", "rgb(94,224,255)"));
+      wrap.appendChild(miniFly(heads.fade, "FLY-FADE", "rgb(211,139,255)"));
+      wrap.appendChild(miniFly(heads.conf, "FLY-CONF", "rgb(240,193,75)"));
+    }
+    body.appendChild(wrap);
+  });
+  el.innerHTML = "";
+  const h = document.createElement("h2");
+  if (isCat) {
+    h.innerHTML = `<span>ALL NODES  7 × {tech, fly-trend, fly-fade, fly-conf}</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span>`;
+  } else {
+    h.innerHTML = `<span>ALL NODES  7 Kalman sensors → fuse  n=${fuse.n_live || 0}  agr ${fmt(fuse.agreement, 2)}</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span>`;
+  }
+  el.appendChild(h);
+  el.appendChild(body);
+}
+
+function motor(vals, color) {
+  const row = document.createElement("div");
+  row.className = "motor";
+  (vals || []).forEach(v => {
+    const i = document.createElement("i");
+    i.style.height = `${Math.max(2, Number(v) * 28)}px`;
+    i.style.background = color;
+    row.appendChild(i);
+  });
+  return row;
+}
+
+function spark(values, color) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "spark");
+  svg.setAttribute("viewBox", "0 0 120 42");
+  svg.setAttribute("preserveAspectRatio", "none");
+  const pts = values || [];
+  if (pts.length < 2) return svg;
+  const min = Math.min(...pts), max = Math.max(...pts);
+  const span = (max - min) || 1;
+  const d = pts.map((y, i) => {
+    const x = i * 120 / (pts.length - 1);
+    const yy = 40 - ((y - min) / span) * 36;
+    return `${i ? "L" : "M"}${x.toFixed(1)},${yy.toFixed(1)}`;
+  }).join(" ");
+  const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  p.setAttribute("d", d);
+  p.setAttribute("fill", "none");
+  p.setAttribute("stroke", color);
+  p.setAttribute("stroke-width", "1.6");
+  svg.appendChild(p);
+  return svg;
+}
+
+function headCard(el, head, hist, color) {
+  const v = head || { vote: "HOLD", score: 0, tau: 1, nfire: 0, eye_bull: [], eye_bear: [], motor: [] };
+  const parsed = parseRole(v.role);
+  el.innerHTML = "";
+  const h = document.createElement("h2");
+  const title = parsed.cat
+    ? `${parsed.cat.toUpperCase()}  ·  fly-${parsed.head}`
+    : (parsed.head || "HEAD").toUpperCase();
+  h.innerHTML = `<span>${title}</span>`;
+  const pill = document.createElement("span");
+  pill.className = "pill " + voteClass(v.vote);
+  pill.textContent = v.vote || "HOLD";
+  h.appendChild(pill);
+  el.appendChild(h);
+
+  const eyes = document.createElement("div");
+  eyes.className = "eyes";
+  const left = document.createElement("div"); left.className = "eye bull";
+  left.innerHTML = `<div class="lbl">RETINA BULL</div>`;
+  left.appendChild(eye(v.eye_bull, RETINA_BULL, false, "bull"));
+  const right = document.createElement("div"); right.className = "eye bear";
+  right.innerHTML = `<div class="lbl">RETINA BEAR</div>`;
+  right.appendChild(eye(v.eye_bear, RETINA_BEAR, false, "bear"));
+  eyes.appendChild(left); eyes.appendChild(right);
+  el.appendChild(eyes);
+
+  const bw = document.createElement("div");
+  bw.className = "bar-wrap";
+  const norm = Math.max(-2, Math.min(2, Number(v.norm) || 0));
+  const pct = Math.min(100, Math.abs(norm) * 50);
+  bw.innerHTML = `<div class="bar-meta"><span>descending score ${Number(v.score||0).toFixed(1)}  τ ${Number(v.tau||0).toFixed(1)}</span><span>${v.nfire||0} cells |x|>0.5</span></div>
+    <div class="bar"><div class="tau" style="left:50%"></div><div class="fill" style="width:${pct}%;margin-left:${norm>=0?50:50-pct}%;background:${norm>=0?'var(--buy)':'var(--sell)'}"></div></div>`;
+  el.appendChild(bw);
+  el.appendChild(spark(hist || [], color));
+  el.appendChild(motor(v.motor, color));
+  const job = document.createElement("div");
+  job.className = "job";
+  let extra = "";
+  if (v.n_updates != null) {
+    extra = ` DA r=${Number(v.da || 0).toFixed(2)}  g+ ${Number(v.gain_pos || 1).toFixed(2)} g− ${Number(v.gain_neg || 1).toFixed(2)}  n=${v.n_updates}`;
+  }
+  job.textContent = (JOB[parsed.head] || JOB[v.role] || "") + extra;
+  el.appendChild(job);
+}
+
+function fmt(n, d=2) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return "—";
+  return x.toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+
+function sugarRow(s) {
+  const sg = s.sugar || {};
+  const native = (sg.reason || "") === "native lamp" || sg.dyn_reason === "native";
+  const label = native ? "sugar GRN lamp" : "sugar feed / satiety";
+  const detail = native
+    ? `feed ${fmt(sg.feeding, 2)}  eat every 2oo3  ${sg.reason || ""}`
+    : `amt ${fmt(sg.dose, 2)}  ${sg.dyn ? (sg.dyn_state || "dyn") : "manual"}  feed ${fmt(sg.feeding, 2)}  sat ${fmt(sg.satiety, 2)}  eat ${fmt(sg.appetite, 2)}  ${sg.reason || ""}`;
+  let html = `<div class="row"><span>${label}</span><span>${detail}</span></div>`;
+  const crops = s.crops || sg.crops || {};
+  ["trend", "fade", "conf", "risk"].forEach(n => {
+    const c = crops[n];
+    if (!c) return;
+    html += `<div class="row"><span>crop ${n}</span><span>${c.dyn_state || c.state || ""}  sat ${fmt(c.satiety, 2)}  da×${fmt(c.da_mult, 2)}  R ${fmt(c.last_r, 2)}${c.skip ? "  SKIP" : ""}</span></div>`;
+  });
+  return html;
+}
+
+let PAIR_LIST = FALLBACK_PAIRS;
+let LAST_BRAINS = "";
+let LAST_EVO = "";
+let BRAIN_LIST = [];
+let EVO_POLICIES = [];
+
+function fillPairs(pairs, current, brains, evo) {
+  const sel = document.getElementById("pair");
+  const list = (pairs && pairs.length) ? pairs : PAIR_LIST;
+  PAIR_LIST = list;
+  if (brains) BRAIN_LIST = brains;
+  if (Array.isArray(evo)) EVO_POLICIES = evo;
+  const trained = new Set(BRAIN_LIST);
+  const evolved = new Set(EVO_POLICIES.map(x => (typeof x === "string" ? x : x.symbol)));
+  sel.innerHTML = list.map(p => {
+    const bits = [];
+    if (trained.has(p)) bits.push("DA");
+    if (evolved.has(p)) bits.push("evo");
+    return `<option value="${p}">${p}${bits.length ? " · " + bits.join(" · ") : ""}</option>`;
+  }).join("");
+  if (current && list.includes(current)) sel.value = current;
+  const evoBox = document.getElementById("use-evo");
+  if (evoBox && evoBox.checked) applyUseEvo();
+}
+
+function evoPolicyFor(symbol) {
+  const tag = String(symbol || "").toUpperCase();
+  return EVO_POLICIES.find(x => String(x.symbol || "").toUpperCase() === tag) || null;
+}
+
+function setFuseCats(spec) {
+  const names = CATEGORY_NODES.map(([k]) => k);
+  const raw = String(spec || "all").trim().toLowerCase();
+  let on = names;
+  if (raw && raw !== "all" && raw !== "*" && raw !== "default") {
+    on = raw.split(/[,+\s|/]+/).map(s => s.trim()).filter(Boolean);
+  }
+  const set = new Set(on);
+  names.forEach(k => {
+    const el = document.getElementById("fuse-" + k);
+    if (el) el.checked = set.has(k);
+  });
+  syncIndDim();
+}
+
+function setFuseInds(spec) {
+  const all = [];
+  Object.keys(CATEGORY_CHANNELS).forEach(cat => {
+    CATEGORY_CHANNELS[cat].forEach(ch => all.push(ch));
+  });
+  const raw = String(spec || "all").trim().toLowerCase();
+  let on = all;
+  if (raw === "plausibility" || raw === "plausible" || raw === "4k") {
+    on = ["ema","macd","adx","sar","ichimoku","supertrend","rsi","stoch","cci","willr","bb"];
+  } else if (raw === "gui-default" || raw === "lab-default" || raw === "lab") {
+    on = DEFAULT_INDS.slice();
+  } else if (raw && raw !== "all" && raw !== "*" && raw !== "default" && raw !== "") {
+    on = (raw === "none" || raw === "off") ? [] : raw.split(/[,+\s|/]+/).map(s => s.trim()).filter(Boolean);
+  }
+  const set = new Set(on);
+  all.forEach(ch => {
+    const el = document.getElementById("ind-" + ch);
+    if (el) el.checked = set.has(ch);
+  });
+}
+
+function applyEvoToForm(symbol) {
+  const pol = evoPolicyFor(symbol);
+  const g = (pol && pol.genome) || null;
+  if (!g) return false;
+  const risk = document.getElementById("risk-tol");
+  if (risk) risk.value = g.risk_tol || "scalp";
+  const sugar = document.getElementById("use-sugar");
+  if (sugar) sugar.checked = !!g.sugar;
+  const amt = document.getElementById("sugar-amt");
+  if (amt && g.sugar_amt != null) amt.value = g.sugar_amt;
+  const sdyn = document.getElementById("sugar-dyn");
+  if (sdyn) sdyn.checked = !!(g.sugar && g.sugar_dyn);
+  const fdyn = document.getElementById("fuse-dynamic");
+  if (fdyn) fdyn.checked = !!g.fuse_dynamic;
+  setFuseCats(g.fuse_cats);
+  setFuseInds(g.fuse_inds);
+  if (sugar) sugar.dispatchEvent(new Event("change"));
+  const hint = document.getElementById("hint");
+  if (hint) {
+    const fit = (pol.fitness != null && Number.isFinite(Number(pol.fitness)))
+      ? `  fit ${Number(pol.fitness).toFixed(0)}`
+      : "";
+    hint.textContent = `use evolved: brains/${pol.symbol}.evo.json${fit}  ${pol.note || ""}`;
+  }
+  return true;
+}
+
+const EVO_LOCK_IDS = ["risk-tol", "use-sugar", "sugar-amt", "sugar-dyn", "fuse-dynamic"];
+
+function evoLockEls() {
+  const els = [];
+  EVO_LOCK_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) els.push(el);
+  });
+  CATEGORY_NODES.forEach(([k]) => {
+    const el = document.getElementById("fuse-" + k);
+    if (el) els.push(el);
+  });
+  const host = document.getElementById("fuse-inds");
+  if (host) host.querySelectorAll("input[type=checkbox]").forEach(el => els.push(el));
+  return els;
+}
+
+function setEvoLocked(on) {
+  evoLockEls().forEach(el => { el.disabled = !!on; });
+  if (!on) {
+    const sugar = document.getElementById("use-sugar");
+    const amt = document.getElementById("sugar-amt");
+    const dyn = document.getElementById("sugar-dyn");
+    const crops = document.getElementById("fly-crops");
+    if (sugar && !sugar.checked) {
+      if (amt) amt.disabled = true;
+      if (dyn) dyn.disabled = true;
+      if (crops) crops.disabled = true;
+    }
+  }
+}
+
+function applyUseEvo() {
+  const box = document.getElementById("use-evo");
+  const pair = document.getElementById("pair");
+  if (!box) return;
+  if (!box.checked) {
+    setEvoLocked(false);
+    return;
+  }
+  const sym = pair ? pair.value : "";
+  if (!applyEvoToForm(sym)) {
+    box.checked = false;
+    setEvoLocked(false);
+    const hint = document.getElementById("hint");
+    if (hint) hint.textContent = `no brains/${sym}.evo.json yet — Train DA with evolve on, then check use evolved.`;
+    return;
+  }
+  setEvoLocked(true);
+}
+
+function collectFormConfig() {
+  const barsRaw = Number(document.getElementById("bars").value);
+  return {
+    symbol: document.getElementById("pair").value,
+    bars: Number.isFinite(barsRaw) ? barsRaw : 2000,
+    balance: Number(document.getElementById("capital").value) || 100000,
+    timeframe: document.getElementById("timeframe").value || "M5",
+    use_brain: document.getElementById("use-brain").checked,
+    use_evo: !!(document.getElementById("use-evo") && document.getElementById("use-evo").checked),
+    continue_da: document.getElementById("continue-da").checked,
+    fuse_cats: selectedFuseCats(),
+    fuse_dynamic: !!(document.getElementById("fuse-dynamic") && document.getElementById("fuse-dynamic").checked),
+    fuse_inds: selectedFuseInds(),
+    risk_tol: (document.getElementById("risk-tol") && document.getElementById("risk-tol").value) || "scalp",
+    volume_pct: (function() {
+      const el = document.getElementById("volume-pct");
+      if (!el || String(el.value || "").trim() === "") return null;
+      const n = Number(el.value);
+      return Number.isFinite(n) ? n : null;
+    })(),
+    volume_mode: (document.getElementById("volume-mode") && document.getElementById("volume-mode").value) || "auto",
+    use_sugar: !!(document.getElementById("use-sugar") && document.getElementById("use-sugar").checked),
+    sugar_amt: (function() {
+      const el = document.getElementById("sugar-amt");
+      const n = el ? Number(el.value) : 1;
+      return Number.isFinite(n) ? n : 1;
+    })(),
+    sugar_dyn: !!(document.getElementById("sugar-dyn") && document.getElementById("sugar-dyn").checked),
+    fly_crops: !!(document.getElementById("fly-crops") && document.getElementById("fly-crops").checked),
+    recalibrate_mode: (document.getElementById("recalibrate-mode") && document.getElementById("recalibrate-mode").value) || "train",
+    recalibrate: (function() {
+      const el = document.getElementById("recalibrate-mode");
+      const m = el ? el.value : "train";
+      return m && m !== "off";
+    })(),
+    nn_vote: !!(document.getElementById("nn-vote") && document.getElementById("nn-vote").checked),
+    nn_vision: !!(document.getElementById("nn-vision") && document.getElementById("nn-vision").checked),
+    nn_fresh: !!(document.getElementById("nn-fresh") && document.getElementById("nn-fresh").checked),
+    nn_adv: !!(document.getElementById("nn-adv") ? document.getElementById("nn-adv").checked : true),
+    entry_appetite: !!(document.getElementById("entry-appetite") && document.getElementById("entry-appetite").checked),
+    trade_rate: (function() {
+      const el = document.getElementById("trade-rate");
+      if (!el || String(el.value || "").trim() === "") return null;
+      const n = Number(el.value);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    })(),
+    bank_pct: (function() {
+      const el = document.getElementById("bank-pct");
+      if (!el || String(el.value || "").trim() === "") return 0;
+      const n = Number(el.value);
+      return Number.isFinite(n) && n > 0 ? n : 0;
+    })(),
+    hold_risk: !!(document.getElementById("hold-risk") && document.getElementById("hold-risk").checked),
+    hold_risk_sens: (function() {
+      const el = document.getElementById("hold-risk-sens");
+      const n = el ? Number(el.value) : 1;
+      return Number.isFinite(n) ? n : 1;
+    })(),
+    profit_recycle: !!(document.getElementById("profit-recycle") && document.getElementById("profit-recycle").checked),
+    trade_bayes: !!(document.getElementById("trade-bayes") && document.getElementById("trade-bayes").checked),
+    settings_ann: !!(document.getElementById("settings-ann") && document.getElementById("settings-ann").checked),
+    fib_trade: !!(document.getElementById("fib-trade") && document.getElementById("fib-trade").checked),
+    evolve: !!(document.getElementById("evolve") && document.getElementById("evolve").checked),
+    evo_pop: (function() {
+      const el = document.getElementById("evo-pop");
+      const n = el ? Number(el.value) : 6;
+      return Number.isFinite(n) ? n : 6;
+    })(),
+    evo_gens: (function() {
+      const el = document.getElementById("evo-gens");
+      const n = el ? Number(el.value) : 4;
+      return Number.isFinite(n) ? n : 4;
+    })(),
+    datapath: (document.getElementById("datapath").value || "").trim(),
+  };
+}
+
+function setCheck(id, on) {
+  const el = document.getElementById(id);
+  if (el) el.checked = !!on;
+}
+
+function setVal(id, value) {
+  const el = document.getElementById(id);
+  if (!el || value === undefined) return;
+  if (value === null) {
+    el.value = "";
+    return;
+  }
+  el.value = value;
+}
+
+function applyFormConfig(cfg, note) {
+  if (!cfg || typeof cfg !== "object") return false;
+  buildFuseInds();
+  const pair = document.getElementById("pair");
+  if (pair && cfg.symbol) {
+    const want = String(cfg.symbol).toUpperCase();
+    const opts = Array.from(pair.options).map(o => o.value);
+    if (opts.includes(want)) pair.value = want;
+  }
+  setVal("timeframe", cfg.timeframe || "M5");
+  if (cfg.bars != null) setVal("bars", cfg.bars);
+  if (cfg.balance != null) setVal("capital", cfg.balance);
+  setVal("risk-tol", cfg.risk_tol || "scalp");
+  if (cfg.volume_pct == null || cfg.volume_pct === "") setVal("volume-pct", "");
+  else setVal("volume-pct", cfg.volume_pct);
+  setVal("volume-mode", cfg.volume_mode || "auto");
+  setVal("recalibrate-mode", cfg.recalibrate_mode || "train");
+  setCheck("nn-vote", cfg.nn_vote !== false);
+  setCheck("nn-vision", !!cfg.nn_vision);
+  setCheck("nn-fresh", !!cfg.nn_fresh);
+  setCheck("nn-adv", cfg.nn_adv !== false);
+  setCheck("entry-appetite", !!cfg.entry_appetite);
+  if (cfg.trade_rate != null) setVal("trade-rate", cfg.trade_rate);
+  setVal("bank-pct", cfg.bank_pct != null ? cfg.bank_pct : 0);
+  setCheck("hold-risk", cfg.hold_risk !== false);
+  if (cfg.hold_risk_sens != null) setVal("hold-risk-sens", cfg.hold_risk_sens);
+  setCheck("profit-recycle", cfg.profit_recycle !== false);
+  setCheck("trade-bayes", cfg.trade_bayes !== false);
+  setCheck("settings-ann", cfg.settings_ann !== false);
+  setCheck("fib-trade", cfg.fib_trade !== false);
+  setCheck("evolve", cfg.evolve !== false);
+  if (cfg.evo_pop != null) setVal("evo-pop", cfg.evo_pop);
+  if (cfg.evo_gens != null) setVal("evo-gens", cfg.evo_gens);
+  setCheck("use-brain", !!cfg.use_brain);
+  setCheck("use-evo", !!cfg.use_evo);
+  setCheck("continue-da", !!cfg.continue_da);
+  setCheck("use-sugar", !!cfg.use_sugar);
+  if (cfg.sugar_amt != null) setVal("sugar-amt", cfg.sugar_amt);
+  setCheck("sugar-dyn", !!cfg.sugar_dyn);
+  setCheck("fly-crops", !!cfg.fly_crops);
+  setCheck("fuse-dynamic", !!cfg.fuse_dynamic);
+  setFuseCats(cfg.fuse_cats || "all");
+  setFuseInds(cfg.fuse_inds || DEFAULT_INDS.join(","));
+  if (cfg.datapath) setVal("datapath", cfg.datapath);
+  const sugar = document.getElementById("use-sugar");
+  if (sugar) sugar.dispatchEvent(new Event("change"));
+  const hint = document.getElementById("hint");
+  if (hint && note) hint.textContent = note;
+  try {
+    localStorage.setItem("flyfx_lab_config", JSON.stringify(cfg));
+  } catch (_e) {}
+  return true;
+}
+
+function fillConfigPick(names, selected) {
+  const sel = document.getElementById("config-pick");
+  if (!sel) return;
+  const cur = selected || sel.value || "default";
+  const opts = ["default"].concat((names || []).filter(n => n && n !== "default"));
+  sel.innerHTML = opts.map(n => `<option value="${n}">${n}</option>`).join("");
+  if (opts.includes(cur)) sel.value = cur;
+}
+
+async function refreshConfigList(selectName) {
+  try {
+    const r = await fetch("/api/configs");
+    if (!r.ok) return null;
+    const data = await r.json();
+    fillConfigPick(data.names || [], selectName);
+    return data;
+  } catch (_e) {
+    return null;
+  }
+}
+
+async function saveCurrentConfig() {
+  const nameEl = document.getElementById("config-name");
+  const pick = document.getElementById("config-pick");
+  let name = (nameEl && nameEl.value.trim()) || (pick && pick.value) || "config";
+  if (name === "default") name = "lab-custom";
+  const cfg = collectFormConfig();
+  cfg.name = name;
+  try {
+    const r = await fetch("/api/configs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "save", name, config: cfg }),
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) {
+      document.getElementById("hint").textContent = "config save failed: " + (data.error || r.status);
+      return;
+    }
+    await refreshConfigList(data.name);
+    if (nameEl) nameEl.value = data.name;
+    document.getElementById("hint").textContent = `Saved config ${data.path || data.name}`;
+    try { localStorage.setItem("flyfx_lab_config", JSON.stringify(cfg)); } catch (_e) {}
+  } catch (_e) {
+    document.getElementById("hint").textContent = "config save failed — is the GUI server running?";
+  }
+}
+
+async function loadSelectedConfig() {
+  const pick = document.getElementById("config-pick");
+  const name = (pick && pick.value) || "default";
+  if (name === "default") {
+    applyFormConfig(DEFAULT_LAB_CONFIG, "Loaded built-in lab default configuration");
+    return;
+  }
+  try {
+    const r = await fetch("/api/configs/" + encodeURIComponent(name));
+    const data = await r.json();
+    if (!r.ok || !data.ok || !data.config) {
+      document.getElementById("hint").textContent = "config load failed: " + (data.error || r.status);
+      return;
+    }
+    applyFormConfig(data.config, `Loaded config ${name}`);
+    const nameEl = document.getElementById("config-name");
+    if (nameEl) nameEl.value = name;
+  } catch (_e) {
+    document.getElementById("hint").textContent = "config load failed — is the GUI server running?";
+  }
+}
+
+async function send(action, extra) {
+  const file = document.getElementById("datafile").files[0];
+  const path = (document.getElementById("datapath").value || "").trim();
+  const body = Object.assign(collectFormConfig(), { action }, extra || {});
+  // Keep bars semantics from the old send(): blank file → default bars already in collect.
+  if (!(file || path) && (!Number.isFinite(Number(body.bars)) || body.bars < 0)) {
+    body.bars = 2000;
+  }
+  if ((file || path) && String(document.getElementById("bars").value || "").trim() === "") {
+    body.bars = 0;
+  }
+  // Persist last dials so reopen restores them.
+  try { localStorage.setItem("flyfx_lab_config", JSON.stringify(collectFormConfig())); } catch (_e) {}
+  const attachData = action === "replay" || action === "train" || action === "recalibrate";
+  if (attachData) {
+    if (file && /\.hst$/i.test(file.name) && !path) {
+      document.getElementById("hint").textContent = "MT4 .hst is binary — paste the full path in “or path”. CSV/JSON can use the file picker.";
+      return;
+    }
+    if (file) {
+      body.data_csv = await file.text();
+      body.data_name = file.name;
+    } else if (path) {
+      body.data_path = path;
+    }
+  }
+  const src = file ? file.name : (path || body.symbol);
+  const cap = Number(body.balance).toLocaleString();
+  document.getElementById("hint").textContent = action === "train"
+    ? (body.evolve
+      ? `Evolving ${body.evo_pop}×${body.evo_gens} on ${src}  ${body.timeframe}  capital $${cap}  → brains/${body.symbol}.evo.json…`
+      : `Training DA on ${src}  ${body.timeframe}  capital $${cap}  → brains/${body.symbol}.json…`)
+    : action === "recalibrate"
+    ? `Recalibrating (evolve + risk_factors) on ${src}  ${body.timeframe}  capital $${cap}…`
+    : action === "replay"
+    ? `Starting ${body.timeframe} replay on ${src}  capital $${cap}${body.recalibrate_mode && body.recalibrate_mode !== "off" ? "  (recal " + body.recalibrate_mode + ")" : ""}${body.nn_vote ? "  (AI 3oo4)" : ""}${body.use_evo ? "  (use evolved)" : ""}${body.use_brain ? "  (use DA brain)" : ""}…`
+    : action === "live"
+      ? `Live ${body.symbol} — GUI dials drive the policy (same as Replay). MT4 must include this pair.`
+      : "Stop requested.";
+  try {
+    const r = await fetch("/api/command", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) {
+      document.getElementById("hint").textContent = "command failed (" + r.status + ")";
+    }
+  } catch (err) {
+    document.getElementById("hint").textContent = "dashboard not reachable — is python fly_forex.py --gui running?";
+  }
+}
+
+document.getElementById("btn-replay").onclick = () => send("replay");
+document.getElementById("btn-train").onclick = () => send("train");
+document.getElementById("btn-recalibrate").onclick = () => send("recalibrate");
+document.getElementById("btn-live").onclick = () => send("live");
+document.getElementById("btn-stop").onclick = () => send("stop");
+document.getElementById("btn-cfg-save").onclick = () => saveCurrentConfig();
+document.getElementById("btn-cfg-load").onclick = () => loadSelectedConfig();
+document.getElementById("btn-cfg-default").onclick = () => {
+  applyFormConfig(DEFAULT_LAB_CONFIG, "Reset to built-in lab default configuration");
+  const pick = document.getElementById("config-pick");
+  if (pick) pick.value = "default";
+};
+(function syncSugarAmt() {
+  const on = document.getElementById("use-sugar");
+  const amt = document.getElementById("sugar-amt");
+  const dyn = document.getElementById("sugar-dyn");
+  const crops = document.getElementById("fly-crops");
+  if (!on) return;
+  const apply = () => {
+    const evoOn = !!(document.getElementById("use-evo") && document.getElementById("use-evo").checked);
+    if (evoOn) return;
+    if (amt) amt.disabled = !on.checked;
+    if (dyn) dyn.disabled = !on.checked;
+    if (crops) crops.disabled = !on.checked;
+  };
+  on.addEventListener("change", apply);
+  apply();
+})();
+(function syncEvolve() {
+  const on = document.getElementById("evolve");
+  const pop = document.getElementById("evo-pop");
+  const gens = document.getElementById("evo-gens");
+  if (!on) return;
+  const apply = () => {
+    if (pop) pop.disabled = !on.checked;
+    if (gens) gens.disabled = !on.checked;
+  };
+  on.addEventListener("change", apply);
+  apply();
+})();
+(function syncUseEvo() {
+  const box = document.getElementById("use-evo");
+  const pair = document.getElementById("pair");
+  if (!box) return;
+  box.addEventListener("change", applyUseEvo);
+  if (pair) pair.addEventListener("change", applyUseEvo);
+})();
+(function wireScalpMode() {
+  const risk = document.getElementById("risk-tol");
+  if (!risk) return;
+  const apply = () => {
+    if (risk.value !== "scalp") return;
+    // 4k cat-fuse companion: bank off, appetite off, snowball on (server-side).
+    // Do not re-apply the old retail-scalp bank 0.4% / appetite package.
+    const bank = document.getElementById("bank-pct");
+    if (bank) bank.value = "0";
+    const hold = document.getElementById("hold-risk");
+    if (hold) hold.checked = true;
+    const sens = document.getElementById("hold-risk-sens");
+    if (sens) sens.value = "1.0";
+    // Keep dynamic entries as the operator dial — do not force appetite off.
+  };
+  risk.addEventListener("change", apply);
+})();
+document.getElementById("datafile").addEventListener("change", () => {
+  const f = document.getElementById("datafile").files[0];
+  if (f) {
+    document.getElementById("bars").value = 0;
+    document.getElementById("hint").textContent = `Loaded ${f.name} — Replay or Train DA uses this file. TF “file native” keeps its bar size; pick M10/H1 to resample if the file is finer.`;
+  }
+});
+
+const CNS_HEADS = [
+  ["trend", "fly-trend"],
+  ["fade", "fly-fade"],
+  ["conf", "fly-conf"],
+  ["risk", "BANC/risk"],
+  ["sugar", "sugar"],
+  ["max", "all (max)"],
+];
+let CNS_LAYOUT = null;
+let CNS_HEAD = "trend";
+let CNS_ACT = {};
+let LAST_CNS_MAPS = {};
+let CNS_HOVER = "";
+let CNS_MOUSE = null;
+let CNS_YAW = 0.22;
+let CNS_PITCH = 0.16;
+let CNS_DRAG = null;
+let CNS_PROJ = null;
+const SPHERE_SPRITES = new Map();
+
+function b64u8(s) {
+  if (!s) return new Uint8Array(0);
+  const bin = atob(s);
+  const u = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+  return u;
+}
+
+function decodeCnsLayout(blob) {
+  const raw = b64u8(blob.xy);
+  const copy = new Uint8Array(raw.byteLength);
+  copy.set(raw);
+  const dv = new DataView(copy.buffer);
+  const n = blob.n | 0;
+  const x = new Float32Array(n);
+  const y = new Float32Array(n);
+  const z = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    x[i] = dv.getInt16(i * 4, true) / 10000;
+    y[i] = dv.getInt16(i * 4 + 2, true) / 10000;
+  }
+  if (blob.z) {
+    const zraw = b64u8(blob.z);
+    const zcopy = new Uint8Array(zraw.byteLength);
+    zcopy.set(zraw);
+    const zdv = new DataView(zcopy.buffer);
+    for (let i = 0; i < n; i++) z[i] = zdv.getInt16(i * 2, true) / 10000;
+  } else {
+    z.fill(0.5);
+  }
+  return {
+    n,
+    x,
+    y,
+    z,
+    rid: b64u8(blob.rid),
+    ang: b64u8(blob.ang),
+    regions: blob.regions || [],
+    counts: blob.counts || {},
+    note: blob.note || "",
+    neurons: blob.neurons || 0,
+  };
+}
+
+async function ensureCnsLayout() {
+  if (CNS_LAYOUT && CNS_LAYOUT.n) return CNS_LAYOUT;
+  try {
+    const r = await fetch("/api/cns-layout");
+    if (!r.ok) return null;
+    const blob = await r.json();
+    if (!blob || !blob.n) return null;
+    CNS_LAYOUT = decodeCnsLayout(blob);
+    return CNS_LAYOUT;
+  } catch {
+    return null;
+  }
+}
+
+function cnsActivity(n) {
+  if (CNS_HEAD === "max") {
+    const out = new Uint8Array(n);
+    ["trend", "fade", "conf", "risk", "sugar"].forEach(k => {
+      const a = CNS_ACT[k];
+      if (!a) return;
+      const m = Math.min(n, a.length);
+      for (let i = 0; i < m; i++) if (a[i] > out[i]) out[i] = a[i];
+    });
+    return out;
+  }
+  const a = CNS_ACT[CNS_HEAD];
+  return (a && a.length) ? a : new Uint8Array(n);
+}
+
+function sphereSprite(hue) {
+  const key = hue | 0;
+  if (SPHERE_SPRITES.has(key)) return SPHERE_SPRITES.get(key);
+  const s = 80;
+  const c = document.createElement("canvas");
+  c.width = s;
+  c.height = s;
+  const g = c.getContext("2d");
+  const cx = s * 0.38;
+  const cy = s * 0.36;
+  const grd = g.createRadialGradient(cx, cy, s * 0.07, s * 0.50, s * 0.54, s * 0.44);
+  grd.addColorStop(0, `hsla(${key}, 45%, 96%, 1)`);
+  grd.addColorStop(0.18, `hsla(${key}, 72%, 68%, 1)`);
+  grd.addColorStop(0.48, `hsla(${key}, 82%, 48%, 1)`);
+  grd.addColorStop(0.82, `hsla(${key}, 78%, 28%, 1)`);
+  grd.addColorStop(1, `hsla(${key}, 65%, 12%, 0)`);
+  g.fillStyle = grd;
+  g.beginPath();
+  g.arc(s * 0.50, s * 0.52, s * 0.44, 0, Math.PI * 2);
+  g.fill();
+  SPHERE_SPRITES.set(key, c);
+  return c;
+}
+
+function regionScale(id) {
+  if (id === "sugar" || id === "da") return 1.55;
+  if (id === "retina_bull" || id === "retina_bear") return 1.22;
+  if (id === "descending" || id === "ascending") return 0.95;
+  return 1.0;
+}
+
+function projectCns(x, y, z, w, h) {
+  const cx = x - 0.5;
+  const cy = y - 0.5;
+  const cz = z - 0.5;
+  const cosP = Math.cos(CNS_PITCH);
+  const sinP = Math.sin(CNS_PITCH);
+  const cy1 = cy * cosP - cz * sinP;
+  const cz1 = cy * sinP + cz * cosP;
+  const cosY = Math.cos(CNS_YAW);
+  const sinY = Math.sin(CNS_YAW);
+  const cx1 = cx * cosY + cz1 * sinY;
+  const cz2 = -cx * sinY + cz1 * cosY;
+  const persp = 1.18 / (1.18 - cz2 * 0.62);
+  return {
+    px: (0.5 + cx1 * persp) * w,
+    py: (0.5 + cy1 * persp) * h,
+    depth: cz2,
+    s: persp,
+  };
+}
+
+function drawCnsSilhouette(ctx, w, h) {
+  const X = t => t * w;
+  const Y = t => t * h;
+  ctx.save();
+  ctx.strokeStyle = "rgba(90,78,64,0.16)";
+  ctx.fillStyle = "rgba(90,78,64,0.025)";
+  ctx.lineWidth = 1.15;
+  const ell = (cx, cy, rx, ry) => {
+    ctx.beginPath();
+    ctx.ellipse(X(cx), Y(cy), rx * w, ry * h, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  };
+  ell(0.12, 0.50, 0.10, 0.07);
+  ell(0.24, 0.50, 0.08, 0.12);
+  ell(0.34, 0.50, 0.08, 0.13);
+  ell(0.44, 0.50, 0.07, 0.11);
+  ell(0.66, 0.50, 0.12, 0.16);
+  ell(0.84, 0.23, 0.155, 0.155);
+  ell(0.84, 0.77, 0.155, 0.155);
+  ctx.fillStyle = "rgba(70,64,56,0.40)";
+  ctx.font = "11px Segoe UI, sans-serif";
+  ctx.fillText("VNC", X(0.08), Y(0.31));
+  ctx.fillText("neck", X(0.47), Y(0.41));
+  ctx.fillText("central brain", X(0.57), Y(0.29));
+  ctx.fillText("optic lobe +", X(0.74), Y(0.07));
+  ctx.fillText("optic lobe −", X(0.74), Y(0.96));
+  ctx.restore();
+}
+
+function paintCnsCanvas() {
+  const canvas = document.getElementById("cns-cv");
+  if (!canvas || !CNS_LAYOUT || !CNS_LAYOUT.n) return;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const box = canvas.parentElement;
+  const w = Math.min(Math.max(box && box.clientWidth ? box.clientWidth : 720, 280), 720);
+  const h = Math.min(Math.max(box && box.clientHeight ? box.clientHeight : 380, 180), 380);
+  if (canvas.width !== Math.floor(w * dpr) || canvas.height !== Math.floor(h * dpr)) {
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+  }
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = "#f3eee4";
+  ctx.fillRect(0, 0, w, h);
+  drawCnsSilhouette(ctx, w, h);
+  const n = CNS_LAYOUT.n;
+  const act = cnsActivity(n);
+  const regions = CNS_LAYOUT.regions;
+  const px = new Float32Array(n);
+  const py = new Float32Array(n);
+  const pr = new Float32Array(n);
+  const depth = new Float32Array(n);
+  const order = Array.from({ length: n }, (_, i) => i);
+  const minDim = Math.min(w, h);
+  for (let i = 0; i < n; i++) {
+    const p = projectCns(CNS_LAYOUT.x[i], CNS_LAYOUT.y[i], CNS_LAYOUT.z[i], w, h);
+    const a = (act[i] || 0) / 255;
+    const meta = regions[CNS_LAYOUT.rid[i]] || {};
+    const scale = regionScale(meta.id);
+    px[i] = p.px;
+    py[i] = p.py;
+    depth[i] = p.depth;
+    pr[i] = (4.6 + 6.8 * a) * p.s * scale * (minDim / 420);
+  }
+  order.sort((ia, ib) => depth[ia] - depth[ib]);
+  CNS_PROJ = { px, py, pr, n };
+  for (let k = 0; k < n; k++) {
+    const i = order[k];
+    const a = (act[i] || 0) / 255;
+    const meta = regions[CNS_LAYOUT.rid[i]] || { hue: 200 };
+    const spr = sphereSprite(meta.hue || 200);
+    const r = pr[i];
+    const d = r * 2.15;
+    const t = Math.max(0, Math.min(1, (a - 0.05) / 0.40));
+    const fade = t * t * (3 - 2 * t);
+    ctx.globalAlpha = 0.18 + 0.82 * fade;
+    ctx.drawImage(spr, px[i] - r, py[i] - r, d, d);
+  }
+  ctx.globalAlpha = 1;
+  const lab = document.getElementById("cns-hover");
+  if (lab && !CNS_HOVER) lab.textContent = "hover a cell · drag to orbit";
+}
+
+function bindCnsCanvas() {
+  const canvas = document.getElementById("cns-cv");
+  if (!canvas || canvas.dataset.bound) return;
+  canvas.dataset.bound = "1";
+  canvas.style.cursor = "grab";
+  canvas.addEventListener("pointerdown", ev => {
+    canvas.setPointerCapture(ev.pointerId);
+    CNS_DRAG = { x: ev.clientX, y: ev.clientY, yaw: CNS_YAW, pitch: CNS_PITCH };
+    canvas.style.cursor = "grabbing";
+  });
+  canvas.addEventListener("pointerup", () => {
+    CNS_DRAG = null;
+    canvas.style.cursor = "grab";
+  });
+  canvas.addEventListener("pointerleave", () => {
+    if (!CNS_DRAG) {
+      CNS_HOVER = "";
+      const lab = document.getElementById("cns-hover");
+      if (lab) lab.textContent = "hover a cell · drag to orbit";
+    }
+  });
+  canvas.addEventListener("pointermove", ev => {
+    if (CNS_DRAG) {
+      const dx = ev.clientX - CNS_DRAG.x;
+      const dy = ev.clientY - CNS_DRAG.y;
+      CNS_YAW = CNS_DRAG.yaw + dx * 0.006;
+      CNS_PITCH = Math.max(-0.7, Math.min(0.7, CNS_DRAG.pitch + dy * 0.005));
+      paintCnsCanvas();
+      return;
+    }
+    if (!CNS_LAYOUT || !CNS_PROJ) return;
+    const r = canvas.getBoundingClientRect();
+    const mx = ev.clientX - r.left;
+    const my = ev.clientY - r.top;
+    let best = 14;
+    let hit = -1;
+    for (let i = 0; i < CNS_PROJ.n; i++) {
+      const dx = CNS_PROJ.px[i] - mx;
+      const dy = CNS_PROJ.py[i] - my;
+      const lim = Math.max(10, CNS_PROJ.pr[i] + 2);
+      const d = Math.hypot(dx, dy);
+      if (d < lim && d < best) { best = d; hit = i; }
+    }
+    CNS_MOUSE = { x: mx, y: my };
+    if (hit < 0) {
+      CNS_HOVER = "";
+    } else {
+      const meta = CNS_LAYOUT.regions[CNS_LAYOUT.rid[hit]] || {};
+      const act = cnsActivity(CNS_LAYOUT.n);
+      const v = act[hit] != null ? (act[hit] / 255).toFixed(2) : "—";
+      CNS_HOVER = `${meta.label || meta.id || "cell"}  |x| ${v}`;
+    }
+    const lab = document.getElementById("cns-hover");
+    if (lab) lab.textContent = CNS_HOVER || "hover a cell · drag to orbit";
+  });
+}
+
+function renderCns(s) {
+  const el = document.getElementById("card-cns");
+  if (!el) return;
+  if (s && s.cns && Object.keys(s.cns).length) LAST_CNS_MAPS = s.cns;
+  const maps = LAST_CNS_MAPS;
+  if (!el.dataset.ready) {
+    el.innerHTML = `<div class="cns-head"><span>MALECNS  ·  structure + activity</span>
+      <div class="cns-tools" id="cns-tools"></div></div>
+      <div class="cns-body">
+        <div class="cns-stage"><canvas id="cns-cv"></canvas><div class="cns-hover" id="cns-hover">hover a cell · drag to orbit</div></div>
+        <div>
+          <div class="cns-legend" id="cns-legend"></div>
+          <div class="cns-note" id="cns-note"></div>
+        </div>
+      </div>`;
+    el.dataset.ready = "1";
+    const tools = document.getElementById("cns-tools");
+    CNS_HEADS.forEach(([id, lab]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.head = id;
+      b.textContent = lab;
+      b.onclick = () => { CNS_HEAD = id; renderCns(null); };
+      tools.appendChild(b);
+    });
+    bindCnsCanvas();
+  }
+  document.querySelectorAll("#cns-tools button").forEach(b => {
+    b.classList.toggle("on", b.dataset.head === CNS_HEAD);
+  });
+  Object.keys(maps).forEach(k => {
+    if (maps[k] && maps[k].act) CNS_ACT[k] = b64u8(maps[k].act);
+  });
+  paintCnsCanvas();
+  const layout = CNS_LAYOUT;
+  const active = CNS_HEAD === "max"
+    ? { reg: {}, fire: {}, hot: [] }
+    : (maps[CNS_HEAD] || { reg: {}, fire: {}, hot: [] });
+  if (CNS_HEAD === "max") {
+    const acc = {};
+    Object.keys(maps).forEach(k => {
+      const reg = (maps[k] || {}).reg || {};
+      Object.keys(reg).forEach(name => { acc[name] = Math.max(acc[name] || 0, Number(reg[name]) || 0); });
+    });
+    active.reg = acc;
+    active.hot = Object.keys(acc).sort((a, b) => acc[b] - acc[a]).filter(k => acc[k] >= 0.08).slice(0, 4);
+  }
+  const legend = document.getElementById("cns-legend");
+  if (legend && layout) {
+    const hot = new Set(active.hot || []);
+    legend.innerHTML = (layout.regions || []).map(r => {
+      const v = Number((active.reg || {})[r.id] || 0);
+      const n = (layout.counts || {})[r.id] || 0;
+      if (!n && v === 0) return "";
+      return `<div class="rg${hot.has(r.id) ? " hot" : ""}">
+        <span class="sw" style="background:hsl(${r.hue},70%,48%)"></span>
+        <span class="nm">${r.label}</span>
+        <span class="val">${v.toFixed(2)}</span>
+      </div>`;
+    }).join("");
+  }
+  const note = document.getElementById("cns-note");
+  if (note) {
+    const nCells = layout ? layout.n : 0;
+    const nNeu = layout ? layout.neurons : 0;
+    const hot = (active.hot || []).join(", ") || "quiet";
+    note.textContent = (layout && layout.note ? layout.note + " " : "")
+      + `${nCells} spheres of ${nNeu || "?"} neurons. Loud now: ${hot}. Quiet cells stay visible (translucent); solid = |x| up. Drag to orbit.`;
+  }
+}
+
+async function boot() {
+  buildFuseInds();
+  try {
+    const m = await (await fetch("/api/meta")).json();
+    fillPairs(m.pairs, m.symbol, m.brains, m.evo);
+    if (m.balance) document.getElementById("capital").value = Number(m.balance);
+    if (m.timeframe) document.getElementById("timeframe").value = m.timeframe;
+    if (Array.isArray(m.brains)) LAST_BRAINS = m.brains.join(",");
+    if (Array.isArray(m.evo)) LAST_EVO = m.evo.map(x => x.symbol || x).join(",");
+  } catch {
+    fillPairs(FALLBACK_PAIRS, "EURUSD");
+  }
+  // Restore dials: server last → localStorage → built-in lab default.
+  let restored = false;
+  const listed = await refreshConfigList("default");
+  if (listed && listed.last) {
+    restored = applyFormConfig(listed.last, "Restored last saved lab configuration");
+  }
+  if (!restored) {
+    try {
+      const raw = localStorage.getItem("flyfx_lab_config");
+      if (raw) restored = applyFormConfig(JSON.parse(raw), "Restored lab configuration from this browser");
+    } catch (_e) {}
+  }
+  if (!restored) {
+    applyFormConfig(DEFAULT_LAB_CONFIG, "Lab default configuration ready — CFG Save/Load for presets");
+  }
+  await ensureCnsLayout();
+  window.addEventListener("resize", () => paintCnsCanvas());
+}
+
+async function tick() {
+  if (!CNS_LAYOUT) await ensureCnsLayout();
+  let s;
+  try { s = await (await fetch("/api/state")).json(); }
+  catch { return; }
+  const live = !!s.live;
+  document.getElementById("clock").textContent = s.label || (live ? (s.mode || "live") : "waiting — pick a pair, then Replay or Train DA");
+  document.getElementById("clock").className = "meta" + (live ? "" : " stale");
+  if (Array.isArray(s.evo)) {
+    const ekey = s.evo.map(x => x.symbol || x).join(",");
+    if (ekey !== LAST_EVO) {
+      LAST_EVO = ekey;
+      fillPairs(PAIR_LIST, document.getElementById("pair").value, s.brains || BRAIN_LIST, s.evo);
+    }
+  }
+  if (Array.isArray(s.brains)) {
+    const key = s.brains.join(",");
+    if (key !== LAST_BRAINS) {
+      LAST_BRAINS = key;
+      fillPairs(PAIR_LIST, document.getElementById("pair").value, s.brains, s.evo || EVO_POLICIES);
+    }
+  }
+  document.getElementById("symbol").textContent = [s.symbol, s.regime, s.close ? Number(s.close).toFixed(5) : "", s.running ? "RUNNING" : ""].filter(Boolean).join("  ·  ");
+  const acc = s.account || {};
+  const eq = document.getElementById("equity");
+  const start = Number(acc.start || acc.equity || 0);
+  const now = Number(acc.equity || 0);
+  eq.textContent = `equity $${fmt(now, 2)}   ${now >= start ? "+" : ""}$${fmt(now - start, 2)}`;
+  eq.className = "eq " + (now >= start ? "up" : "dn");
+  const pos = s.position || {};
+  document.getElementById("pos").textContent = pos.side
+    ? `${pos.side} ${fmt(pos.lots, 2)} lots @ ${Number(pos.entry).toFixed(5)}  float $${fmt(pos.floating, 2)}`
+    : "flat";
+  const snow = s.snowball || {};
+  document.getElementById("snow").textContent = `snowball ${snow.adds || 0}/${snow.max || 2}` + (snow.last ? `  ${snow.last}` : "");
+  const mg = s.martingale || {};
+  const banc = s.banc || {};
+  document.getElementById("banc").textContent = [
+    banc.mult != null ? `BANC ×${Number(banc.mult).toFixed(2)}  threat ${Number(banc.threat || 0).toFixed(2)}  walk ${Number(banc.walk || 0).toFixed(2)}  ${banc.vote || ""}` : "",
+    s.risk_tol ? `risk ${s.risk_tol}` : "",
+    (s.appetite && s.appetite.enabled) ? `appetite ${Number(s.appetite.appetite||1).toFixed(2)} rate ${Number(s.appetite.rate||0).toFixed(1)}/1k→${Number(s.appetite.target||0).toFixed(0)}${s.appetite.soft_nn_hold ? " soft-2oo3" : ""}` : "",
+    (s.bank_pct != null && Number(s.bank_pct) > 0) ? `bank ${Number(s.bank_pct).toFixed(2)}%` : "",
+    (s.hold_risk && s.hold_risk.risk != null) ? `hold-risk ${Number(s.hold_risk.risk).toFixed(2)} early ${Number(s.hold_risk.early_frac||1).toFixed(2)}` : "",
+    (s.profit_recycle && s.profit_recycle.active) ? `recycle ${s.profit_recycle.phase} $${Number(s.profit_recycle.budget||0).toFixed(0)}` : "",
+    (s.trade_bayes && s.trade_bayes.enabled !== false && s.trade_bayes.p_win != null) ? `bayes p=${Number(s.trade_bayes.p_win).toFixed(2)} ×${Number(s.trade_bayes.size_mult||1).toFixed(2)}${s.trade_bayes.inhibit ? " INHIBIT" : ""}${s.trade_bayes.trim_frac > 0 ? " TRIM" : ""}` : "",
+    (s.params && s.params.sl != null) ? `SL ${Number(s.params.sl).toFixed(2)} TP ${Number(s.params.tp).toFixed(1)} trail ${Number(s.params.trail).toFixed(2)} imp ${Number(s.params.impulse).toFixed(2)} RSI ${Number(s.params.rsi_buy).toFixed(0)}/${Number(s.params.rsi_sell).toFixed(0)} hold ${Number(s.params.hold).toFixed(0)}` : "",
+    (s.trade_ann && s.trade_ann.on) ? `trade×10 ${s.trade_ann.side || "HOLD"} bma ${s.trade_ann.top || ""}` : "trade×10 off",
+    (s.settings_ann && s.settings_ann.on) ? `set×20 bma ${s.settings_ann.top || ""} ${s.settings_ann.moved || "held"}` : "set×20 off",
+    (s.sugar && s.sugar.appetite != null) ? `sugar amt ${Number(s.sugar.dose != null ? s.sugar.dose : 1).toFixed(2)}${s.sugar.dyn ? " " + (s.sugar.dyn_state || "dyn") : ""} feed ${Number(s.sugar.feeding||0).toFixed(2)} sat ${Number(s.sugar.satiety||0).toFixed(2)}` : "",
+    mg.streak ? `martingale streak ${mg.streak}` : "",
+    mg.note || "",
+    (s.rails && s.rails.kill) ? "KILL SWITCH" : "",
+    (s.rails && s.rails.lock) ? `snowball lock ${s.rails.lock}` : "",
+    (s.rails && s.rails.n != null) ? `admit ×${Number(s.rails.admit || 1).toFixed(2)} PF ${Number(s.rails.pf || 0).toFixed(2)} n=${s.rails.n}` : "",
+  ].filter(Boolean).join("  ·  ");
+
+  const heads = s.heads || {};
+  const hist = s.history || {};
+  renderCns(s);
+  renderNodeBoard(s);
+  headCard(document.getElementById("card-trend"), heads.trend, hist.trend, "rgb(94,224,255)");
+  headCard(document.getElementById("card-fade"), heads.fade, hist.fade, "rgb(211,139,255)");
+  headCard(document.getElementById("card-conf"), heads.conf, hist.conf, "rgb(240,193,75)");
+
+  const c = document.getElementById("card-committee");
+  const votes = s.votes || {};
+  const fusion = s.fusion || {};
+  const fam = s.families || {};
+  const koo9 = s.koo9 || {};
+  const nineVotes = koo9.votes || {};
+  const mode = s.committee_mode || "";
+  const isKoo9 = mode === "koo9" || Object.keys(nineVotes).length >= 5;
+  const ens = s.ensemble || {};
+  const ensBooks = ens.books || {};
+  const isEns = mode === "ensemble" || Object.keys(ensBooks).length >= 3;
+  const isNest = mode === "nest" || !!fam.structure;
+  const isLegacy = mode === "legacy";
+  const cats = s.categories || {};
+  const catRows = cats.categories || {};
+  const isCat = mode === "categories";
+  const isFuse = mode === "fuse" || (!isKoo9 && !isEns && !isNest && !isLegacy && !isCat);
+  const fuse = s.cat_fuse || {};
+  const pipe = document.getElementById("pipeline");
+  const picks = document.getElementById("fuse-picks");
+  const indHost = document.getElementById("fuse-inds");
+  const showFuse = (isFuse || mode === "" || mode === "fuse");
+  if (picks) picks.style.display = showFuse ? "" : "none";
+  if (indHost) indHost.style.display = showFuse ? "" : "none";
+  if (pipe) {
+    if (isCat) {
+      const win = cats.winner ? `  ·  winner <b class="now">${cats.winner}</b> ${cats.vote_type || s.tag || ""}` : "";
+      pipe.innerHTML = `<b>OHLCV</b><span class="arr">→</span>
+      <b>7 category Kalmans</b><span class="arr">→</span>
+      <b>tech + fly-trend + fly-fade</b><span class="arr">→</span>
+      <b>2oo3 / 3oo3</b><span class="arr">→</span>
+      <b>fly-conf inhibit</b><span class="arr">→</span>
+      <b class="now">confidence pick</b><span class="arr">→</span>
+      <b>BANC / size</b><span class="arr">→</span>
+      <b>trade</b>${win}`;
+      pipe.style.display = "";
+    } else if (isFuse) {
+      const plan = s.fuse_plan || {};
+      const picked = (fuse.selected || []).length && (fuse.selected || []).length < CATEGORY_NODES.length
+        ? (fuse.selected || []).join("+")
+        : "all live";
+      const fuseNow = plan.dynamic
+        ? `fuse ${plan.state || "?"} ${picked}`
+        : `fuse ${picked}`;
+      pipe.innerHTML = `<b>OHLCV</b><span class="arr">→</span>
+      <b>7 category Kalmans</b><span class="arr">→</span>
+      <b class="now">${fuseNow}</b><span class="arr">→</span>
+      <b>tech + fly-trend + fly-fade</b><span class="arr">→</span>
+      <b>2oo3</b><span class="arr">→</span>
+      <b>BANC / size</b><span class="arr">→</span>
+      <b>trade</b>`;
+      pipe.style.display = "";
+    } else {
+      pipe.style.display = "none";
+    }
+  }
+  if (isKoo9) {
+    const rows = NINE_NODES.map(([k, lab]) =>
+      `<div class="row"><span>${k} · ${lab}</span><span class="pill ${voteClass(nineVotes[k])}">${nineVotes[k] || "HOLD"}</span></div>`
+    ).join("");
+    c.innerHTML = `<h2><span>COMMITTEE 5oo9–9oo9</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span></h2>
+    ${rows}
+    <div class="row"><span>tally</span><span>${koo9.buy || 0} BUY · ${koo9.sell || 0} SELL · ${koo9.hold || 0} HOLD  size×${fmt(koo9.mult, 2)}</span></div>
+    <div class="row"><span>BANC female risk</span><span>×${fmt((s.banc||{}).mult,2)}  ${(s.banc||{}).vote || ""}</span></div>
+    <div class="row"><span>risk tolerance</span><span>${s.risk_tol || "balanced"}</span></div>
+    ${sugarRow(s)}
+    <div class="decision ${voteClass(s.decision)}">${s.decision || "HOLD"}  ${s.tag || ""}</div>
+    <div class="job" style="margin-top:10px">${s.note || "Nine MaleCNS flies, one W. 5oo9 trades small, 9oo9 trades large. A 5–4 split does not trade."}</div>`;
+  } else if (isEns) {
+    const ensRows = ["classic","structure","momentum","fade","breakout"].map(k => {
+      const b = ensBooks[k] || {};
+      return `<div class="row"><span>${k} ${b.tag || ""}</span><span class="pill ${voteClass(b.side)}">${b.side || "HOLD"}</span></div>`;
+    }).join("");
+    c.innerHTML = `<h2><span>COMMITTEE BAYES 2oo3/3oo3</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span></h2>
+    ${ensRows}
+    <div class="row"><span>tally</span><span>${ens.buy || 0} BUY · ${ens.sell || 0} SELL  p=${fmt(ens.strength,2)}  size×${fmt(ens.ens_mult,2)}</span></div>
+    <div class="row"><span>on side</span><span>${(ens.on_side || []).join(" · ") || "—"}</span></div>
+    <div class="row"><span>BANC female risk</span><span>×${fmt((s.banc||{}).mult,2)}  ${(s.banc||{}).vote || ""}</span></div>
+    <div class="row"><span>risk tolerance</span><span>${s.risk_tol || "balanced"}</span></div>
+    ${sugarRow(s)}
+    <div class="decision ${voteClass(s.decision)}">${s.decision || "HOLD"}  ${s.tag || ""}</div>
+    <div class="job" style="margin-top:10px">${s.note || "Five strategy books. Each votes 2oo3 or 3oo3. Bayesian averaging mixes them; classic 2oo3 keeps the EURUSD freeze prior."}</div>`;
+  } else if (isCat) {
+    const body = CATEGORY_NODES.map(([k, lab]) => {
+      const r = catRows[k] || {};
+      const win = cats.winner === k;
+      const ghost = r.available === false;
+      const inh = !!r.inhibited;
+      const cls = win ? "winner" : inh ? "inhibited" : ghost ? "ghost" : "";
+      const live = ghost
+        ? "empty"
+        : `imp ${fmt(r.impulse, 2)} · agr ${fmt(r.agreement, 2)}${r.n_live != null ? ` · ${r.n_live}/${r.n_expected || "?"}` : ""}`;
+      const why = r.tech_reason ? `<span class="sub">${r.tech_reason}</span>` : "";
+      const inhWhy = r.inhibit_reason ? `<span class="sub">${r.inhibit_reason}</span>` : "";
+      const result = win ? `${r.decision || "HOLD"} ★` : (r.decision || "HOLD");
+      const regime = (!ghost && r.regime) ? `<span class="sub">${r.regime}</span>` : "";
+      return `<tr class="${cls}">
+        <td>${k}<span class="sub">${lab}</span></td>
+        <td>${live}${regime}</td>
+        <td><span class="pill ${voteClass(r.tech)}">${r.tech || "HOLD"}</span>${why}</td>
+        <td><span class="pill ${voteClass(r.trend)}">${r.trend || "HOLD"}</span></td>
+        <td><span class="pill ${voteClass(r.fade)}">${r.fade || "HOLD"}</span></td>
+        <td>${fmt(r.conf_norm, 2)}${inhWhy}</td>
+        <td>${r.vote_type || "HOLD"}${inh ? " inhibit" : ""}</td>
+        <td><span class="pill ${voteClass(r.decision)}">${result}</span></td>
+      </tr>`;
+    }).join("");
+    c.innerHTML = `<h2><span>COMMITTEE 7-CAT 2oo3/3oo3</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span></h2>
+    <table class="cat-table">
+      <thead><tr>
+        <th>classification</th><th>Kalman</th><th>tech</th><th>fly-trend</th><th>fly-fade</th><th>conf</th><th>vote</th><th>result</th>
+      </tr></thead>
+      <tbody>${body}</tbody>
+    </table>
+    <div class="row"><span>winner</span><span>${cats.winner || "—"}  ${cats.vote_type || s.tag || ""}  conf ${fmt(cats.conf, 2)}</span></div>
+    <div class="row"><span>inhibited</span><span>${(cats.inhibited || []).join(" · ") || "—"}</span></div>
+    <div class="row"><span>losers</span><span>${(cats.losers || []).join(" · ") || "—"}  ${cats.conflict || ""}</span></div>
+    <div class="row"><span>BANC female risk</span><span>×${fmt((s.banc||{}).mult,2)}  ${(s.banc||{}).vote || ""}</span></div>
+    <div class="row"><span>risk tolerance</span><span>${s.risk_tol || "balanced"}</span></div>
+    ${sugarRow(s)}
+    <div class="decision ${voteClass(s.decision)}">${s.decision || "HOLD"}  ${s.tag || ""}</div>
+    <div class="job" style="margin-top:10px">${s.note || "Each classification has its own tech node + fly-trend + fly-fade. Two of those three agree → 2oo3; all three → 3oo3. Fly-conf does not vote a side — it inhibits. Highest-confidence surviving vote trades; BUY vs SELL is never averaged."}</div>`;
+  } else if (isFuse) {
+    const plan = s.fuse_plan || {};
+    const picked = fuse.selected || [];
+    const mixAll = !picked.length || picked.length >= CATEGORY_NODES.length;
+    const sensorRows = CATEGORY_NODES.map(([k, lab]) => {
+      const r = catRows[k] || {};
+      const ghost = r.available === false;
+      const inMix = mixAll || picked.includes(k);
+      const fused = r.fused != null ? r.fused : r.impulse;
+      const cls = [ghost ? "ghost" : "", inMix ? "" : "ghost"].filter(Boolean).join(" ");
+      const chans = (r.channels || []).join("+");
+      return `<tr class="${cls}">
+        <td>${k}<span class="sub">${lab}${inMix ? "" : " · not in mix"}</span></td>
+        <td>${ghost ? "empty" : `fused ${fmt(fused, 2)} · agr ${fmt(r.agreement, 2)}${r.n_live != null ? ` · ${r.n_live}/${r.n_expected || "?"}` : ""}`}${chans ? `<span class="sub">${chans}</span>` : ""}</td>
+        <td>${ghost ? "—" : (r.regime || "")}</td>
+      </tr>`;
+    }).join("");
+    const fuseLab = mixAll ? "all live" : picked.join("+");
+    const dynRows = plan.dynamic ? `
+    <div class="row"><span>regime FSM</span><span>${plan.state || "?"}  want ${plan.want || "?"}  ${plan.bars_in || 0} bars  ${(plan.include || []).join("+") || fuseLab}</span></div>
+    <div class="row"><span>why</span><span>${plan.reason || "—"}</span></div>
+    <div class="row"><span>allowlist</span><span>${(plan.allow || []).join("+") || "all"}</span></div>` : "";
+    const job = plan.dynamic
+      ? "Regime FSM picks the mix: TREND {trend,structure} · RANGE {momentum,structure} · BREAK {volatility,trend} · QUIET {trend}. Volume may join if live. FUSE boxes are an allowlist. Empty overlays stay out. PullbackSetup + fly-trend + fly-fade vote 2oo3."
+      : "Seven Kalmans mix by inverse variance into one impulse. PullbackSetup tech + fly-trend + fly-fade vote 2oo3. Fly-conf may only abstain. Empty overlays stay out of the mix.";
+    c.innerHTML = `<h2><span>COMMITTEE CAT-FUSE 2oo3${plan.dynamic ? "  ·  " + (plan.state || "FSM") : ""}</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span></h2>
+    <table class="cat-table">
+      <thead><tr><th>classification</th><th>Kalman</th><th>regime</th></tr></thead>
+      <tbody>${sensorRows}</tbody>
+    </table>
+    <div class="row"><span>fuse ${fuseLab}</span><span>n=${fuse.n_live || cats.n_live || 0}/${fuse.n_expected || picked.length || 7}  agr ${fmt(fuse.agreement || cats.agreement, 2)}  imp ${fmt(fuse.impulse || cats.impulse, 2)}  ${fuse.regime || cats.regime || ""}</span></div>
+    <div class="row"><span>indicators</span><span>${s.fuse_inds || plan.inds || "all"}</span></div>${dynRows}
+    <div class="row"><span>tech</span><span class="pill ${voteClass(votes.tech)}">${votes.tech || "HOLD"}</span></div>
+    <div class="row"><span>fly-trend</span><span class="pill ${voteClass(votes.trend)}">${votes.trend || "HOLD"}</span></div>
+    <div class="row"><span>fly-fade</span><span class="pill ${voteClass(votes.fade)}">${votes.fade || "HOLD"}</span></div>
+    <div class="row"><span>fly-conf</span><span class="pill ${voteClass(votes.conf)}">${votes.conf || "HOLD"}</span></div>
+    <div class="row"><span>p_cast tech / trend / fade</span><span>${fmt(fusion.tech,2)} · ${fmt(fusion.trend,2)} · ${fmt(fusion.fade,2)}</span></div>
+    <div class="row"><span>BANC female risk</span><span>×${fmt((s.banc||{}).mult,2)}  ${(s.banc||{}).vote || ""}</span></div>
+    <div class="row"><span>risk tolerance</span><span>${s.risk_tol || "balanced"}</span></div>
+    ${sugarRow(s)}
+    <div class="decision ${voteClass(s.decision)}">${s.decision || "HOLD"}  ${s.tag || ""}</div>
+    <div class="job" style="margin-top:10px">${s.note || job}</div>`;
+  } else {
+  const nestNote = fam.structure
+    ? `Nine nodes: structure 3oo3 {tech, ema, candle}=${fam.structure || "HOLD"}  momentum 3oo3 {fly-trend, flow, impulse}=${fam.momentum || "HOLD"}  fade 3oo3 {fly-fade, rsi, residual}=${fam.fade || "HOLD"}. Outer 2oo3 of those three families.`
+    : "Timing from tech. Flies vote or veto. Fusion may only abstain. BANC scales risk. Dopamine retunes each head after close.";
+  c.innerHTML = `<h2><span>COMMITTEE ${fam.structure ? "3×3oo3 → 2oo3" : "2oo3"}</span><span class="pill ${voteClass(s.decision)}">${s.decision || "HOLD"}</span></h2>
+    <div class="row"><span>family structure</span><span class="pill ${voteClass(fam.structure)}">${fam.structure || "—"}</span></div>
+    <div class="row"><span>family momentum</span><span class="pill ${voteClass(fam.momentum)}">${fam.momentum || "—"}</span></div>
+    <div class="row"><span>family fade</span><span class="pill ${voteClass(fam.fade)}">${fam.fade || "—"}</span></div>
+    <div class="row"><span>tech / ema / candle</span><span>${["tech","ema","candle"].map(k => k+" "+(votes[k]||"HOLD")).join(" · ")}</span></div>
+    <div class="row"><span>trend / flow / impulse</span><span>${["trend","flow","impulse"].map(k => k+" "+(votes[k]||"HOLD")).join(" · ")}</span></div>
+    <div class="row"><span>fade / rsi / residual</span><span>${["fade","rsi","residual"].map(k => k+" "+(votes[k]||"HOLD")).join(" · ")}</span></div>
+    <div class="row"><span>fly-conf</span><span class="pill ${voteClass(votes.conf)}">${votes.conf || "HOLD"}</span></div>
+    <div class="row"><span>p_cast tech / trend / fade</span><span>${fmt(fusion.tech,2)} · ${fmt(fusion.trend,2)} · ${fmt(fusion.fade,2)}</span></div>
+    <div class="row"><span>BANC female risk</span><span>×${fmt((s.banc||{}).mult,2)}  ${(s.banc||{}).vote || ""}</span></div>
+    <div class="row"><span>risk tolerance</span><span>${s.risk_tol || "balanced"}</span></div>
+    ${sugarRow(s)}
+    <div class="decision ${voteClass(s.decision)}">${s.decision || "HOLD"}  ${s.tag || ""}</div>
+    <div class="job" style="margin-top:10px">${s.note || nestNote}</div>`;
+  }
+
+  const log = s.log || [];
+  const rows = log.slice().reverse().map(r =>
+    `<tr><td>${r.t || ""}</td><td class="${voteClass(r.side)}">${r.side || ""}</td><td>${r.what || ""}</td><td>${r.detail || ""}</td></tr>`
+  ).join("");
+  document.getElementById("card-log").innerHTML = `<h2>DECISION TAPE</h2>
+    <table><thead><tr><th>TIME</th><th>SIDE</th><th>WHAT</th><th>DETAIL</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+boot();
+tick();
+setInterval(tick, 250);
+</script>
+</body>
+</html>

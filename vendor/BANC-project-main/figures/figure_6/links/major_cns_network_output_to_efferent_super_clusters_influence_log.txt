@@ -1,0 +1,32 @@
+
+Two-way ANOVA (source × target) Summary
+---------------------------------------
+
+Date: 2026-05-19 03:13:42
+Observations: 522148
+Unique sources: 528 | Unique targets: 15
+Replication present: TRUE
+
+Large design (528 source × 15 target = 7920 cells) — analytic SS decomposition fast path. Override via options(banc.fast_anova_threshold = ...).
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ANOVA table (analytic, balanced-cell unweighted SS)
+---------------------------------------------------
+
+|Term          |        SS|     Df|    F.value| Pr_F| eta2_P|
+|:-------------|---------:|------:|----------:|----:|------:|
+|source        | 4314203.1|    527| 10611.9793|    0| 0.9158|
+|target        |  462010.3|     14| 42778.9423|    0| 0.5380|
+|source:target |  690864.1|   7378|   121.3837|    0| 0.6352|
+|Residuals     |  396688.2| 514228|         NA|   NA|     NA|
+
+Concise figure-legend statement
+-------------------------------
+
+[1] "Two-way ANOVA (522148 obs over 528 sources × 15 targets), source × target interaction significant (F(7378, 514228) = 121.38, P < 2.2 × 10^−16; partial η² = 0.64)."
+
+Concise stat
+------------
+
+[1] "(P < 2.2 × 10^−16, two-way ANOVA, source×target interaction (analytic SS), F(7378, 514228) = 121.38, partial η² = 0.64, n = 522148)"

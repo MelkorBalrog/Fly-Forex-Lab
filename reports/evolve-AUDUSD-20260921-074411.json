@@ -1,0 +1,78 @@
+{
+  "symbol": "AUDUSD",
+  "pop": 6,
+  "gens": 4,
+  "seed": 21,
+  "cancelled": false,
+  "best_fitness": -1741.06,
+  "best": "risk=aggressive  sugar ON\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=momentum,volatility,volume,breadth,structure,sentiment  SL 2.43 TP 10.0  snow off  mart on",
+  "summary": {
+    "n": 2,
+    "wins": 1,
+    "losses": 1,
+    "net_usd": -691.06,
+    "equity": 99308.93,
+    "da_n": 14,
+    "max_dd": 0.0084
+  },
+  "genome": {
+    "params": {
+      "sl_atr": 2.4269342137240493,
+      "tp_atr": 10.03406433971819,
+      "trail_arm_atr": 2.8105044429747346,
+      "trail_gap_atr": 2.0612497831252763,
+      "be_atr": 1.3331465791535326,
+      "rsi_buy_arm": 52.864698153578466,
+      "rsi_buy_fire": 63.32643470050402,
+      "rsi_sell_arm": 46.80051979648927,
+      "rsi_sell_fire": 38.423865626515884,
+      "rsi_cont_lo": 32.0,
+      "rsi_cont_hi": 40.330447575871254,
+      "min_impulse": 0.5118988684840721,
+      "cont_impulse": 0.7423683164745105,
+      "cooldown_bars": 9.294990709625681,
+      "lock_win_pips": 9.079097550574405,
+      "max_hold_bars": 63.04402080830377,
+      "min_hold_bars": 4.403682035434775,
+      "n_updates": 2
+    },
+    "risk_tol": "aggressive",
+    "fuse_dynamic": true,
+    "sugar": true,
+    "sugar_amt": 1.0,
+    "sugar_dyn": false,
+    "fuse_cats": "momentum,volatility,volume,breadth,structure,sentiment",
+    "fuse_inds": "all",
+    "cat_inhibit": 0.6152228473320653,
+    "no_snowball": true,
+    "no_martingale": false
+  },
+  "history": [
+    {
+      "gen": 1,
+      "best_fitness": -1000000.0,
+      "best": "risk=aggressive  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.45 TP 12.0  snow on  mart off",
+      "net_usd": 0.0
+    },
+    {
+      "gen": 2,
+      "best_fitness": -1000000.0,
+      "best": "risk=aggressive  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn OFF  fuse=all  SL 2.45 TP 12.0  snow on  mart off",
+      "net_usd": 0.0
+    },
+    {
+      "gen": 3,
+      "best_fitness": -1741.06,
+      "best": "risk=aggressive  sugar ON\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=momentum,volatility,volume,breadth,structure,sentiment  SL 2.43 TP 10.0  snow off  mart on",
+      "net_usd": -691.06
+    },
+    {
+      "gen": 4,
+      "best_fitness": -1741.06,
+      "best": "risk=aggressive  sugar ON\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=momentum,volatility,volume,breadth,structure,sentiment  SL 2.43 TP 10.0  snow off  mart on",
+      "net_usd": -691.06
+    }
+  ],
+  "brain": "C:\\Workspace\\FlyFOREXTrader\\brains\\AUDUSD.json",
+  "evo": "C:\\Workspace\\FlyFOREXTrader\\brains\\AUDUSD.evo.json"
+}

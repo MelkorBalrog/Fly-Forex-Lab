@@ -1,0 +1,126 @@
+{
+  "inspect": {
+    "saved_at": "2026-09-20 22:03:39",
+    "meta": {
+      "n_trades": 2,
+      "da_n": 6
+    },
+    "params": {
+      "sl_atr": 2.4451315595238095,
+      "tp_atr": 12.0,
+      "trail_arm_atr": 3.2,
+      "trail_gap_atr": 1.8,
+      "be_atr": 1.5,
+      "rsi_buy_arm": 52.0,
+      "rsi_buy_fire": 62.0,
+      "rsi_sell_arm": 48.0,
+      "rsi_sell_fire": 38.0,
+      "rsi_cont_lo": 32.0,
+      "rsi_cont_hi": 42.0,
+      "min_impulse": 0.5,
+      "cont_impulse": 0.75,
+      "cooldown_bars": 8.042476761904762,
+      "lock_win_pips": 8.0,
+      "max_hold_bars": 64.0,
+      "min_hold_bars": 4.0,
+      "n_updates": 2
+    },
+    "genome_flags": {},
+    "genome_params": {},
+    "da": {
+      "trend": {
+        "n_updates": 6,
+        "gain_pos": 1.000539604746306,
+        "gain_neg": 0.9845764799345483
+      },
+      "fade": {
+        "n_updates": 6,
+        "gain_pos": 0.9964859790434777,
+        "gain_neg": 0.9857384216257158
+      },
+      "conf": {
+        "n_updates": 6,
+        "gain_pos": 1.0040780793918402,
+        "gain_neg": 0.9931504113900116
+      },
+      "risk": {
+        "n_updates": 6,
+        "gain_pos": 1.0168602411099454,
+        "gain_neg": 0.9933358625952872
+      }
+    }
+  },
+  "source": "yahoo 5m AUDUSD=X",
+  "baseline": {
+    "symbol": "AUDUSD",
+    "source": "yahoo 5m AUDUSD=X eval-clip",
+    "n": 0,
+    "wins": 0,
+    "losses": 0,
+    "net_usd": 0,
+    "net_pips": 0,
+    "equity": 100000.0,
+    "best": 0.0,
+    "worst": 0.0,
+    "report": "C:\\Workspace\\FlyFOREXTrader\\reports\\trades-AUDUSD-20260921-054510.csv",
+    "da_n": 0,
+    "banc_mean": 1.062,
+    "buys": 0,
+    "sells": 0,
+    "snowball": 0,
+    "max_dd": 0.0,
+    "label": "baseline_use_brain",
+    "elapsed_s": 279.1,
+    "window": {
+      "n_bars": 1977,
+      "start": "2026-09-09 23:20",
+      "end": "2026-09-18 21:25",
+      "source": "yahoo 5m AUDUSD=X eval-clip"
+    }
+  },
+  "evolve": {
+    "fitness": -1741.06,
+    "net_usd": -691.06,
+    "n": 2,
+    "da_n": 14,
+    "elapsed_s": 7141.0,
+    "genome": "risk=aggressive  sugar ON\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=momentum,volatility,volume,breadth,structure,sentiment  SL 2.43 TP 10.0  snow off  mart on",
+    "summary": {
+      "n": 2,
+      "wins": 1,
+      "losses": 1,
+      "net_usd": -691.06,
+      "equity": 99308.93,
+      "max_dd": 0.0084,
+      "fitness": -1741.06
+    }
+  },
+  "evolved_eval": {
+    "symbol": "AUDUSD",
+    "source": "yahoo 5m AUDUSD=X eval-clip",
+    "n": 0,
+    "wins": 0,
+    "losses": 0,
+    "net_usd": 0,
+    "net_pips": 0,
+    "equity": 100000.0,
+    "best": 0.0,
+    "worst": 0.0,
+    "report": "C:\\Workspace\\FlyFOREXTrader\\reports\\trades-AUDUSD-20260921-074912.csv",
+    "da_n": 0,
+    "banc_mean": 1.075,
+    "buys": 0,
+    "sells": 0,
+    "snowball": 0,
+    "max_dd": 0.0,
+    "label": "evolved_use_evo",
+    "elapsed_s": 300.1,
+    "window": {
+      "n_bars": 1977,
+      "start": "2026-09-09 23:20",
+      "end": "2026-09-18 21:25",
+      "source": "yahoo 5m AUDUSD=X eval-clip"
+    }
+  },
+  "keep_evolved": false
+}

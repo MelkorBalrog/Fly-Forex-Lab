@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-16T23:29:41.081237+00:00",
+  "name": "fly-connectome-malecns-166k",
+  "description": "The complete MaleCNS v1.0 connectome as typed arrays: every neuron, every directed edge, raw signed weights, destination-major CSR.",
+  "neurons": 166700,
+  "edges": 25582938,
+  "synaptic_contacts": 124177617,
+  "csr": {
+    "orientation": "row = postsynaptic neuron, edges_source = presynaptic neuron index",
+    "offsets_length": 166701,
+    "reconstruct": "for post in range(neurons): for e in range(offsets[post], offsets[post+1]): W[post, edges_source[e]] = edges_weight[e]",
+    "transpose_note": "Transpose for a presynaptic-major view; no edge is coalesced."
+  },
+  "weights": {
+    "raw": true,
+    "normalization_applied": false,
+    "semantics": "Signed synaptic count: magnitude from the flat connectome at minimum confidence 0.5, sign from the neurotransmitter prediction. Not a conductance and not a measured physiological strength.",
+    "positive_edges": 15768940,
+    "negative_edges": 9813998,
+    "zero_edges": 0,
+    "absolute_max": 712.5250244140625
+  },
+  "neurons_detail": {
+    "superclasses": 27,
+    "cell_types": 11752,
+    "untyped": 2194,
+    "note": "Cell type is an empty label where the source carries no official type."
+  },
+  "populations": {
+    "retina": 3335,
+    "lamina": 7114,
+    "descending": 1314,
+    "sugar": 23
+  },
+  "derived": {
+    "hops_from_retina": "Unweighted shortest-path hop count from the retinal input set; -1 where unreachable.",
+    "hops_to_descending": "Unweighted shortest-path hop count to the descending set; -1 where unreachable.",
+    "computed_by": "this project, not the upstream release"
+  },
+  "soma_positions": {
+    "included": false,
+    "note": "Soma coordinates are not part of this package. The central-brain subset dataset fly-connectome-49k carries measured soma positions for its 49,393 neurons."
+  },
+  "provenance": {
+    "dataset": "MaleCNS v1.0 flat connectome",
+    "upstream_files": {
+      "annotations.feather": {
+        "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+        "bytes": 14483314,
+        "sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+        "path": "/Users/fernando/fly_wordbrain/vendor/doomfly/connectome_data/malecns_v1/annotations.feather"
+      },
+      "neurotransmitters.feather": {
+        "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather",
+        "bytes": 43282834,
+        "sha256": "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621",
+        "path": "/Users/fernando/fly_wordbrain/vendor/doomfly/connectome_data/malecns_v1/neurotransmitters.feather"
+      },
+      "edges.feather": {
+        "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+        "bytes": 1051241946,
+        "sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+        "path": "/Users/fernando/fly_wordbrain/vendor/doomfly/connectome_data/malecns_v1/edges.feather"
+      }
+    },
+    "assembled_via": "github.com/nftechie/doomfly at 71ecf53d78eaffaf1a57ed7b0ccf5d458abc9f33",
+    "source_graph_sha256": "08bd21db0883698ac98501f4d70bb01eb72ea2736874fdb9092f9243b889db7b",
+    "source_graph_bytes": 688840517,
+    "packager_sha256": "6ec317923327c5dbc1bc66f5e43d4c85930bd835e988e8db23b916d61ca59ba1",
+    "minimum_confidence": 0.5
+  },
+  "related": {
+    "central_brain_subset": "fernandofernandes/fly-connectome-49k",
+    "models": [
+      "fernandofernandes/fly-wordbrain-rank64",
+      "fernandofernandes/fly-wordbrain-rank32"
+    ]
+  },
+  "files": {
+    "edges_offsets": {
+      "file": "graph/edges_offsets.i32",
+      "dtype": "int32",
+      "shape": [
+        166701
+      ],
+      "bytes": 666804,
+      "sha256": "649f7b23e1cdbca64a500f9f364ebbb0da5889c8be75a9086e1d5ce29d888375"
+    },
+    "edges_source": {
+      "file": "graph/edges_source.i32",
+      "dtype": "int32",
+      "shape": [
+        25582938
+      ],
+      "bytes": 102331752,
+      "sha256": "c0a2d02fbe1ab449a2cdf7377024361a625f201266f7d6415c3c8584dc67a2db"
+    },
+    "edges_weight": {
+      "file": "graph/edges_weight.f32",
+      "dtype": "float32",
+      "shape": [
+        25582938
+      ],
+      "bytes": 102331752,
+      "sha256": "2ad536115bd1ad1a7ec5c83975359f082b16aaf25de64c012c1837782cf3162c"
+    },
+    "body_id": {
+      "file": "neurons/body_id.i64",
+      "dtype": "int64",
+      "shape": [
+        166700
+      ],
+      "bytes": 1333600,
+      "sha256": "6b6b40c3bddf84b1281ef0b18db06927c2bf61c5f4cb32a4219ec9b7839dc2e5"
+    },
+    "superclass_index": {
+      "file": "neurons/superclass_index.i32",
+      "dtype": "int32",
+      "shape": [
+        166700
+      ],
+      "bytes": 666800,
+      "sha256": "0f8724ed1585012d7cfa6389ecdd89885459ed7409426cb9d4e80a0dab74105c"
+    },
+    "cell_type_index": {
+      "file": "neurons/cell_type_index.i32",
+      "dtype": "int32",
+      "shape": [
+        166700
+      ],
+      "bytes": 666800,
+      "sha256": "4af34959d1fdefc38191b8c22a06594dac3a6133a859ce5aa01d7dfb0e6d0a33"
+    },
+    "superclass_labels": {
+      "file": "neurons/superclass_labels.json",
+      "bytes": 540,
+      "sha256": "d59919e0f8cd0bd92bb73950b681eef96b01f608284e02fad3ad4f98bc1ab9b3"
+    },
+    "cell_type_labels": {
+      "file": "neurons/cell_type_labels.json",
+      "bytes": 151350,
+      "sha256": "f7554833321828b3615566e00f441abc144d6c99388e87d6d685c2717c1ac644"
+    },
+    "hops_from_retina": {
+      "file": "derived/hops_from_retina.i32",
+      "dtype": "int32",
+      "shape": [
+        166700
+      ],
+      "bytes": 666800,
+      "sha256": "3f283b8a3e23a36ea94e204f9a31699df1fcfaf1913dd088c24a23a9b9684593"
+    },
+    "hops_to_descending": {
+      "file": "derived/hops_to_descending.i32",
+      "dtype": "int32",
+      "shape": [
+        166700
+      ],
+      "bytes": 666800,
+      "sha256": "bd41825c541c0ddced8b1db910df097fef7eaaae006b03251b2a6a614c6df11d"
+    },
+    "population_retina": {
+      "file": "populations/retina.i32",
+      "dtype": "int32",
+      "shape": [
+        3335
+      ],
+      "bytes": 13340,
+      "sha256": "5ec145156d998f582e5d8f08c4174e10f7f853d34745118adab8589f192d04b4"
+    },
+    "population_lamina": {
+      "file": "populations/lamina.i32",
+      "dtype": "int32",
+      "shape": [
+        7114
+      ],
+      "bytes": 28456,
+      "sha256": "22d6fa8ac7aa40700d09394aea1cf35226711d2efc78bc716882920ba180e47e"
+    },
+    "population_descending": {
+      "file": "populations/descending.i32",
+      "dtype": "int32",
+      "shape": [
+        1314
+      ],
+      "bytes": 5256,
+      "sha256": "2b0a5b1766165d9b7a826cf4fb67bb3a247a41d6043a7017f12074d090af44cf"
+    },
+    "population_sugar": {
+      "file": "populations/sugar.i32",
+      "dtype": "int32",
+      "shape": [
+        23
+      ],
+      "bytes": 92,
+      "sha256": "89b057c7b57d5e783f608815b4219b17b54c812c3fa229bcb78b1cafa30d37a1"
+    }
+  },
+  "license": {
+    "data": "CC-BY-4.0",
+    "attribution": "FlyEM / HHMI Janelia Research Campus, University of Cambridge, MRC Laboratory of Molecular Biology, Google Research",
+    "packaging_code": "MIT"
+  }
+}

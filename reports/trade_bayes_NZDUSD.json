@@ -1,0 +1,50 @@
+{
+  "enabled": true,
+  "global": {
+    "a": 4.5,
+    "b": 4.8,
+    "w_sum": 7.6875,
+    "w_n": 1.0,
+    "l_sum": 0.0,
+    "l_n": 0.0
+  },
+  "bins": {
+    "side=SELL|regime=DOWN|vol=mid|session=london|impulse=strong|bb=squeeze|heat=cold|tag=maj": {
+      "a": 4.5,
+      "b": 4.8,
+      "w_sum": 7.6875,
+      "w_n": 1.0,
+      "l_sum": 0.0,
+      "l_n": 0.0
+    }
+  },
+  "memory": [
+    {
+      "fp": {
+        "side": "SELL",
+        "regime": "DOWN",
+        "vol": "mid",
+        "session": "london",
+        "impulse": "strong",
+        "bb": "squeeze",
+        "heat": "cold",
+        "tag": "maj"
+      },
+      "vec": [
+        -1.0,
+        -1.0,
+        1.0,
+        0.9,
+        0.40299999999999997,
+        1.25,
+        0.0,
+        0.5,
+        0.0
+      ],
+      "won": true,
+      "r_mult": 7.6875,
+      "usd": 12223.0
+    }
+  ],
+  "path": "C:\\Workspace\\FlyFOREXTrader\\reports\\trade_bayes_NZDUSD.json"
+}

@@ -1,0 +1,66 @@
+{
+  "symbol": "AUDUSD",
+  "kind": "evo",
+  "saved_at": "2026-09-23 06:03:00",
+  "fitness": -86.67,
+  "note": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=all  SL 2.54 TP 12.6  snow off  mart off",
+  "genome": {
+    "params": {
+      "sl_atr": 2.5372223342284044,
+      "tp_atr": 12.561427842383532,
+      "trail_arm_atr": 3.538807577807588,
+      "trail_gap_atr": 1.6572758465671358,
+      "be_atr": 1.4617047568683987,
+      "rsi_buy_arm": 52.0,
+      "rsi_buy_fire": 62.230683387288764,
+      "rsi_sell_arm": 48.0,
+      "rsi_sell_fire": 38.0,
+      "rsi_cont_lo": 32.22586102491995,
+      "rsi_cont_hi": 41.90838603108473,
+      "min_impulse": 0.5,
+      "cont_impulse": 0.75,
+      "cooldown_bars": 8.042476761904762,
+      "lock_win_pips": 8.59675141539815,
+      "max_hold_bars": 64.0,
+      "min_hold_bars": 4.0,
+      "n_updates": 1
+    },
+    "risk_tol": "balanced",
+    "fuse_dynamic": true,
+    "sugar": false,
+    "sugar_amt": 1.0,
+    "sugar_dyn": false,
+    "fuse_cats": "",
+    "fuse_inds": "all",
+    "cat_inhibit": 0.4909285057820072,
+    "no_snowball": true,
+    "no_martingale": true
+  },
+  "meta": {
+    "n_trades": 1,
+    "da_n": 5,
+    "fitness": -86.67,
+    "max_dd": 0.0004,
+    "net_usd": -36.67,
+    "evolve": {
+      "pop": 3,
+      "gens": 2,
+      "seed": 1471,
+      "history": [
+        {
+          "gen": 1,
+          "best_fitness": -86.67,
+          "best": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=all  SL 2.54 TP 12.6  snow off  mart off",
+          "net_usd": -36.67
+        },
+        {
+          "gen": 2,
+          "best_fitness": -86.67,
+          "best": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=all  SL 2.54 TP 12.6  snow off  mart off",
+          "net_usd": -36.67
+        }
+      ]
+    },
+    "genome_note": "risk=balanced  sugar OFF\u00d71.00  sdyn OFF  fuse-dyn ON  fuse=all  SL 2.54 TP 12.6  snow off  mart off"
+  }
+}

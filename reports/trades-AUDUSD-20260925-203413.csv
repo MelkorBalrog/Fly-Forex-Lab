@@ -1,3 +1,0 @@
-n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
-1,SELL,9.72,66.9,45.0,0.5,2026-09-22 09:10,2026-09-22 14:30,0.71097,0.71123,-3.3,-255.06,68.04,49.5,0.0,-323.1,time stop,99676.9
-2,SELL,8.79,58.6,45.0,0.5,2026-09-23 14:35,2026-09-23 17:10,0.70403,0.7035,4.7,472.87,61.53,38.63,0.0,411.34,trail stop,100088.24

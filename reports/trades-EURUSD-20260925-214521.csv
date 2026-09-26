@@ -1,2 +1,0 @@
-n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
-1,SELL,17.41,65.8,45.0,0.5,2026-09-10 13:50,2026-09-10 14:15,1.16233,1.16176,5.1,1007.62,121.87,89.21,0.0,885.75,"sentiment 0.70  +0.92R  float $1,053  peak $1,366  (1.05% of balance)  peak giveback",100885.75

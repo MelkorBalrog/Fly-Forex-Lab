@@ -1,2 +1,0 @@
-n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
-1,BUY,0.1,58.3,45.0,0.5,2026-09-11 13:20,2026-09-11 14:35,0.71833,0.71747,-9.3,-8.57,0.7,0.47,0.0,-9.27,ATR stop,99990.73

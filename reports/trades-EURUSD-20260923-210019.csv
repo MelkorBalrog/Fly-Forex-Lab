@@ -1,2 +1,0 @@
-n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
-1,BUY,20.0,64.8,45.0,0.5,2026-09-15 15:55,2026-09-15 16:05,1.15469,1.15496,2.0,546.58,140.0,103.42,0.0,406.58,prediction hit,100406.58

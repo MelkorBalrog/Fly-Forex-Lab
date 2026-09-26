@@ -1,3 +1,0 @@
-n,side,lots,conf,threshold,cal_p,open_time,close_time,entry,exit,pips,gross,commission,slippage,swap,usd,reason,equity
-1,BUY,20.0,64.7,45.0,0.5,2026-09-17 12:50,2026-09-17 18:00,0.71229,0.71143,-9.4,-1733.92,140.0,94.3,0.0,-1873.92,session flatten,98126.08
-2,SELL,10.29,62.4,45.0,0.4,2026-09-22 09:00,2026-09-22 14:10,0.71082,0.71184,-10.9,-1050.19,72.03,51.43,0.0,-1122.22,time stop,97003.86

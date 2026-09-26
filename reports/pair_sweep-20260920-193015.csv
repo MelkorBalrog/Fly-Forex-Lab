@@ -1,8 +1,0 @@
-symbol,source,n,wins,losses,buys,sells,snowball,net_pips,net_usd,best,worst,equity,da_n,banc_mean
-EURUSD,hst EURUSD5.hst,7,2,5,1,6,2,-13.3,-219.7,648.56,-454.63,99780.3,0,1.026
-GBPUSD,yahoo 5m GBPUSD=X,1,0,1,0,1,0,-14.5,-245.66,-245.66,-245.66,99754.34,0,0.96
-USDJPY,yahoo 5m USDJPY=X,3,1,2,2,1,0,0.0,-9.46,28.76,-23.39,99990.54,0,0.965
-USDCHF,yahoo 5m USDCHF=X,1,0,1,1,0,0,-12.0,-241.37,-241.37,-241.37,99758.63,0,0.955
-AUDUSD,yahoo 5m AUDUSD=X,1,0,1,0,1,0,-8.7,-282.46,-282.46,-282.46,99717.54,0,1.034
-EURGBP,yahoo 5m EURGBP=X,1,0,1,0,1,0,-6.3,-211.24,-211.24,-211.24,99788.76,0,1.037
-USDCAD,yahoo 5m USDCAD=X,0,0,0,0,0,0,0,0,0.0,0.0,100000.0,0,0.915
